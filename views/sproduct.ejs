@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ruige products X-RAY MACHINE FLUOROSCOPY ULTRASOUND INSPECTION MACHINE ANESTHESIA MACHINE ICU </title>
+		<meta charset="UTF-8"/>
+		<meta name="keywords" content=" X-RAY machine fluoroscopy Ultrasound Inspection machine Anesthesia machine ICU" />
+		<meta name="description" content="veterinary medical products including veterinary x ray machine, DR, ultrasound, Anesthesia machine, inspection machine, veterinary ICU" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/css/resect.css" />
+		<link rel="stylesheet" href="/css/public.css" />
+		<link rel="stylesheet" href="/css/sproduct.css" />
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="/js/public.js"></script>
+	</head>
+	<body>
+		<div class="warp">
+			<%- include('head') %>
+			<div class="spro-top"></div>
+			<div class="spro-top1"></div>
+			<% if (products.length) { %> 
+			<ul class="pro-list">
+				 <% for(var i=0;i<products.length;i++){ %>  
+                    <li>
+                    	<span style="background:<%= products[i].url %> ; background-size:100% 100% ;"></span>
+                    	<span>
+                    		<h1><%= products[i].head %></h1>
+                    		<p><%= products[i].data %></p>
+                    		<span><a href="<%= index %>pro/<%= i %>detail">MORE DETAIL</a></span>
+                    		</span>
+                    	</li>  
+                 <% } %>
+			</ul>
+			
+			<div class="other">
+				<h1>OTHER RODUCTS</h1>
+				<ul>
+					 <% if(index<3){for(var j=0;j<3;j++){ %> 
+					<a href="<%= j+index+1 %>pro"><li>
+						<div class="bac"  style="background:<%= productdata[j+index+1][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[j+index+1][0].lastname %></p>
+					</li>
+					</a>
+					 <% }} %>
+					 <%if(index==3){ %> 
+					 	<a href="4pro"><li>
+						<div class="bac"  style="background:<%= productdata[4][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[4][0].lastname %></p>
+					</li>
+					</a>
+					<a href="5pro"><li>
+						<div class="bac"  style="background:<%= productdata[5][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[5][0].lastname %></p>
+					</li>
+					</a>
+					<a href="0pro"><li>
+						<div class="bac"  style="background:<%= productdata[0][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[0][0].lastname %></p>
+					</li>
+					</a>
+					 <% } %>
+					 <%if(index==4){ %> 
+					 	<a href="5pro"><li>
+						<div class="bac"  style="background:<%= productdata[5][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[5][0].lastname %></p>
+					</li>
+					</a>
+					<a href="0pro"><li>
+						<div class="bac"  style="background:<%= productdata[0][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[0][0].lastname %></p>
+					</li>
+					</a>
+					<a href="1pro"><li>
+						<div class="bac"  style="background:<%= productdata[1][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[1][0].lastname %></p>
+					</li>
+					</a>
+					 <% } %>
+					  <%if(index==5){ %> 
+					 	<a href="0pro"><li>
+						<div class="bac"  style="background:<%= productdata[0][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[0][0].lastname %></p>
+					</li>
+					</a>
+					<a href="1pro"><li>
+						<div class="bac"  style="background:<%= productdata[1][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[1][0].lastname %></p>
+					</li>
+					</a>
+					<a href="2pro"><li>
+						<div class="bac"  style="background:<%= productdata[2][0].url %> ; background-size:100% 100% ;"></div>
+						<p><%= productdata[2][0].lastname %></p>
+					</li>
+					</a>
+					 <% } %>
+				</ul>
+			</div>
+			<% } %>
+			<%- include('foot') %>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		//控制左右单双分开
+		$('.pro-list li:even>span').css("float","right")
+	</script>
+	
+</html>

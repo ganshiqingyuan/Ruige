@@ -1,0 +1,28 @@
+{
+  "name": "wangzhan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "supervisor index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@alicloud/sms-sdk": "^1.0.2",
+    "busboy": "^0.2.14",
+    "ejs": "^2.5.6",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-cors": "0.0.16",
+    "koa-multer": "^1.0.1",
+    "koa-router": "^7.2.1",
+    "koa-static": "^3.0.0",
+    "koa-static-cache": "^5.1.1",
+    "koa-views": "^6.0.2",
+    "nodemailer": "^4.0.1",
+    "supervisor": "^0.12.0"
+  }
+}

@@ -1,0 +1,160 @@
+.h-header{
+			overflow: auto;
+			box-sizing: border-box;
+			width: 100%;
+		}
+		a{
+			text-decoration: none;
+		}
+			margin-top: 150px;
+		}
+		.pro-list li {
+			width: 100%;
+			height: 400px;
+		}
+		.pro-list li span{
+			box-sizing: border-box;
+			font-size: 25px;
+			padding: 30px 30px;
+			display: block;
+			width: 50%;
+			height: 100%;
+			float: left;
+		}
+		.pro-list li span:first-child{
+			background: url(../img/newdog.png);
+			background-size:100% 100%;
+		}
+		
+
+*{
+			margin: 0;
+			padding: 0;
+		}
+		.top{
+			margin-top: 80px;
+			padding-top: 50%;
+			box-sizing: border-box;
+			width: 100%;
+			background: url(/img/contactbac.jpg);
+			background-size:100% 100% ;
+		}
+		.top1{
+			position: absolute;
+			top: 80px;
+			left: 0;
+			padding-top: 50%;
+			box-sizing: border-box;
+			width: 100%;
+			background: url(/img/contactbac1.jpg);
+			z-index: -1;
+			background-size:100% 100% ;
+		}
+		.top h1{
+			margin: auto;
+			margin-top: -45%;
+			width: 80%;
+			height: 100px;
+			line-height: 100px;
+			font-size: 40px;
+			color: black;
+			text-align: center;
+		}
+		.top ul{
+			margin-top: 70px;
+			width: 60%;
+			margin-left: 15%;
+		}	
+		.top ul li{
+			margin-top: 30px;
+			float: left;
+			width: 100%;
+			}
+		.top ul li img{
+			float: left;
+			width:20px ;
+			height: 20px;	
+		}	
+		.top ul li h2{
+			color: rgba(255,255,255,0.7);
+			height: 20px;
+			line-height: 20px;
+			font-size: 18px;
+			margin-left: 10px;
+			float: left;
+			width: 100px;
+			color: black;
+		}	
+		.top ul li span{
+			color: rgba(255,255,255,0.5);
+			line-height: 20px;
+			float: left;
+			display: block;
+			width: 50%;
+			color: black;
+		}	
+		@media only screen and (max-width:900px ) {
+			.message div{
+			width: 100%;
+			height: 100%;
+			float: left;
+		}
+		.top h1{
+			margin: auto;
+			margin-top: -45%;
+			width: 80%;
+			height: 50px;
+			line-height: 50px;
+			font-size: 25px;
+			color: black;
+			text-align: center;
+		}
+		.top ul{
+			margin-top: 0px;
+			width: 60%;
+			margin-left: 10%;
+		}
+		.top ul li{
+			margin-top: 15px;
+			float: left;
+			width: 100%;
+			}
+		}
+			@media only screen and (max-width:500px ) {
+			.message div{
+			width: 100%;
+			height: 100%;
+			float: left;
+		}
+		.top ul{
+			margin-top: 35%;
+			width: 60%;
+			margin-left: 10%;
+		}	
+		.top h1{
+			margin: auto;
+			margin-top: -35%;
+			width: 80%;
+			height: 50px;
+			line-height: 50px;
+			font-size: 20px;
+			color: black;
+			text-align: center;
+		}
+		.top ul li h2{
+			color: rgba(0,0,0,0.7);
+			height: 20px;
+			line-height: 20px;
+			font-size: 18px;
+			margin-left: 10px;
+			float: left;
+			width: 100px;
+		}	
+		.top ul li span{
+			color: rgba(0,0,0,0.5);
+			line-height: 20px;
+			float: left;
+			display: block;
+			width: 30%;
+		}
+		}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Ruige International Trading Co.veterinary medical products </title>
+		<meta name="keywords" content="Ruige, medical, veterinary, x ray, pet medical, ultrasound, inspection machine, anaesthesia machine, ICU, vet machine, veterinary x ray machine, veterinary ultrasound, veterinary CT, veterinary MRI." />
+		<meta name="description" content="veterinary medical products including veterinary x ray machine, DR, ultrasound, Anesthesia machine, inspection machine, veterinary ICU" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="css/resect.css" />
+		<link rel="stylesheet" href="css/public.css" />
+		<link rel="stylesheet" href="css/product.css" />
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="/js/public.js"></script>
+		<script type="text/javascript" src="/js/product.js" ></script>
+	</head>
+	<body>
+		<%- include('head') %>
+		<div class="warp">
+			    <div class="mainproduct">
+			    	<div class="pro-top">
+			    		<p><</p>
+			    			<div class="pro-con">
+			    				<span>
+			    				<div class="img">
+			    					<img src="http://photo.ganshi123.cn/rrayleft.jpg" alt="products first show" />
+			    					<div>
+			    						<h3>VETERINARY X RAY MACHINE </h3>
+			    						<span class="in-content">PROVIDE OEM/ODM SERVICE,  </span>
+			    						<span class="in-foot1">manufacture x ray table as required.</span>
+			    						<span class="in-foot2">High frequency high voltage generator, excellent image.</span>
+			    						<span class="in-foot3">TOP SALE IN CHINESE VETERINARY MARKET </span>
+			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/1pro">VIEW MORE</a></span>
+			    					</div>
+			    					<img src="http://photo.ganshi123.cn/rayright.jpg"  alt="products first show"/>
+			    				</div>
+			    				<div class="imgtwo">
+			    					<div>
+			    						<h3>VERERINARY ANESTHESIA</h3>
+			    						<span class="in-content">Looking reliable and compatible business partnership all around the world</span>
+			    						<span class="in-foot">DIFFERENT MODELS</span>
+			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/4pro">VIEW MORE</a></span>
+			    					</div>
+			    					<img src="http://photo.ganshi123.cn/secright.jpg" alt="products second show" />
+			    				</div>
+			    				<div class="imgthree">
+			    					<div>
+			    						<h3>INSPECTION MACHINE</h3>
+			    						<span class="in-content">Rapid -Reliable-Quantitative-Convenient </span>
+			    						<span class="in-foot">INNOVATION FOR CLINICAL DIAGNOSIS</span>
+			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/3pro">VIEW MORE</a></span>
+			    					</div>
+			    					<img src="http://photo.ganshi123.cn/fourleft.jpg" alt="products third show" />
+			    				</div>
+			    				<div class="imgfour">
+			    					<div>
+			    						<h3>RUIGE - COMPREHENSIVE SUPPLIER OF IMAGING PRODUCTS:</h3>
+			    						<span class="in-content">
+MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-Endoscopy</span>
+			    						<span class="in-foot">DESIGNED SPECIFICALLY FOR ANIMALS</span>
+			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/2pro">VIEW MORE</a></span>
+			    					</div>
+			    					<img src="http://photo.ganshi123.cn/thirdright.jpg" alt="product fourth show" />
+			    				</div>
+			    				</span>
+			    			</div>
+			    		<p>></p>	
+			    		<ul class="four">
+			    					<li class="fir"></li>
+			    					<li></li>
+			    					<li></li>
+			    					<li></li>
+			    				</ul>
+			    	</div>
+			    	<div class="middle">
+			    		<div class="rightwarp">
+			    		<div class="m-right">
+			    			<div class="m-left">
+			    			<p style="font-size: 2.1rem;"> BY</p>
+			    			<p>R</p>
+			    			<p>U</p>
+			    			<p>I</p>
+			    			<p>G</p>
+			    			<p>E</p>
+			    		</div>
+			    		<div class="img-right"></div>
+			    		<div class="word-right">
+			    			<i>THE</i> VALUABLE EXPERIENCE WE HAVE ACCUMULATED REGARDING VETERINARY MEDICAL PRODUCTS AND X-RAY PRODUCTION HELPED US TO PROVIDE CUSTOMERS WITH GOOD COMPETETIVE ADVANTAGE AND BUSINESS BENEFITS.
+
+			    		</div>
+			    	     </div>
+			    	     </div>
+			    		</div>
+			    	<div class="chose">
+			    		<ul>
+								<% for(var i=0;i<productdata.length;i++){ %> 
+										<li style="background:<%= productdata[i][0].url %> ; background-size:100% 100% ;">
+											<span class="firs"><p><a href="sproduct/<%= i %>pro">View more</a></p></span>
+											<span><p><%= productdata[i][0].lastname %></p></span>
+										</li>
+								<% } %>
+
+
+			    			<!--<li style="background: url(../img/SIXone.jpg); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/0pro">View more</a></p></span>
+			    				<span><p>X-RAY MACHINE</p></span>
+			    			</li>
+			    			<li style="background:url(../img/SIXfour.jpg); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/1pro">View more</a></p></span>
+			    				<span><p>FLUOROSCOPY MACHINE</p></span>
+			    			</li>
+			    			<li style="background: url(../img/SIXtwo.jpg); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/2pro">View more</a></p></span>
+			    				<span><p>ULTRASOUND</p></span>
+			    			</li>
+			    			<li style="background: url(../img/fourth.png); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/3pro">View more</a></p></span>
+			    				<span><p> Laboratory Instruments</p></span>
+			    			</li>
+			    			<li style="background: url(../img/fif.png); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/4pro">View more</a></p></span>
+			    				<span><p>ANESTHESIA MACHINE</p></span>
+			    			</li>
+			    			<li style="background: url(../img/buxiugang.png); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/5pro">View more</a></p></span>
+			    				<span><p>Stainless Steel Instruments</p></span>
+			    			</li>
+			    			<li style="background: url(../img/eghith.png); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/6pro">View more</a></p></span>
+			    				<span><p>Monitoring</p></span>
+			    			</li>
+			    			<li style="background: url(../img/seventh.png); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/7pro">View more</a></p></span>
+			    				<span><p>Breeding Series</p></span>
+			    			</li>
+			    			<li style="background: url(../img/ninth.png); background-size:100% 100% ;">
+			    				<span class="firs"><p><a href="sproduct/8pro">View more</a></p></span>
+			    				<span><p>Patient care and wound</p></span>
+							</li>
+						-->
+			    		</ul>
+			    	</div>
+			    </div>
+			</div>
+			
+			<div class="advantage" style="margin-top: 100px;">
+   	<div style="font-size: 32px;">Come to see us!</div>
+   </div>
+   <div class="bottomswipt">
+   	<ul>
+   		<li>
+   			<h4>The 13th BJSAVA Annual Congress</h4>
+   			<p>Sep 10-13, 2017</p>
+   			<p>Beijing，China</p>
+   			<img style="width: 70%;" src="/img/bs1.jpg" />
+   		</li>
+   		<li>
+   			<h4>The 8th South China Small Animal Veterinary Congress</h4>
+   			<p>Oct 17-19, 2017</p>
+   			<p>Zhuhai, China</p>
+   			<img style="width: 40%;"  src="http://photo.ganshi123.cn/bs2.png" />
+   		</li>
+   		<li>
+   			<h4>33rd World Veterinary Congress (WVC Incheon, KOREA 2017)</h4>
+   			<p>Aug27 - 31, 2017</p>
+   			<p>Incheon, Korea</p>
+   			<img style="width: 70%; margin-top: 40px;" src="/img/bs3.png" />
+   		</li>
+   	</ul>
+   </div>
+		<%- include('foot') %>
+	</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ruige International Trading Co., Ltd. products detail </title>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="KVET-500 KPET-DR4500J KPET-DR5500J KPET-DR6000J OTF 5000 OTF 6000 OTF 7000 HD501 HD 502 HD 601 Protein analysis system HD-101 Protein analysis system HD-101 Veterinary ICU X-RAY machine fluoroscopy Ultrasound Inspection machine Anesthesia machine ICU" />
+		<meta name="description" content="veterinary medical products including veterinary x ray machine, DR, ultrasound, Anesthesia machine, inspection machine, veterinary ICU KVET-500 KPET-DR4500J KPET-DR5500J KPET-DR6000J OTF 5000 OTF 6000 OTF 7000 HD501 HD 502 HD 601 Protein analysis system HD-101 Protein analysis system HD-101 Veterinary ICU" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/css/resect.css" />
+		<link rel="stylesheet" href="/css/public.css" />
+		<link rel="stylesheet" href="/css/deproduct.css" />
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="/js/public.js"></script>
+	</head>
+	<body>
+	<%- include('head') %>
+	<div class="de-top"></div>
+	<div class="de-top1"></div>
+	<div class="decontent">
+		<div class="de-left" style="background: <%= products.url %>; background-size:100% 100% ;"></div>
+		<div class="de-right">
+			<h1><%= products.head %></h1>
+			<p><%= products.data %></p>
+			<ul>
+				<% for(var j=0;j<products.detail.length;j++){ %> 
+				<li><%=  products.detail[j] %></li>
+				<% } %>
+			</ul>
+		</div>
+	</div>
+	<% if (product.length>1) { %> 
+		<div class="de-bottom">
+			<ul>
+				<% for(var i=0;i<product.length;i++){ %> 
+					<a href="<%= i %>detail">
+				<li>
+					<div class="bacg" style="background:<%= product[i].url %>;background-size:100% 100% ;"></div>
+					<p><%= product[i].head %> </p>
+				</li>
+				</a>
+				 <% } %>
+			</ul>
+		</div>
+		<% } %>
+	<%- include('form') %>
+	<%- include('foot') %>
+	</body>
+</html>

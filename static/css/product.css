@@ -1,0 +1,764 @@
+*{
+			font-family: "微软雅黑";
+			}
+	
+.bottomswipt{
+	width: 100%;
+}
+.bottomswipt ul{
+	margin: auto;
+	width: 1200px;
+	overflow: auto;
+}	
+.bottomswipt ul li{
+	box-sizing: border-box;
+	padding: 30px;
+	width: 400px;
+	float: left;
+}
+.bottomswipt ul li h4{
+	height: 60px;
+	line-height: 30px;
+	font-weight: 700;
+	width: 100%;
+	margin-top: 30px;
+	text-align: center;
+}
+.bottomswipt ul li p{
+	width: 100%;
+	margin-top: 25px;
+	text-align: center;
+}
+.bottomswipt ul li img{
+	display: block;
+	width: 50%;
+	margin: auto;
+	margin-top: 30px;
+}
+			
+		.advantage{
+	width: 80%;
+	margin: auto;
+	height: 60px;
+	    border-bottom: 1px solid #333;
+}
+.advantage div{
+	width: 240px;
+    border-bottom: 3px solid rgba(150,150,150,0.6);
+    text-align: center;
+    line-height: 30px;
+    height: 60px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin: auto
+}
+.advantage div:hover{
+	 border-bottom: 3px solid black;
+}	
+			
+		.panel>ul{
+			display: none;
+		}	
+		.bb-footer{
+			margin-top: 100px;
+			width: 100%;
+			min-height: 400px;
+		}
+		.b-descrip{
+			width: 100%;
+			min-height: 400px;
+		}
+		.b-descrip span{
+			text-align: center;
+			display: block;
+			width: 50%;
+			margin: auto;
+			min-height: 100px;
+			}	
+		.mainproduct{
+			clear: both;
+			width: 100%;
+		}
+		.pro-top{
+			max-width: 1700px;
+			margin: auto;
+			position: relative;
+			width: 100%;
+			height: 500px;
+		}
+		.pro-top p{
+			color: rgba(150,150,150,0.8);
+			right: 0;
+			position: absolute;
+			font-size: 2.8rem;
+			text-align: center;
+			display: block;
+			float: left;
+			line-height: 500px;
+			width: 10%;
+			height: 100%;
+			z-index: 100;
+		}
+		.pro-top p:first-child{
+			font-size: 2.8rem;
+			z-index: 20;
+			left: 0;
+			position: absolute;
+			text-align: center;
+			display: block;
+			float: left;
+			line-height: 500px;
+			width: 10%;
+			height: 100%;
+		}
+		.pro-top .pro-con{
+			position: absolute;
+			left: 0;
+			top: 0;
+			overflow: hidden;
+			float: left;
+			width:100% ;	
+			height: 100%	
+		}	
+		.pro-top .pro-con span{
+			position: relative;
+			display: block;
+			width: 100%;
+			height: 100%;
+		}	
+		.pro-top .pro-con span div.img{
+			left: 0;
+			top: 0;
+			display: none;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+		.pro-top .pro-con span div.imgtwo{
+			display: none;
+			left: 0;
+			top: 0;
+			display: none;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+		.pro-top .pro-con span div.imgfour{
+			display: none;
+			left: 0;
+			top: 0;
+			display: none;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+		.pro-top .pro-con span div.imgfour div{
+			z-index: 5;
+			position: absolute;
+			left: 10%;
+			top: 0;
+			width: 50%;
+			height: 100%;
+		}
+		.pro-top .pro-con span div.imgfour img{
+			opacity: 0;
+			position: absolute;
+			right: 5%;
+			width: 50%;
+			height: 100%;
+		}
+		.pro-top .pro-con span div.imgfour div h3{
+			transition: 0.4s;
+			margin-top: 1.4rem;
+			width: 100%;
+			font-size: 2.7rem;
+			font-weight: 700;
+		}
+		.pro-top .pro-con span div.imgfour div span.in-content{
+			transition: 0.4s;
+			margin-top: 1.4rem;
+			display: block;
+			font-size: 1.5rem;
+			width: 100%;
+			color: blue;
+			height: auto;
+		}
+		.pro-top .pro-con span div.imgfour div span.in-foot{
+			transition: 0.4s;
+			margin-top: 1.4rem;
+			color: green;
+			display: block;
+			font-size: 2.8rem;
+			width: 100%;
+			font-weight: 700;
+			height: auto;
+		}
+		.pro-top .pro-con span div.imgfour div span.href{
+			transition: 0.4s;
+			display: block;
+			width: 14.2rem;
+			height: 2.85rem;
+			line-height: 2.85rem;
+			color: white;
+			text-align: center;
+			border-radius:5px ;
+			background: blue;
+			font-size: 1.7rem;
+			margin: 2.85rem 2rem;
+			font-weight: 800;
+		}
+		.pro-top .pro-con span div.imgthree{
+			display: none;
+			left: 0;
+			top: 0;
+			display: none;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+		.pro-top .pro-con span div.imgthree div{
+			z-index: 5;
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 50%;
+			height: 100%;
+		}
+		.pro-top .pro-con span div.imgthree img{
+			opacity: 0;
+			position: absolute;
+			left: 0;
+			width: 50%;
+			height: 100%;
+		}
+		.pro-top .pro-con span div.imgthree div h3{
+			transition: 0.4s;
+			margin-top: 3.5rem;
+			width: 100%;
+			font-size: 2.7rem;
+			font-weight: 700;
+		}
+		.pro-top .pro-con span div.imgthree div span.in-content{
+			transition: 0.4s;
+			margin-top: 1.4rem;
+			display: block;
+			font-size: 1.6rem;
+			width: 100%;
+			color: blue;
+			height: auto;
+		}
+		.pro-top .pro-con span div.imgthree div span.in-foot{
+			transition: 0.4s;
+			margin-top: 1.4rem;
+			color: green;
+			display: block;
+			font-size: 2.8rem;
+			width: 100%;
+			font-weight: 700;
+			height: auto;
+		}
+		.pro-top .pro-con span div.imgthree div span.href{
+			transition: 0.4s;
+			display: block;
+			width: 14.2rem;
+			height: 2.8rem;
+			line-height: 2.8rem;
+			color: white;
+			text-align: center;
+			border-radius:5px ;
+			background: blue;
+			font-size: 1.7rem;
+			margin: 2.8rem 2.1rem;
+			font-weight: 800;
+		}
+		.pro-top .pro-con span div.imgtwo div{
+			z-index: 5;
+			position: absolute;
+			left: 10%;
+			top: 0;
+			width: 50%;
+			height: 100%;
+		}	
+		.pro-top .pro-con span div.imgtwo div h3{
+			transition: 0.5s;
+			margin-top: 3.5rem;
+			width: 100%;
+			font-size: 2.7rem;
+			font-weight: 700;
+		}
+		.pro-top .pro-con span div.imgtwo div span.in-content{
+			transition: 0.4s;
+			margin-top: 2.1rem;
+			display: block;
+			font-size: 2.1rem;
+			width: 100%;
+			color: blue;
+			height: auto;
+		}
+		.pro-top .pro-con span div.imgtwo div span.in-foot{
+			transition: 0.4s;
+			margin-top: 2.8rem;
+			color: green;
+			display: block;
+			font-size: 3rem;
+			width: 100%;
+			font-weight: 700;
+			height: auto;
+		}
+		.pro-top .pro-con span div.imgtwo div span.href{
+			transition: 0.4s;
+			display: block;
+			width: 14.2rem;
+			height: 2.8rem;
+			line-height: 2.8rem;
+			color: white;
+			text-align: center;
+			border-radius:5px ;
+			background: blue;
+			font-size: 1.7rem;
+			margin: 2.8rem 2.1rem;
+			font-weight: 800;
+		}
+		.pro-top .pro-con span div.imgtwo img{
+			opacity: 0;
+			position: absolute;
+			right: 10%;
+			width: 50%;
+			height: 100%;
+		}
+		.pro-top .pro-con span div.img img:first-child{
+			left: 0;
+			margin-left: 2%;
+			width: 23%;
+		}
+		.pro-top .pro-con span div.img img{
+			margin-top: 2.8rem;
+			opacity: 0;
+			position: absolute;
+			right: 0;
+			width: 40%;
+			height: 100%;
+		}	
+		.pro-top .pro-con span div.img div{
+			z-index: 5;
+			position: absolute;
+			left: 25%;
+			width: 45%;
+			height: 100%;
+		}
+		.pro-top .pro-con span div.img div h3{
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			margin-top: 3.5rem;
+			width: 100%;
+			font-weight: 700;
+			font-size: 2.5rem;
+			color: black;
+		}
+		.pro-top .pro-con span div.img div span.in-content{
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-weight: 700;
+			margin-top: 0.7rem;
+			display: block;
+			font-size: 2.75rem;
+			color: blue;
+			width: 100%;
+			height: auto;
+		}
+		.pro-top .pro-con span div.img div span.in-foot1{
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			margin-top: 1.1rem;
+			display: block;
+			font-size: 1.75rem;
+			width: 100%;
+			height: auto;
+		}
+		.pro-top .pro-con span div.img div span.in-foot2{
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			margin-top: 0.7rem;
+			display: block;
+			font-size: 1.4rem;
+			width: 100%;
+			height: auto;
+		}
+		.pro-top .pro-con span div.img div span.in-foot3{
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			margin-top: 1rem;
+			display: block;
+			font-size: 2.5rem;
+			font-weight: 700;
+			color: green;
+			width: 100%;
+			height: auto;
+		}
+		.pro-top .pro-con span div.img div span.href{
+			display: block;
+			width: 14.2rem;
+			height: 2.8rem;
+			line-height: 2.8rem;
+			color: white;
+			text-align: center;
+			border-radius:5px ;
+			background: blue;
+			font-size: 1.78rem;
+			margin: 2.8rem 2.1rem;
+		}
+		.chose{
+			padding: 0 100px;
+			margin-top: 100px;
+			}
+		.chose li{
+			position: relative;
+			height: 10px;
+			box-sizing: border-box;
+			padding-top: 25%;
+			background: url(../img/newdog.png);
+			background-size:100% 100% ;
+			width: 25%;
+			float: left;
+			margin-left: 6%;
+			margin-top: 50px;
+			overflow: hidden;
+		}
+		.warp{
+			overflow: auto;
+			margin-top: 80px;
+		}
+		.chose li span{
+			transition: all 0.5s; 
+			top: 0;
+			background: rgba(16,95,240,0.5);
+			position: absolute;
+			box-sizing: border-box;
+			padding-top:50% ;
+			display: block;
+			border-top-right-radius:10px ;
+			border-top-left-radius:10px ;
+			width: 100%;
+			text-align: center;
+			}	
+		.chose li span.firs{
+			border-top-right-radius:0;
+			border-top-left-radius:0;
+			border-bottom-right-radius:10px ;
+			border-bottom-left-radius:10px ;
+			padding-top:50% ;
+			top: 50%;
+			}
+		.chose li span.firs a{
+			display: block;
+			margin-top: -25%;
+		}	
+		.chose li span p{
+			padding-top: 12.5%;
+			color: black;
+			font-size: 1.7rem;
+			font-weight: 700;
+			width: 80%;
+			margin: auto;
+			margin-top: -40%;
+		}	
+		.four{
+			left: 50%;
+			top:90%;
+			position: absolute;
+			margin-left: -55px;
+			z-index: 10;
+			width: 110px;
+			height: 20px;
+			}
+		.four li{
+			float: left;
+			z-index: 10;
+			margin: 0;
+			width: 20px;
+			margin-left: 10px;
+			height: 20px;
+			border-radius:50%;
+			background: rgba(150,150,150,0.5);
+			}
+		.four li.fir{
+			margin-left: 0;
+		}
+		.middle{
+			width: 100%;
+			height:500px ;
+			margin-top: 100px;
+			padding-bottom: 40px;	
+			}
+		.middle .m-left{
+			width: 100px;
+			height: 500px;
+			float: left;
+		}
+		.rightwarp{
+			width: 100%;
+		}
+		.middle .m-left p{
+			margin-top: 30px;
+			width: 100%;
+			font-size: 1.2rem;
+			font-weight: 700;
+			text-align: center;
+			}
+		.m-right{
+			width: 1150px;
+			margin: auto;
+			overflow: auto;
+		}
+		.m-right .img-right{
+			width: 500px;
+			height: 500px;
+			float: left;
+			background: url(/img/productleft.jpg);
+			background-size:100% 100% ;
+			}
+		.m-right .word-right{
+			width: 500px;
+			float: left;
+			box-sizing: border-box;
+			padding: 100px 30px 0;
+			line-height: 3.6rem;
+			text-align: left;
+			font-size: 1.42rem;
+			font-style: italic;
+		}	
+		.m-right .word-right i{
+			font-size: 2.14rem;
+			font-weight: 700;
+			font-style: normal;
+		}
+		@media only screen and (min-width:1800px ) {
+			html,body{
+				font-size: 23px;
+			}
+			.pro-top{
+				
+				height: 800px;
+			}
+			.pro-top p{
+				line-height: 800px;
+			}
+			.pro-top p:first-child{
+				line-height: 800px;
+			}
+		}
+		@media only screen and (min-width:1600px ) {
+			html,body{
+				font-size: 20px;
+			}
+			.pro-top{
+				
+				height: 700px;
+			}
+			.pro-top p{
+				line-height: 700px;
+			}
+			.pro-top p:first-child{
+				line-height: 700px;
+			}
+		}
+		@media only screen and (min-width:1400px ) {
+			html,body{
+				font-size: 17px;
+			}
+			.pro-top{
+				
+				height: 600px;
+			}
+			.pro-top p{
+				line-height: 600px;
+			}
+			.pro-top p:first-child{
+				line-height: 600px;
+			}
+		}
+		@media only screen and (max-width:1200px ) {
+			html,body{
+				font-size: 12px;
+			}
+			.bottomswipt ul{
+	margin: auto;
+	width: 350px;
+	overflow: auto;
+}	
+.bottomswipt ul li{
+	box-sizing: border-box;
+	padding: 30px;
+	width: 350px;
+	float: left;
+}
+		}
+		@media only screen and (max-width:1150px ) {
+			.middle{
+				height: auto;
+			}
+			.m-right{
+			width: 600px;
+			margin: auto;
+		}
+		.m-right .word-right{
+			margin-left: 100px;
+		}
+		}			
+		@media only screen and (max-width: 1000px) {
+			.h-header ul{
+				display: none;
+			}
+		.chose{
+			padding: 0 50px;
+			margin-top: 30px;
+			}	
+		.chose li span p{
+			font-size: 18px;
+			width: 80%;
+			margin: auto;
+			margin-top: -40%;
+		}	
+		}
+		@media only screen and (max-width:900px ) {
+			.pro-top{
+				
+				height: 400px;
+			}
+			html,body{
+				font-size: 10px;
+			}
+			.pro-top p{
+				line-height: 400px;
+			}
+			.pro-top p:first-child{
+				line-height: 400px;
+			}
+		}
+		@media only screen and (min-width: 100px) and (max-width: 700px) {
+		
+		.chose{
+			padding: 0 30px;
+			margin-top: 30px;
+			}
+		.chose li{
+			position: relative;
+			height: 10px;
+			box-sizing: border-box;
+			padding-top: 38%;
+			background: url(../img/newdog.png);
+			background-size:100% 100% ;
+			width: 38%;
+			margin-left:8% ;
+			float: left;
+		}
+		}
+		@media only screen and (max-width: 700px) {
+			.pro-top{
+				height: 300px;
+			}
+			html,body{
+				font-size: 7px;
+			}
+			.bottomswipt ul li p{
+				font-size:20px;
+			}
+			.bottomswipt ul li h4{
+				font-size: 25px;
+			}
+			.pro-top p{
+				line-height: 300px;
+			}
+			.pro-top p:first-child{
+				line-height: 300px;
+			}
+			.m-right .word-right{
+				font-size: 20px !important;
+				line-height: 35px !important;
+			}
+		}
+		@media only screen and (max-width: 600px) {
+			.pro-top{
+				height: 300px;
+			}
+			html,body{
+				font-size: 6px;
+			}
+				.m-right{
+			width: 300px;
+			margin: auto;
+		}
+		.m-right .img-right{
+			width: 250px;
+			height: 250px;
+			float: left;
+			background: url('http://photo.ganshi123.cn/productleft.jpg');
+			background-size:100% 100% ;
+			}
+		.middle .m-left{
+			width: 50px;
+			height: auto;
+			float: left;
+		}	
+		.m-right .word-right{
+			margin-left: 25px;
+			width: 250px;
+			float: left;
+			height: auto;
+			box-sizing: border-box;
+			padding: 50px 0px 0;
+			line-height: 3.6rem;
+			text-align: center;
+			font-size: 1.42rem;
+			font-style: italic;
+		}	
+			
+		}
+		@media only screen and (max-width: 500px ) {
+			.pro-top{
+				height: 200px;
+			}
+			html,body{
+				font-size: 5px;
+			}
+			.pro-top p{
+				line-height: 200px;
+			}
+			.pro-top p:first-child{
+				line-height: 200px;
+			}
+			/*.chose{
+			margin-top: 30px;
+			padding: 20px 70px;
+			}
+			.chose li{
+			position: relative;
+			height: 10px;
+			box-sizing: border-box;
+			padding-top: 70%;
+			background: url(../img/newdog.png);
+			background-size:100% 100% ;
+			width: 70%;
+			margin-left: 15%;
+			float: left;
+		}*/
+			.chose li span p{
+			width: 85%;
+			margin: auto;
+			margin-top: -40%;
+			font-size: 8px;
+		}
+		}
+		/*@media only screen and (max-width:350px ) {
+			.chose li{
+			position: relative;
+			height: 10px;
+			box-sizing: border-box;
+			padding-top: 100%;
+			background: url(../img/newdog.png);
+			background-size:100% 100% ;
+			width: 100%;
+			float: left;
+		}
+			.chose li span p{
+			width: 80%;
+			margin: auto;
+			margin-top: -40%;
+			font-size: 17px;
+		}
+		}*/

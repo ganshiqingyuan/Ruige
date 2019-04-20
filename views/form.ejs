@@ -1,0 +1,99 @@
+<div class="message">
+	<div class="me-warp">send successfully and  we will replay back to you soon</div>
+				<div class="form-left">
+				<label for="name"><strong class="name">*</strong>Name:</label>
+				<input type="text" class="required name" name="name" />
+				<label for="email"><strong class="email">*</strong>Email:</label>
+				<input type="email" class="required email" name="email" />
+				<label for="subject">Subject:</label>
+				<input type="text" name="subject" />
+				<label for="phone">Phone:</label>
+				<input type="text" class="required" name="phone" />
+				</div>
+				<div class="form-right">
+				<label for="company"><strong class="company">*</strong>Company:</label>
+				<input type="text" class="required company" name="company" />
+				<label for="content"><strong class="textarea">*</strong>Message:</label>
+				<textarea class="company"></textarea>
+				<span class="submit">
+				<input class="send" type="submit" value="Send message" />
+				</span>
+				</div>
+</div>
+<p class="form-tip">We’ll usually get back to you within 24 hours of receiving your message .
+Fields marked with an * are required
+</p>
+	<script type="text/javascript">
+		var namecontrol=false;
+		var messagecontrol=false;
+		var companycontrol=false;
+		var emailcontrol=false;
+		$("input.name").blur(function(){
+			if($(this).val()==""){
+				namecontrol=false;
+				$("strong.name").css("color","red")
+			}
+			else{
+				namecontrol=true
+				$("strong.name").css("color","white")
+				console.log("1")
+			}
+		})
+		$("input.email").blur(function(){
+			if(this.value=="" || (this.value!="" &&!(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(this.value)))){
+				emailcontrol=false;
+				$("strong.email").css("color","red")
+			}
+			else{
+				emailcontrol=true;
+				$("strong.email").css("color","white")
+				console.log("2")
+			}
+		})
+		$("input.company").blur(function(){
+			if($(this).val()==""){
+				companycontrol=false;
+				$("strong.company").css("color","red");
+			}
+			else{
+				companycontrol=true
+				$("strong.company").css("color","white");
+				console.log("3")
+			}
+		})
+		$("textarea").blur(function(){
+			if($(this).val()==""){
+				messagecontrol=false;
+				$("strong.textarea").css("color","red");
+			}
+			else{
+				messagecontrol=true;
+				$("strong.textarea").css("color","white");
+				console.log("4")
+			}
+		})
+		$(".send").click(function(){
+			if(namecontrol&&emailcontrol&&companycontrol&&messagecontrol){
+			$.post("/send",{"name":$("input").eq(0).val(),"email":$("input").eq(1).val(),"subject":$("input").eq(2).val(),"phone":$("input").eq(3).val(),"company":$("input").eq(4).val(),"word":$("textarea").val()},function(data){
+			   if(data==1){
+			   	$(".me-warp").css("display","block");
+			   	setTimeout(function(){
+			   		for(var i=0;i<5;i++){
+			   			$("input").eq(i).val("");
+			   		}
+			   		$("textarea").val("")
+			   			$(".me-warp").css("display","none");
+			   		 namecontrol=false;
+		             messagecontrol=false;
+		             companycontrol=false;
+		             emailcontrol=false;
+		             $("strong").css("color","red")
+			   	},4000)
+			   }
+			})
+			}
+			else{
+				alert("Fields marked with an * are required")
+			}
+		})
+	</script>	

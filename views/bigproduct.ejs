@@ -1,0 +1,95 @@
+<div class="bigproduct">
+	<form  method="POST" action="/upload" enctype="multipart/form-data">
+				<div class="form-left">
+				<label for="lastname"><strong class="name">*</strong>大产品名称:</label>
+				<input type="text" class="required name" name="lastname" />
+				<label for="head">实例产品名称:</label>
+				<input type="text" name="head" />
+				<label for="data">产品大概描述:</label>
+				<input type="text" class="required" style="width: 50%;" name="data" />
+				<label for="datadetail"><strong class="textarea">*</strong>具体描述:</label>
+				<textarea placeholder="不同条目用逗号分开" style="width: 50%;height: 300px;" name="datadetail" class="company"></textarea>
+				<label for="file"><strong class="textarea">*</strong>图片</label>
+				<input type="file" name="file" />
+				<span class="submit">
+				<input class="send" type="submit"  value="提交" />
+				</span>
+				</div>
+	</form>			
+</div>
+<div class="bigproduct">
+	<form  method="POST" action="/upload1" enctype="multipart/form-data">
+				<div class="form-left">
+				<label for="lastname"><strong class="name">*</strong>添加到第几类产品:</label>
+				<input type="text" placeholder="直接输入数字" class="required name" name="lastname" />
+				<label for="head">实例产品名称:</label>
+				<input type="text" name="head" />
+				<label for="data">产品大概描述:</label>
+				<input type="text" class="required" style="width: 50%;" name="data" />
+				<label for="datadetail"><strong class="textarea">*</strong>具体描述:</label>
+				<textarea placeholder="不同条目用逗号分开" style="width: 50%;height: 300px;" name="datadetail" class="company"></textarea>
+				<label for="file"><strong class="textarea">*</strong>图片</label>
+				<input type="file" name="file" />
+				<span class="submit">
+				<input class="send" type="submit"  value="提交" />
+				</span>
+				</div>
+	</form>			
+</div>
+<div class="deleteproductbig" style="display: none;">
+	<label for="which">删除第几大类产品</label>
+	<input name="which" type="text" />
+	<button>提交</button>
+</div>
+<div class="deleteproductsmall" style="display: none;">
+	<label for="which">删除第几大类里的产品</label>
+	<input class="smallout" name="which" type="text" />
+	<label for="which">里面的第几小类</label>
+	<input class="smallin" name="whichsmall" type="text" />
+	<button>提交</button>
+</div>
+<script>
+	$(".inputbig").click(function(){
+		$(".bigproduct").css("display","none")
+		$(".bigproduct").eq(0).css("display","block")
+		$(".deleteproductbig").css("display","none")
+		$(".deleteproductsmall").css("display","none")
+	})
+	$(".inputsmall").click(function(){
+		$(".bigproduct").css("display","none")
+		$(".bigproduct").eq(1).css("display","block")
+		$(".deleteproductbig").css("display","none")
+		$(".deleteproductsmall").css("display","none")
+	})
+	$(".deletebig").click(function(){
+		$(".bigproduct").css("display",'none');
+		$(".deleteproductsmall").css("display","none")
+		$(".deleteproductbig").css("display","block")
+	})
+	$(".deletesmall").click(function(){
+		$(".bigproduct").css("display",'none');
+		$(".deleteproductbig").css("display","none")
+		$(".deleteproductsmall").css("display","block")
+	})
+	$(".deleteproductbig button").click(function(){
+		$.post("/deletebig",$(".deleteproductbig input").val(),function(res){
+			alert(res)
+			alert("删除成功");
+			location.reload();
+		}).error(function(){
+			alert("删除失败")
+			location.reload();
+		})
+	})
+	$(".deleteproductsmall button").click(function(){
+		$.post("/deletesmall",{"out":$(".deleteproductsmall .smallout").val(),"in":$(".deleteproductsmall .smallin").val()},function(res){
+			alert(res)
+			alert("删除成功");
+			location.reload();
+		}).error(function(){
+			alert("删除失败")
+			location.reload();
+		})
+		
+	})
+</script>

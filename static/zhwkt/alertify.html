@@ -1,0 +1,229 @@
+
+
+
+
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+<head>
+    <title>主页</title>
+    
+
+
+
+
+
+
+<meta charset="utf-8">
+<meta name="keywords" content="admui,admui官网,admui下载,admui框架,通用后台管理系统,后台框架,ui框架" />
+<meta name="description" content="Admui在线演示系统，Admui是一个基于最新Web技术的企业级通用管理系统快速开发框架，可以帮助企业极大的提高工作效率，节省开发成本，提升品牌形象。" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- 移动设备 viewport -->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui">
+<meta name="author" content="admui.com">
+<!-- 360浏览器默认使用Webkit内核 -->
+<meta name="renderer" content="webkit">
+<!-- 禁止百度SiteAPP转码 -->
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+<link rel="icon" type="image/png" href="Content/images/favicon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<!-- Safari浏览器添加到主屏幕（IOS） -->
+<link rel="icon" sizes="192x192" href="Content/images/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Admui">
+<!-- Win8标题栏及ICON图标 -->
+<link rel="apple-touch-icon-precomposed" href="Content/images/apple-touch-icon.png">
+<meta name="msapplication-TileImage" content="http://cdn.admui.com/demo/1.1.0/images/app-icon72x72@2x.png">
+<meta name="msapplication-TileColor" content="#62a8ea">
+<!-- 样式 -->
+<link rel="stylesheet" href="Content/themes/classic/base/css/site.css" id="siteStyle">
+<!--[if lte IE 9]>
+<meta http-equiv="refresh" content="0; url='http://www.admui.com/ie/'" />
+<![endif]-->
+<!--[if lt IE 10]>
+<script src="Content/vendor/media-match/media.match.min.js"></script>
+<script src="Content/vendor/respond/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+    
+    <!-- 图标 CSS-->
+    <link rel="stylesheet" href="Content/fonts/font-awesome/font-awesome.css">
+    <link rel="stylesheet" href="Content/fonts/web-icons/web-icons.css">
+    
+    <!-- 插件 CSS -->
+    <link rel="stylesheet" href="Content/vendor/animsition/animsition.css">
+    <link rel="stylesheet" href="Content/vendor/toastr/toastr.css">
+    <link rel="stylesheet" href="Content/css/demo.css">
+    
+    <!-- 插件 -->
+    <script src="Content/vendor/jquery/jquery.min.js"></script>
+    <script src="Content/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="Content/vendor/modernizr/modernizr.min.js"></script>
+    <script src="Content/vendor/breakpoints/breakpoints.min.js"></script>
+    <script src="Content/vendor/artTemplate/template.min.js"></script>
+    <script src="Content/vendor/toastr/toastr.min.js"></script>
+    <script src="Content/vendor/bootbox/bootbox.min.js"></script>
+    
+    <!-- 核心  -->
+    <script src="Content/themes/classic/global/js/core.js"></script>
+    <script src="Content/themes/classic/base/js/site.js"></script>
+    <script src="Content/themes/classic/global/js/configs/site-configs.js"></script>
+    <script src="Content/themes/classic/global/js/components.js"></script>
+    
+ 
+	
+    <script>
+        Breakpoints();
+    </script>
+</head>
+
+<body>
+
+
+
+<main class="site-page">
+    <div class="page-container" id="admui-pageContent">
+    
+    
+	
+
+
+
+
+
+
+<title>Alertify 弹框</title>
+
+<link rel="stylesheet" href="Content/vendor/alertify-js/alertify.css">
+<link rel="stylesheet" href="Content/css/examples/components/advanced/alertify.css">
+
+<div class="page animation-fade">
+    <div class="page-header">
+        <h1 class="page-title">Alertify</h1>
+        <div class="page-header-actions">
+            <a class="btn btn-inverse btn-round" href="http://bsify.admui.com/" target="_blank">
+                <i class="icon wb-link" aria-hidden="true"></i> <span class="hidden-xs">官网</span></a>
+        </div>
+    </div>
+    <div class="page-content">
+
+        <div class="panel">
+            <div class="panel-body container-fluid">
+                <div class="row row-lg">
+                    <div class="col-lg-4 col-sm-6">
+
+                        <div class="example-wrap">
+                            <h4 class="example-title">Alert 对话框</h4>
+                            <div class="example">
+                                <button type="button" class="btn btn-primary" id="alert" data-plugin="alertify" data-alert-message="这是一个 alert 对话框">
+                                    显示
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+
+                        <div class="example-wrap">
+                            <h4 class="example-title">Confirm 对话框</h4>
+                            <div class="example">
+                                <button type="button" class="btn btn-primary" id="confirm" data-plugin="alertify" data-type="confirm" data-confirm-title="这是一个 confirm 对话框" data-success-message="您单击了确定" data-error-message="您单击了取消">
+                                    显示
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="clearfix visible-sm-block visible-md-block"></div>
+                    <div class="col-lg-4 col-sm-6">
+
+                        <div class="example-wrap">
+                            <h4 class="example-title">Prompt 对话框</h4>
+                            <div class="example">
+                                <button type="button" class="btn btn-primary" id="prompt" data-plugin="alertify" data-type="prompt" data-prompt-title="这是一个 prompt 对话框" data-success-message="您单击了确定，填写的值为：%s" data-error-message="您单击了取消" data-default-message="Default Value">
+                                    显示
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+
+                        <div class="example-wrap">
+                            <h4 class="example-title">延迟</h4>
+                            <div class="example">
+                                <button type="button" class="btn btn-primary" id="exampleDelay" data-plugin="alertify" data-type="log" data-delay="10000" data-log-message="10秒后消失">
+                                    显示
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+
+                        <div class="example-wrap">
+                            <h4 class="example-title">按钮</h4>
+                            <div class="example">
+                                <button type="button" class="btn btn-primary" id="exampleLabels" data-plugin="alertify" data-type="confirm" data-ok-label="接受" data-cancel-label="拒绝" data-confirm-title="自定义按钮标签" data-success-message="您单击了确定" data-error-message="您单击了取消">
+                                    显示
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	
+	
+	
+    </div>
+    <div class="page-loading vertical-align text-center">
+        <div class="page-loader loader-default loader vertical-align-middle" data-type="default"></div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="site-footer-legal">上海畅控 &copy;
+        <a href="http://www.admui.com" target="_blank">admui.com</a>
+    </div>
+    <div class="site-footer-right">
+                                           当前版本：v1.1.0
+        <a class="margin-left-5" data-toggle="tooltip" title="升级" href="http://www.admui.com/buy" target="_blank">
+            <i class="icon fa-cloud-upload"></i>
+        </a>
+    </div>
+</footer>
+
+
+<script src="Content/vendor/alertify-js/alertify.min.js"></script>
+<!-- 布局 -->
+<script src="Content/themes/classic/base/js/sections/menu.js"></script>
+<script src="Content/themes/classic/base/js/sections/media-menu.js"></script>
+<script src="Content/themes/classic/base/js/sections/content-tabs.js"></script>
+
+<!-- 插件 -->
+<script src="Content/vendor/jquery-pjax/jquery.pjax.min.js"></script>
+<script src="Content/themes/classic/global/js/plugins/responsive-tabs.js"></script>
+<script src="Content/vendor/ashoverscroll/jquery-asHoverScroll.min.js"></script>
+<script src="Content/vendor/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="Content/vendor/screenfull/screenfull.min.js"></script>
+
+<!-- 客服组件 -->
+<script src="Content/js/main.js" id="kf5-provide-supportBox" kf5-domain="admui.kf5.com"></script>
+
+<!-- 消息通知 -->
+<!--<script src="Content/js/notify-msg.js"></script>-->
+</body>
+</html>
+
