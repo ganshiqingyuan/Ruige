@@ -8,16 +8,65 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="css/resect.css" />
 		<link rel="stylesheet" href="css/public.css" />
-		<link rel="stylesheet" href="css/product.css" />
+		<link rel="stylesheet" href="css/newproduct.css" />
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
 		<script type="text/javascript" src="/js/public.js"></script>
 		<script type="text/javascript" src="/js/product.js" ></script>
-	</head>
+    </head>
+    <style>
+    .newproduct{
+        width: 100%;
+        overflow: auto;
+        box-sizing: border-box;
+        padding: 0 20px;
+        margin-top: 80px;
+    }
+    .new_lefttab{
+        width: 15%;
+        float: left;
+    }
+    .new_lefttab>ul{
+        overflow: auto;
+        margin-top: 1rem;
+    }
+    .new_lefttab>ul>li{
+        width: 100%;
+        line-height: 2rem;
+        border-bottom:1px solid #ddd; 
+        text-align: center
+    }
+    .new_righttab{
+        width: 83%;
+        margin-left: 2%;
+        float: left;
+    }
+    </style>
 	<body>
 		<%- include('head') %>
 		<div class="warp">
-			    <div class="mainproduct">
-			    	
+			    <div class="newproduct">
+                    <div class="new_lefttab">
+                        <h1>Product Categories</h1>
+                        <ul>
+                            <li>Animation asdls</li>
+                            <li>Animation asdls</li>
+                            <li class="new_havechild">
+                                Animation asdls
+                                <div class="new_child_container">
+                                    <ul>
+                                        <li>Product Categories</li>
+                                        <li>Product Categories</li>
+                                        <li>Product Categories</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="new_righttab">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
 			    </div>
 			</div>
 			
