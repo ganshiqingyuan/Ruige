@@ -16,24 +16,59 @@
     <style>
     .newproduct{
         width: 100%;
-        overflow: auto;
         box-sizing: border-box;
         padding: 0 20px;
         margin-top: 80px;
+    }
+    .newproduct::after{
+        content: '';
+        clear: both;
+        display: block;
     }
     .new_lefttab{
         width: 15%;
         float: left;
     }
+    .new_lefttab h1{
+        font-size: 1.5rem;
+    }
     .new_lefttab>ul{
-        overflow: auto;
+        overflow: visable;
         margin-top: 1rem;
     }
     .new_lefttab>ul>li{
         width: 100%;
+        overflow: visable;
+        position: relative;
         line-height: 2rem;
         border-bottom:1px solid #ddd; 
-        text-align: center
+        text-align: center;
+        cursor: pointer;
+    }
+    .new_lefttab>ul>li:hover{
+        background: #ddd;
+    }
+    .new_havechild>.new_child_container{
+        position: absolute;
+        left: 100%;
+        width: 10rem;
+        border: 1px solid #ddd;
+        box-shadow: 0px 0px 2px 1px  #ddd;
+        padding: 3px;
+        top: 1px;
+        display: none;
+    }
+    .new_havechild>.new_child_container>ul{
+        background: white;
+    }
+    .new_havechild>.new_child_container>ul>li{
+        margin: 0;
+        background: white;
+        cursor: pointer;
+    }
+    .new_havechild>.new_child_container>ul>li:hover{
+        background: #dddddd;
+        cursor: pointer;
     }
     .new_righttab{
         width: 83%;
@@ -51,15 +86,25 @@
                             <li>Animation asdls</li>
                             <li>Animation asdls</li>
                             <li class="new_havechild">
-                                Animation asdls
+                                Animation asdls2
                                 <div class="new_child_container">
                                     <ul>
+                                        <li>Product Categories</li>
+                                        <li>Product Categories</li>
+                                        <li>Product Categories</li>
+                                        <li>Product Categories</li>
+                                        <li>Product Categories</li>
+                                        <li>Product Categories</li>
                                         <li>Product Categories</li>
                                         <li>Product Categories</li>
                                         <li>Product Categories</li>
                                     </ul>
                                 </div>
                             </li>
+                            <li>Animation asdls</li>
+                            <li>Animation asdls</li>
+                            <li>Animation asdls</li>
+                            <li>Animation asdls</li>
                         </ul>
                     </div>
                     <div class="new_righttab">
@@ -71,5 +116,13 @@
 			</div>
 			
 		<%- include('foot') %>
-	</body>
+    </body>
+    <script>
+    $(".new_havechild").hover(function(){
+        $(this).find(".new_child_container").show()
+    },
+    function(){
+        $(this).find(".new_child_container").hide()
+    })
+    </script>
 </html>
