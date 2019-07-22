@@ -12,10 +12,24 @@ const { uploadFile1 } = require('./static/js/upload1.js')
 const nodemailer = require('nodemailer');
 
 
+
 const SMSClient = require('@alicloud/sms-sdk')
 
 const accessKeyId = 'LTAISnXsHJUOx7B8'
 const secretAccessKey = 'ibrV5ZmezEAfAz2IzTGVCSaN1M97CX'
+
+const uuid = require("uuid")
+
+const mysql = require("mysql");
+const sqlconfig = require("./config/sqlconfig.js")
+
+var threadpool  = mysql.createPool({
+  host     : sqlconfig.database.HOST,
+  user     : sqlconfig.database.USERNAME,
+  password : sqlconfig.database.PASSWORD,
+  database : sqlconfig.database.DATABASE
+});
+
 
 let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 
@@ -48,7 +62,36 @@ smtpTransport = nodemailer.createTransport(
 
 const staticPath = './static'
 
+/*threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
+  if (error) {
+      throw error
+  };
+  console.log(results[0])
+  // console.log('The solution is: ', results[0].solution);
+});
+return
+*/
+
 var productdata=JSON.parse(fs.readFileSync('static/data/product.json','utf8'));
+
+/*productdata.forEach((data,index)=>{
+  var id = uuid.v4()
+  threadpool.query(`insert into PRODUCT_TYPE values('${id}','0','${data[0].lastname}','${data[0].data}','${new Date().getTime()}',${index})`, function (error, results, fields) {
+      if (error) {
+          throw error
+      };
+      for(var i=0;i<data.length;i++){
+        threadpool.query(`insert into PRODUCT_LIST values('${uuid.v4()}','${id}','${data[i].url}','${data[i].data}','${new Date().getTime()}','${data[i].detail}')`, function (error, results, fields) {
+          if (error) {
+              throw error
+          };
+          // console.log('The solution is: ', results[0].solution);
+      });
+      }
+      // console.log('The solution is: ', results[0].solution);
+  });
+
+})*/
 
 //
 app.use(convert(staticCache(path.join(__dirname, staticPath), {
@@ -66,6 +109,7 @@ app.use(views(path.join(__dirname, './views'), {
 }))
 
 router.get("/",async ( ctx ) => {
+  console.log("123")
 	await ctx.render('sys1', {
 		productdata,
         })
@@ -78,10 +122,35 @@ router.get("/product",async ( ctx ) => {
 })
 
 router.get("/newproduct",async ( ctx ) => {
-  await ctx.render('newproduct',{
-    productdata
+  var typeData
+  await new Promise(function(res,rej){
+    threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
+      if (error) {
+          throw error
+      };
+      typeData = results;
+      console.log(typeData.length)
+      typeData.forEach((item,index)=>{
+        threadpool.query(`select * from PRODUCT_LIST where typeID='${item.id}'`, function (error, results, fields) {
+            if (error) {
+                throw error
+            };
+            item.children = results
+            res()
+            // console.log('The solution is: ', results[0].solution);
+        });
+      })
+      // console.log('The solution is: ', results[0].solution);
+  })
+  })
+  const productdata = typeData
+  ctx.body = JSON.stringify(productdata)
+  return
+  await ctx.render('newproduct', {
+    productdata,
   })
 })
+
 
 router.get("/contact",async ( ctx ) => {
 	await ctx.render('contact', {
@@ -286,5 +355,5 @@ function parseQueryStr( queryStr ) {
 //		}
 //})
 
-app.listen(3001)
+app.listen(sqlconfig.PORT)
 console.log('[demo] start-quick is starting at port 3000')

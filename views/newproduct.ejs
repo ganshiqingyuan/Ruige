@@ -77,34 +77,29 @@
     }
     </style>
 	<body>
-		<%- include('head') %>
 		<div class="warp">
 			    <div class="newproduct">
                     <div class="new_lefttab">
                         <h1>Product Categories</h1>
                         <ul>
-                            <li>Animation asdls</li>
-                            <li>Animation asdls</li>
-                            <li class="new_havechild">
-                                Animation asdls2
-                                <div class="new_child_container">
-                                    <ul>
-                                        <li>Product Categories</li>
-                                        <li>Product Categories</li>
-                                        <li>Product Categories</li>
-                                        <li>Product Categories</li>
-                                        <li>Product Categories</li>
-                                        <li>Product Categories</li>
-                                        <li>Product Categories</li>
-                                        <li>Product Categories</li>
-                                        <li>Product Categories</li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>Animation asdls</li>
-                            <li>Animation asdls</li>
-                            <li>Animation asdls</li>
-                            <li>Animation asdls</li>
+                            <% for(var i=0;i<productdata.length;i++){ %> 
+                                    <% if(productdata[i].children.length==0){ %>
+                                        <li><%=productdata[i].name%></li>
+                                    <%}%>
+
+                                    <%if(productdata[i].children.length>0){%>
+                                        <li class="new_havechild">
+                                            <%=productdata[i].name%>
+                                            <div class="new_child_container">
+                                                <ul>
+                                                    <%for(var j=0;j<productdata.length;j++){ %>
+                                                        <li><%= productdata[i][j].detail %></li>
+                                                    <%}%>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    <%}%>
+                            <% } %>
                         </ul>
                     </div>
                     <div class="new_righttab">
