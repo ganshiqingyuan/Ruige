@@ -17,25 +17,25 @@
 	<div class="de-top"></div>
 	<div class="de-top1"></div>
 	<div class="decontent">
-		<div class="de-left" style="background: <%= products.url %>; background-size:100% 100% ;"></div>
+		<div class="de-left" style="background: <%= list_info.imgSrc %>; background-size:100% 100% ;"></div>
 		<div class="de-right">
-			<h1><%= products.head %></h1>
-			<p><%= products.data %></p>
+			<h1><%= list_info.list_name %></h1>
+			<p><%= list_info.descript %></p>
 			<ul>
-				<% for(var j=0;j<products.detail.length;j++){ %> 
-				<li><%=  products.detail[j] %></li>
+				<% for(var j=0;j<list_info.detail.split(',').length;j++){ %> 
+				<li><%=  list_info.detail.split(',')[j] %></li>
 				<% } %>
 			</ul>
 		</div>
 	</div>
-	<% if (product.length>1) { %> 
+	<% if (other_list.length>1) { %> 
 		<div class="de-bottom">
 			<ul>
-				<% for(var i=0;i<product.length;i++){ %> 
-					<a href="<%= i %>detail">
+				<% for(var i=0;i<other_list.length;i++){ %> 
+					<a href="<%= other_list[i].id %>">
 				<li>
-					<div class="bacg" style="background:<%= product[i].url %>;background-size:100% 100% ;"></div>
-					<p><%= product[i].head %> </p>
+					<div class="bacg" style="background:<%= other_list[i].imgSrc %>;background-size:100% 100% ;"></div>
+					<p><%= other_list[i].list_name %> </p>
 				</li>
 				</a>
 				 <% } %>

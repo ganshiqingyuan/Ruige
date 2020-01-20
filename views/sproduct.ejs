@@ -17,15 +17,15 @@
 			<%- include('head') %>
 			<div class="spro-top"></div>
 			<div class="spro-top1"></div>
-			<% if (products.length) { %> 
+			<% if (gs_list.length) { %> 
 			<ul class="pro-list">
-				 <% for(var i=0;i<products.length;i++){ %>  
+				 <% for(var i=0;i<gs_list.length;i++){ %>  
                     <li>
-                    	<span style="background:<%= products[i].url %> ; background-size:100% 100% ;"></span>
+                    	<span style="background:<%= gs_list[i].imgSrc %> ; background-size:100% 100% ;"></span>
                     	<span>
-                    		<h1><%= products[i].head %></h1>
-                    		<p><%= products[i].data %></p>
-                    		<span><a href="<%= index %>pro/<%= i %>detail">MORE DETAIL</a></span>
+                    		<h1><%= gs_list[i].list_name %></h1>
+                    		<p><%= gs_list[i].descript %></p>
+                    		<span><a href="<%= gs_list[i].typeID %>/<%= gs_list[i].id %>">MORE DETAIL</a></span>
                     		</span>
                     	</li>  
                  <% } %>
@@ -34,63 +34,13 @@
 			<div class="other">
 				<h1>OTHER RODUCTS</h1>
 				<ul>
-					 <% if(index<3){for(var j=0;j<3;j++){ %> 
-					<a href="<%= j+index+1 %>pro"><li>
-						<div class="bac"  style="background:<%= productdata[j+index+1][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[j+index+1][0].lastname %></p>
-					</li>
-					</a>
-					 <% }} %>
-					 <%if(index==3){ %> 
-					 	<a href="4pro"><li>
-						<div class="bac"  style="background:<%= productdata[4][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[4][0].lastname %></p>
-					</li>
-					</a>
-					<a href="5pro"><li>
-						<div class="bac"  style="background:<%= productdata[5][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[5][0].lastname %></p>
-					</li>
-					</a>
-					<a href="0pro"><li>
-						<div class="bac"  style="background:<%= productdata[0][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[0][0].lastname %></p>
-					</li>
-					</a>
-					 <% } %>
-					 <%if(index==4){ %> 
-					 	<a href="5pro"><li>
-						<div class="bac"  style="background:<%= productdata[5][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[5][0].lastname %></p>
-					</li>
-					</a>
-					<a href="0pro"><li>
-						<div class="bac"  style="background:<%= productdata[0][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[0][0].lastname %></p>
-					</li>
-					</a>
-					<a href="1pro"><li>
-						<div class="bac"  style="background:<%= productdata[1][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[1][0].lastname %></p>
-					</li>
-					</a>
-					 <% } %>
-					  <%if(index==5){ %> 
-					 	<a href="0pro"><li>
-						<div class="bac"  style="background:<%= productdata[0][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[0][0].lastname %></p>
-					</li>
-					</a>
-					<a href="1pro"><li>
-						<div class="bac"  style="background:<%= productdata[1][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[1][0].lastname %></p>
-					</li>
-					</a>
-					<a href="2pro"><li>
-						<div class="bac"  style="background:<%= productdata[2][0].url %> ; background-size:100% 100% ;"></div>
-						<p><%= productdata[2][0].lastname %></p>
-					</li>
-					</a>
+					 <% for(var j = 0; j < related_arry_set.length; j++){ %> 
+						<a href="<%= related_arry_set[j].id %>">
+							<li>
+								<div class="bac"  style="background:<%= related_arry_set[j].imgSrc %> ; background-size:100% 100% ;"></div>
+								<p><%= related_arry_set[j].name %></p>
+							</li>
+						</a>
 					 <% } %>
 				</ul>
 			</div>

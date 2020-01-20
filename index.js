@@ -60,43 +60,59 @@ smtpTransport = nodemailer.createTransport(
  );
 
 
-const staticPath = './static'
+const staticPath = './static';
+var productdata
 
-/*threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
+threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
   if (error) {
       throw error
   };
-  console.log(results[0])
+  const id_list = results.map(_=>_.id)
+  const sql = `select * from PRODUCT_LIST where typeID in (${id_list.map(_=>`'${_}'`).join(',')})`
+  threadpool.query(sql,function(error, results2, fields){
+    if(error){
+      throw error
+    }
+    results.forEach(_=>{
+      _.list = results2.filter(__=>__.typeID == _.id)
+    })
+    productdata = results
+  })
   // console.log('The solution is: ', results[0].solution);
 });
-return
-*/
 
-var productdata=JSON.parse(fs.readFileSync('static/data/product.json','utf8'));
 
-/*productdata.forEach((data,index)=>{
-  var id = uuid.v4()
-  threadpool.query(`insert into PRODUCT_TYPE values('${id}','0','${data[0].lastname}','${data[0].data}','${new Date().getTime()}',${index})`, function (error, results, fields) {
-      if (error) {
-          throw error
-      };
-      for(var i=0;i<data.length;i++){
-        threadpool.query(`insert into PRODUCT_LIST values('${uuid.v4()}','${id}','${data[i].url}','${data[i].data}','${new Date().getTime()}','${data[i].detail}')`, function (error, results, fields) {
-          if (error) {
-              throw error
-          };
-          // console.log('The solution is: ', results[0].solution);
-      });
-      }
-      // console.log('The solution is: ', results[0].solution);
-  });
 
-})*/
+//var productdata=JSON.parse(fs.readFileSync('static/data/product.json','utf8'));
+
+
+
+console.log(productdata)
+
+// productdata.forEach((data,index)=>{
+//   var id = uuid.v4()
+//   threadpool.query(`insert into PRODUCT_TYPE values('${id}','0','${data[0].lastname}','${data[0].data}','${new Date().getTime()}',${index})`, function (error, results, fields) {
+//       if (error) {
+//           throw error
+//       };
+//       for(var i=0;i<data.length;i++){
+//         threadpool.query(`insert into PRODUCT_LIST values('${uuid.v4()}','${id}','${data[i].url}','${data[i].data}','${new Date().getTime()}','${data[i].detail}','${data[i].head}')`, function (error, results, fields) {
+//           if (error) {
+//               throw error
+//           };
+//           // console.log('The solution is: ', results[0].solution);
+//       });
+//       }
+//       // console.log('The solution is: ', results[0].solution);
+//   });
+
+// })
+// return 
 
 //
-app.use(convert(staticCache(path.join(__dirname, staticPath), {
-    maxAge: 24 * 60 * 60
-})));
+// app.use(convert(staticCache(path.join(__dirname, staticPath), {
+//     maxAge: 24 * 60 * 60
+// })));
 
 
 app.use(static(
@@ -109,7 +125,6 @@ app.use(views(path.join(__dirname, './views'), {
 }))
 
 router.get("/",async ( ctx ) => {
-  console.log("123")
 	await ctx.render('sys1', {
 		productdata,
         })
@@ -137,10 +152,8 @@ router.get("/newproduct",async ( ctx ) => {
             };
             item.children = results
             res()
-            // console.log('The solution is: ', results[0].solution);
         });
       })
-      // console.log('The solution is: ', results[0].solution);
   })
   })
   const productdata = typeData
@@ -173,23 +186,101 @@ router.get("/partener",async ( ctx ) => {
 
 
 
-
+// 获取大类商品信息
 router.get("/sproduct/:a",async ( ctx ) => {
-	var products=await productdata[parseInt(ctx.params.a)];
-	var index=parseInt(ctx.params.a);
-			await ctx.render('sproduct', {
-				products,index,productdata,
-        })
+  const type_id = ctx.params.a;
+  // 获取当前分类下产品列表
+  const gs_list = await new Promise((res,rej) =>{
+    threadpool.query(`SELECT * FROM PRODUCT_LIST WHERE typeID = '${type_id}'`, (err, results, fields) =>{
+      if(err){
+        rej(err)
+      }
+      res(results)
+    })
+  })
+  // 获取当前分类信息
+  const gs_info = await new Promise((res,rej)=>{
+    threadpool.query(`SELECT * FROM PRODUCT_TYPE WHERE id = '${type_id}'`, (err, results, fields)=>{
+      if(err){
+        rej(err)
+      }
+      res(results[0])
+    })
+  })
+  // 找到当前分类信息后三个分类信息
+  const gs_sort = gs_info.sort;
+
+  const gs_type_length = await new Promise((res, rej)=>{
+    threadpool.query(`SELECT COUNT(*) as length FROM PRODUCT_TYPE`, (err, results, fields)=>{
+      if(err){
+        rej(err)
+      }
+      res(results[0])
+    })
+  })
+
+  const related_sort = [(gs_sort+1) % gs_type_length.length, (gs_sort+2) % gs_type_length.length, (gs_sort+3) % gs_type_length.length]
+
+  const related_arry = await new Promise((res,rej)=>{
+    threadpool.query(`SELECT type.id, type.name, list.imgSrc
+                      FROM PRODUCT_TYPE type JOIN PRODUCT_LIST list 
+                      ON type.id = list.typeID
+                      WHERE type.sort IN (${related_sort.map(_=>`'${_}'`).join(',')})`, (err, results, fields)=>{
+                        if(err){
+                          rej(err)
+                        }
+                        res(results)
+                      })
+  })
+  const related_arry_set = [];
+
+  related_arry.forEach(_=>{
+    if(!related_arry_set.map(__=>__.id).includes(_.id)){
+      related_arry_set.push(_)
+    }
+  })
+
+  await ctx.render('sproduct', {
+    gs_list, productdata, related_arry_set
+  })
 })
 
-
+// 获取小类商品信息
 router.get("/sproduct/:a/:b",async ( ctx ) => {
-	var product=await productdata[parseInt(ctx.params.a)];
-	var products=product[parseInt(ctx.params.b)]
-	console.log(products)
-			await ctx.render('deproduct', {
-				products,product,productdata,
-        })
+  const typeID = ctx.params.a;
+  const listID = ctx.params.b;
+
+  // 获取商品信息
+  const list_info = await new Promise((res,rej)=>{
+    const sql = `SELECT * FROM PRODUCT_LIST 
+                WHERE id = '${listID}'`
+
+    threadpool.query(sql, (err, result, fields)=>{
+      if(err){
+        rej(err)
+      }
+      res(result[0])
+    })
+  })
+
+  console.log(list_info)
+
+  const other_list = await new Promise((res,rej)=>{
+    const sql = `SELECT imgSrc, list_name, id
+                FROM PRODUCT_LIST
+                WHERE typeID = '${typeID}' AND id <> '${listID}'`
+    
+    threadpool.query(sql, (err, results, fields)=>{
+      if(err){
+        rej(err)
+      }
+      res(results)
+    })
+  })
+
+  await ctx.render('deproduct', {
+    list_info, other_list, productdata,
+  })
 })
 
 

@@ -22,7 +22,7 @@
 			    			<div class="pro-con">
 			    				<span>
 			    				<div class="img">
-			    					<img src="http://photo.ganshi123.cn/rrayleft.jpg" alt="products first show" />
+			    					<img src="/img/rrayleft.jpg" alt="products first show" />
 			    					<div>
 			    						<h3>VETERINARY X RAY MACHINE </h3>
 			    						<span class="in-content">PROVIDE OEM/ODM SERVICE,  </span>
@@ -31,7 +31,7 @@
 			    						<span class="in-foot3">TOP SALE IN CHINESE VETERINARY MARKET </span>
 			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/1pro">VIEW MORE</a></span>
 			    					</div>
-			    					<img src="http://photo.ganshi123.cn/rayright.jpg"  alt="products first show"/>
+			    					<img src="/img/rayright.jpg"  alt="products first show"/>
 			    				</div>
 			    				<div class="imgtwo">
 			    					<div>
@@ -40,7 +40,7 @@
 			    						<span class="in-foot">DIFFERENT MODELS</span>
 			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/4pro">VIEW MORE</a></span>
 			    					</div>
-			    					<img src="http://photo.ganshi123.cn/secright.jpg" alt="products second show" />
+			    					<img src="/img/secright.jpg" alt="products second show" />
 			    				</div>
 			    				<div class="imgthree">
 			    					<div>
@@ -49,7 +49,7 @@
 			    						<span class="in-foot">INNOVATION FOR CLINICAL DIAGNOSIS</span>
 			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/3pro">VIEW MORE</a></span>
 			    					</div>
-			    					<img src="http://photo.ganshi123.cn/fourleft.jpg" alt="products third show" />
+			    					<img src="/img/fourleft.jpg" alt="products third show" />
 			    				</div>
 			    				<div class="imgfour">
 			    					<div>
@@ -59,7 +59,7 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
 			    						<span class="in-foot">DESIGNED SPECIFICALLY FOR ANIMALS</span>
 			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/2pro">VIEW MORE</a></span>
 			    					</div>
-			    					<img src="http://photo.ganshi123.cn/thirdright.jpg" alt="product fourth show" />
+			    					<img src="/img/thirdright.jpg" alt="product fourth show" />
 			    				</div>
 			    				</span>
 			    			</div>
@@ -93,9 +93,9 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
 			    	<div class="chose">
 			    		<ul>
 								<% for(var i=0;i<productdata.length;i++){ %> 
-										<li style="background:<%= productdata[i][0].url %> ; background-size:100% 100% ;">
-											<span class="firs"><p><a href="sproduct/<%= i %>pro">View more</a></p></span>
-											<span><p><%= productdata[i][0].lastname %></p></span>
+										<li style="background:<%= productdata[i].list[0].imgSrc %> ; background-size:100% 100% ;">
+											<span class="firs"><p><a href="sproduct/<%= productdata[i].id %>">View more</a></p></span>
+											<span><p><%= productdata[i].name %></p></span>
 										</li>
 								<% } %>
 
@@ -157,7 +157,7 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
    			<h4>The 8th South China Small Animal Veterinary Congress</h4>
    			<p>Oct 17-19, 2017</p>
    			<p>Zhuhai, China</p>
-   			<img style="width: 40%;"  src="http://photo.ganshi123.cn/bs2.png" />
+   			<img style="width: 40%;"  src="/img/bs2.png" />
    		</li>
    		<li>
    			<h4>33rd World Veterinary Congress (WVC Incheon, KOREA 2017)</h4>
