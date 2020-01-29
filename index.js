@@ -2,7 +2,9 @@ import Vue from "vue";
 import App from "./app.vue"
 import VueRouter from "vue-router"
 Vue.use(VueRouter)
-//import router from "./route/route.js"
+
+import config from "./elementconfig.js"
+import router from "./route/route.js"
 //import store from "./store/store.js"
 
 new Vue({
@@ -11,7 +13,7 @@ new Vue({
             text:123,
         }
     },
-//    router,
+    router,
  //   store,
     el:"#app",
     render:c=>c("App"),

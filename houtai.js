@@ -74,12 +74,24 @@ threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields)
       throw error
     }
     results.forEach(_=>{
-      _.list = results2.filter(__=>__.typeID == _.id)
+      _.list = results2.filter(__=>__.typeID == _.id);
     })
     productdata = results
+
+    // productdata.forEach(_=>{
+    //   threadpool.query(`update PRODUCT_TYPE set src = '${_.list[0].imgSrc}' where id = '${_.id}'`, function(error, result, fields) {
+    //     if(error){
+    //       console.log(error)
+    //     }
+    //     else{
+    //       console.log("插入成功")
+    //     }
+    //   })
+    // })
   })
   // console.log('The solution is: ', results[0].solution);
 });
+
 
 
 
@@ -133,7 +145,7 @@ router.get("/",async ( ctx ) => {
 router.get("/product",async ( ctx ) => {
 	await ctx.render('product', {
 		productdata,
-        })
+  })
 })
 
 router.get("/newproduct",async ( ctx ) => {

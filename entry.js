@@ -27,6 +27,11 @@ module.exports = {
       chunks:'async'
     },
   },
+  resolve:{
+    alias:{
+      'houtai':path.resolve(__dirname,"houtai")
+    }
+  },
   module:{
     rules:[
       {
@@ -56,8 +61,11 @@ module.exports = {
                 }
             }
           ]
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader'
       }
-
     ],
   },
   plugins:[

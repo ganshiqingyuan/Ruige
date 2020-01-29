@@ -1,4 +1,14 @@
 {
     "presets": [["@babel/preset-env",{"useBuiltIns": "usage"}]],
-    "plugins": ["@babel/plugin-syntax-dynamic-import","@babel/transform-runtime"]
+    "plugins": [
+        "@babel/plugin-syntax-dynamic-import",
+        [
+            "component",
+            {
+            "libraryName": "element-ui",
+            "styleLibraryName": "theme-chalk"
+            }
+        ],
+        "@babel/transform-runtime"
+    ]
 }
