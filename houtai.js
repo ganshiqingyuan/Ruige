@@ -7,6 +7,9 @@ const path = require('path')
 const app = new Koa()
 const fs= require("fs")
 const router = require('koa-router')();
+
+require('./houtai/houtai_api/houtai_api.js')(router)
+
 const { uploadFile } = require('./static/js/upload.js')
 const { uploadFile1 } = require('./static/js/upload1.js')
 const nodemailer = require('nodemailer');

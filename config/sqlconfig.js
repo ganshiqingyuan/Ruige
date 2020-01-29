@@ -1,6 +1,6 @@
 const config = {
     // 启动端口
-    PORT: 3002,
+    PORT: 3000,
   
     // 数据库配置
     database: {

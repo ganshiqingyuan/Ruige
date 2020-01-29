@@ -54,7 +54,7 @@ export default {
                     children: [{
                             label: '分类商品管理',
                             icon: 'el-icon-c-scale-to-original',
-                            path: '/app/main/systemconfig/usermanager',
+                            path: '/houtai/productmanage',
                             code: '050101',
                             showed: false
                         },

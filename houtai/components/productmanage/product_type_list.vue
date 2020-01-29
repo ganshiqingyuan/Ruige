@@ -2,19 +2,20 @@
     <div class="product_type_list_container">
         <el-form label-width = '120px'>
             <el-row>
-                <el-col :span="9">
+                <el-col :span="8">
                     <el-form-item label = '产品类型名称：' size="small">
                         <el-input v-model="type_name"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="9">
+                <el-col :span="8">
                     <el-form-item label = '产品描述：' size="small">
                         <el-input v-model="type_name"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="8">
                     <el-form-item size="small">
-                        <el-button>查询</el-button>
+                        <el-button @click="query_type_list(1)">查询</el-button>
+                        <el-button @click="addProduct">添加分类产品</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -70,7 +71,20 @@
 
 <script>
 export default {
-    
+    data(){
+        return{
+            typeData:[
+                {
+                    
+                }
+            ]
+        }
+    },
+    methods:{
+        query_type_list: function(page){
+            const requestData = {}
+        }
+    }
 }
 </script>
 
