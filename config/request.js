@@ -24,7 +24,7 @@ request.interceptors.request.use(function (config) {
 
 request.interceptors.response.use(function (response) {
     console.log(response)
-    if (response.data.resultCode == '200') {
+    if (response.data.code == '200') {
         return Promise.resolve(response.data);
     } else if (response.data.resultCode === '1') {
         notice({
