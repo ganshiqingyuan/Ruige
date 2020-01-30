@@ -5,7 +5,10 @@ Vue.use(VueRouter)
 
 import config from "./elementconfig.js"
 import router from "./route/route.js"
+import request from "./config/request.js"
 //import store from "./store/store.js"
+
+Vue.use(request)
 
 new Vue({
     data(){

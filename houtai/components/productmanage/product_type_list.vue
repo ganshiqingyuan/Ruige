@@ -4,12 +4,12 @@
             <el-row>
                 <el-col :span="8">
                     <el-form-item label = '产品类型名称：' size="small">
-                        <el-input v-model="type_name"></el-input>
+                        <el-input v-model="queryItem.name"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label = '产品描述：' size="small">
-                        <el-input v-model="type_name"></el-input>
+                        <el-input v-model="queryItem.descript"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -73,6 +73,12 @@
 export default {
     data(){
         return{
+            queryItem:{
+                name:'',
+                descript:'',
+                page:1,
+                perpage:10
+            },
             typeData:[
                 {
                     
@@ -82,7 +88,12 @@ export default {
     },
     methods:{
         query_type_list: function(page){
-            const requestData = {}
+            const requestData = this.queryItem
+            requestData.page = page
+
+            this.$rq.getTypeList(requestData).then(res=>{
+                this.typeData = res.data
+            })
         }
     }
 }
