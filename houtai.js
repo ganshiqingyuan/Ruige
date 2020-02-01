@@ -29,6 +29,7 @@ const sqlconfig = require("./config/sqlconfig.js")
 
 var threadpool  = mysql.createPool({
   host     : sqlconfig.database.HOST,
+  port     : sqlconfig.database.PORT,
   user     : sqlconfig.database.USERNAME,
   password : sqlconfig.database.PASSWORD,
   database : sqlconfig.database.DATABASE
