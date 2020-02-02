@@ -3,6 +3,7 @@ const views = require('koa-views')
 const static = require('koa-static')
 const convert = require('koa-convert');
 const staticCache = require('koa-static-cache');
+const koaBody = require('koa-body');
 var cors = require('koa2-cors');
 const path = require('path')
 const app = new Koa()
@@ -84,6 +85,8 @@ threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields)
     })
     productdata = results
 
+    console.log(1)
+
     // productdata.forEach(_=>{
     //   threadpool.query(`update PRODUCT_TYPE set src = '${_.list[0].imgSrc}' where id = '${_.id}'`, function(error, result, fields) {
     //     if(error){
@@ -103,9 +106,6 @@ threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields)
 
 //var productdata=JSON.parse(fs.readFileSync('static/data/product.json','utf8'));
 
-
-
-console.log(productdata)
 
 // productdata.forEach((data,index)=>{
 //   var id = uuid.v4()
@@ -137,6 +137,15 @@ app.use(static(
 ))
 
 app.use(cors())
+
+app.use(koaBody(
+  {
+    formidable: {
+      uploadDir: path.resolve(__dirname, './static/img')
+    },
+    multipart:true
+  }
+))
 
 
 app.use(views(path.join(__dirname, './views'), {

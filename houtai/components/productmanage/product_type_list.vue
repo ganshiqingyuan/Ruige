@@ -1,5 +1,6 @@
 <template>
     <div class="product_type_list_container">
+        <product-type-change v-if="productTypeChangeShowFlag"></product-type-change>
         <el-form label-width = '120px'>
             <el-row>
                 <el-col :span="8">
@@ -15,7 +16,7 @@
                 <el-col :span="8">
                     <el-form-item size="small">
                         <el-button @click="query_type_list(1)">查询</el-button>
-                        <el-button @click="addProduct">添加分类产品</el-button>
+                        <el-button @click="changeTypeChangeShowFlag(true)">添加分类产品</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -44,16 +45,16 @@
 
             <el-table-column
             label='更新时间'
-            prop = 'descript'
+            prop = 'updateTime'
             >
             </el-table-column>
 
             <el-table-column
             label='图片'
-            prop = 'descript'
+            prop = 'src'
             >
                 <template slot-scope="scope">
-
+                    <img style="width:50px;height:50px;" :src="imgSrc+ scope.row.src.replace('url(','').replace(')','').trim()"/>
                 </template>
             </el-table-column>
 
@@ -66,13 +67,28 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination
+            style="float:right;"
+            layout="prev, pager, next, total"
+            :total="total"
+            @prev-click="(pagenum)=>query_type_list(pagenum)"
+            @next-click="(pagenum)=>query_type_list(pagenum)"
+            @current-change="(pagenum)=>query_type_list(pagenum)"
+            key="boardContent"
+        >
+        </el-pagination>
     </div>
 </template>
 
 <script>
+import productTypeChange from './product_type_change.vue'
+
 export default {
     data(){
         return{
+            imgSrc: this.$rq.imgSrc,
+            productTypeChangeShowFlag: false,
+            total:0,
             queryItem:{
                 name:'',
                 descript:'',
@@ -80,21 +96,26 @@ export default {
                 perpage:10
             },
             typeData:[
-                {
-                    
-                }
+                
             ]
         }
     },
     methods:{
+        changeTypeChangeShowFlag: function(flag){
+            this.productTypeChangeShowFlag = flag
+        },
         query_type_list: function(page){
             const requestData = this.queryItem
             requestData.page = page
 
             this.$rq.getTypeList(requestData).then(res=>{
                 this.typeData = res.data
+                this.total = res.total
             })
         }
+    },
+    components:{
+        productTypeChange
     }
 }
 </script>

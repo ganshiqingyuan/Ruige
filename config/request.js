@@ -52,10 +52,18 @@ request.interceptors.response.use(function (response) {
 })
 
 var apis = {
-    getTypeList: function(data){
+    imgSrc:'http://localhost:3000',
+    getTypeList: function(params){
         return request({
             url:'/houtai/productmanage/get_type_list',
             method: 'get',
+            params
+        })
+    },
+    saveType: function(data){
+        return request({
+            url:'/houtai/productmanage/change_type_info',
+            method:'post',
             data
         })
     }
