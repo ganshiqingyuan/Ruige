@@ -27,7 +27,7 @@
         :data = 'typeData'
         >
             <el-table-column
-            label='排序'
+            label='排序123'
             prop = 'sort'
             >
             </el-table-column>
