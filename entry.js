@@ -29,7 +29,8 @@ module.exports = {
   },
   resolve:{
     alias:{
-      'houtai':path.resolve(__dirname,"houtai")
+      'houtai':path.resolve(__dirname,"houtai"),
+      'img': path.resolve(__dirname,"img")
     }
   },
   module:{

@@ -62,8 +62,11 @@
             label="操作"
             >
                 <template slot-scope="scope">
-                    <el-button>查看子产品列表</el-button>
-                    <el-button>删除产品类别</el-button>
+                    <img style="height:18px;cursor:pointer;" @click="" :src="deletePng"/>
+                    <img style="height:21px;padding:0 10px;cursor:pointer;" :src="cutJpg"/>
+                    <img style="height:18px;cursor:pointer;" @click="" :src="seeJpg"/>
+                    <img style="height:21px;padding:0 10px;cursor:pointer;" :src="cutJpg"/>
+                    <img style="height:18px;cursor:pointer;" @click="" :src="dealJpg"/>
                 </template>
             </el-table-column>
         </el-table>
@@ -82,10 +85,17 @@
 
 <script>
 import productTypeChange from './product_type_change.vue'
-
+import deletePng from 'img/delete.png'
+import dealJpg from 'img/deal.jpg'
+import cutJpg from 'img/cut.jpg'
+import seeJpg from 'img/see.jpg'
 export default {
     data(){
         return{
+            deletePng: deletePng,
+            cutJpg: cutJpg,
+            seeJpg: seeJpg,
+            dealJpg: dealJpg,
             imgSrc: this.$rq.imgSrc,
             productTypeChangeShowFlag: false,
             total:0,
