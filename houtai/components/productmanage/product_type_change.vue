@@ -24,7 +24,7 @@
                     :show-file-list="false"
                     :on-change="listChange"
                     :auto-upload="false">
-                    <img v-if="fenleiItem.file" :src="URL.createObjectURL(fenleiItem.file.raw)" class="avatar">
+                    <img v-if="fenleiItem.file" :src="typeof(fenleiItem.file) == 'string'?(imgSrc+fenleiItem.file.replace('url(','').replace(')','').trim()):URL.createObjectURL(fenleiItem.file.raw)" class="avatar">
                     <div v-else >
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -50,8 +50,10 @@ export default {
                 name:'',
                 descript:'',
                 sort:'',
-                file:''
+                file:'',
+                id:''
             },
+            imgSrc: this.$rq.imgSrc,
             URL:URL,
             fenleirules:{
                 name:[
@@ -64,6 +66,20 @@ export default {
                     {required:true, trigger:'blur', message:'排序不能为空'}
                 ]
             }
+        }
+    },
+    props:{
+        propsType: Object
+    },
+    mounted: function(){
+        const propsType = this.propsType
+        console.log(propsType)
+        if(propsType){
+            this.fenleiItem.name = propsType.name;
+            this.fenleiItem.descript = propsType.descript;
+            this.fenleiItem.sort = propsType.sort;
+            this.fenleiItem.file = propsType.src;
+            this.fenleiItem.id = propsType.id
         }
     },
     methods:{
@@ -88,15 +104,16 @@ export default {
                     if(this.fenleiItem.file){
                         this.uploadLoading = true;
                         const formData = new FormData();
-                        formData.append('file',this.fenleiItem.file.raw)
+                        formData.append('file',typeof(this.fenleiItem.file) == 'string'?this.fenleiItem.file:this.fenleiItem.file.raw)
                         formData.append('name',this.fenleiItem.name)
                         formData.append('descript',this.fenleiItem.descript)
                         formData.append('sort',this.fenleiItem.sort)
+                        formData.append('id',this.fenleiItem.id)
                         this.$rq.saveType(formData).then(res=>{
                             this.uploadLoading = false
                             if(res){
                                 this.$message('保存成功')
-                                this.changeImgUploadShowFlag(false)
+                                this.changeTypeChangeShowFlag(false)
                             }
                             this.$parent.query_type_list(1)
                         })

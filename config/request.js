@@ -66,6 +66,13 @@ var apis = {
             method:'post',
             data
         })
+    },
+    deleteType: function(data){
+        return request({
+            url:'/houtai/productmanage/delete_type',
+            method: 'post',
+            data
+        })
     }
 }
 export default {

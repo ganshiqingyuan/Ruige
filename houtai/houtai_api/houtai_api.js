@@ -42,9 +42,9 @@ module.exports = function(router, threadpool){
     })
     router.post('/houtai/productmanage/change_type_info', async (ctx) =>{
         try{
-            const file = ctx.request.files.file
-            const {name, descript, sort} = ctx.request.body
-            let src = ''
+            const file = ctx.request.files && ctx.request.files.file
+            const {name, descript, sort, id} = ctx.request.body
+            let src = ctx.request.body.file
             if(file){
                 var path = file.path.replace(/\\/g, '/');
                 var fname = file.name;
@@ -57,9 +57,10 @@ module.exports = function(router, threadpool){
                     src = `url(/img/${nextPath.slice(nextPath.lastIndexOf('/')+1)})`
                 }
             }
+            console.log(id, src)
             await new Promise((res,rej)=>{
-                const sql = `insert into PRODUCT_TYPE(id, parentId, name, descript, updateTime, sort, src)
-                            values('${uuid.v4()}','','${name}','${descript}','${new Date().getTime()}', ${sort}, '${src}')`
+                const sql = `replace into PRODUCT_TYPE(id, parentId, name, descript, updateTime, sort, src)
+                            values('${id || uuid.v4()}','','${name}','${descript}','${new Date().getTime()}', ${sort}, '${src}')`
                 threadpool.query(sql, function (error, results, fields) {
                     if (error) {
                         throw error
@@ -70,6 +71,32 @@ module.exports = function(router, threadpool){
             ctx.body = JSON.stringify({
                 code: 200,
                 data: 1
+            })
+        }
+        catch(err){
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: ''
+            })
+        }
+    }),
+    router.post('/houtai/productmanage/delete_type', async (ctx) =>{
+        try{
+            const {id} = ctx.request.body
+            const sql = `delete from product_type where id = '${id}'`;
+            
+            await new Promise((res,rej)=>{
+                threadpool.query(sql, function(error, results, fields){
+                    if(error){
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+            ctx.body = JSON.stringify({
+                code: 200,
+                data:1
             })
         }
         catch(err){

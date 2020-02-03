@@ -1,6 +1,6 @@
 <template>
     <div class="product_type_list_container">
-        <product-type-change v-if="productTypeChangeShowFlag"></product-type-change>
+        <product-type-change :propsType = 'propsType' v-if="productTypeChangeShowFlag"></product-type-change>
         <el-form label-width = '120px'>
             <el-row>
                 <el-col :span="8">
@@ -23,6 +23,7 @@
         </el-form>
 
         <el-table
+        v-loading='tableLoading'
         :data = 'typeData'
         >
             <el-table-column
@@ -62,11 +63,11 @@
             label="操作"
             >
                 <template slot-scope="scope">
-                    <img style="height:18px;cursor:pointer;" @click="" :src="deletePng"/>
+                    <img style="height:18px;cursor:pointer;" @click="deleteType(scope.row.id)" :src="deletePng"/>
                     <img style="height:21px;padding:0 10px;cursor:pointer;" :src="cutJpg"/>
                     <img style="height:18px;cursor:pointer;" @click="" :src="seeJpg"/>
                     <img style="height:21px;padding:0 10px;cursor:pointer;" :src="cutJpg"/>
-                    <img style="height:18px;cursor:pointer;" @click="" :src="dealJpg"/>
+                    <img style="height:18px;cursor:pointer;" @click="changeType(scope.row)" :src="dealJpg"/>
                 </template>
             </el-table-column>
         </el-table>
@@ -92,6 +93,7 @@ import seeJpg from 'img/see.jpg'
 export default {
     data(){
         return{
+            propsType:'',
             deletePng: deletePng,
             cutJpg: cutJpg,
             seeJpg: seeJpg,
@@ -99,6 +101,7 @@ export default {
             imgSrc: this.$rq.imgSrc,
             productTypeChangeShowFlag: false,
             total:0,
+            tableLoading:false,
             queryItem:{
                 name:'',
                 descript:'',
@@ -111,17 +114,44 @@ export default {
         }
     },
     methods:{
+        deleteType: function(id){
+            const requestData = {
+                id:id
+            }
+            this.$confirm('确认删除该类别?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$rq.deleteType(requestData).then(res=>{
+                    this.$message('删除成功');
+                    this.query_type_list(1)
+                })
+            }).catch(() => {
+
+            });
+        },
         changeTypeChangeShowFlag: function(flag){
             this.productTypeChangeShowFlag = flag
+            this.propsType = ''
         },
         query_type_list: function(page){
             const requestData = this.queryItem
             requestData.page = page
-
+            this.tableLoading = true
             this.$rq.getTypeList(requestData).then(res=>{
                 this.typeData = res.data
                 this.total = res.total
+                this.tableLoading = false
             })
+            .catch(err=>{
+                console.info(err)
+                this.tableLoading = false
+            })
+        },
+        changeType: function(item){
+            this.propsType = item;
+            this.productTypeChangeShowFlag = true
         }
     },
     components:{
