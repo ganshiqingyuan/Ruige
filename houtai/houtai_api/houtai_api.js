@@ -107,4 +107,50 @@ module.exports = function(router, threadpool){
             })
         }
     })
+
+
+    // 子分类相关接口   
+    router.get('/houtai/productmanage/get_product_list', async (ctx) =>{
+        try{
+            const {typeId, list_name = '', descript = '', beginTime = 0, endTime = 9999999999999, page = 1, perpage = 10 } = ctx.query;
+
+            const sql = `SELECT SQL_CALC_FOUND_ROWS * FROM PRODUCT_LIST
+                        WHERE typeID = '${typeId}' AND list_name like '%${list_name}%' AND descript like '%${descript}%'
+                        AND updateTime BETWEEN ${beginTime} AND ${endTime}
+                        limit ${(page-1)*perpage},${perpage}`
+            
+            const product_list = await new Promise((res,rej)=>{
+                threadpool.query(sql, function(error, results, fields){
+                    if(error){
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+
+            const sql1 = `select FOUND_ROWS() as count`
+
+            const count = await new Promise((res,rej)=>{
+                threadpool.query(sql1, function(error, results, fields){
+                    if(error){
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+
+            ctx.body = JSON.stringify({
+                code: 200,
+                total: count[0].count,
+                data: product_list
+            })
+        }
+        catch(err){
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: ''
+            })
+        }
+    })
 }

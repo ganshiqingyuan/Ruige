@@ -2,7 +2,7 @@
     <el-dialog
         class="hospital_search"
         title='分类添加'
-        @close="changeTypeChangeShowFlag(flase)"
+        @close="changeTypeChangeShowFlag(false)"
         :visible.sync="typeChangeShowFlag"
         width="1000px"
     >
