@@ -110,7 +110,7 @@ module.exports = function(router, threadpool){
 
 
     // 子分类相关接口   
-    router.get('/houtai/productmanage/get_product_list', async (ctx) =>{
+    router.get('/houtai/productmanage/get_product_list', async (ctx) =>{ // 子产品列表
         try{
             const {typeId, list_name = '', descript = '', beginTime = 0, endTime = 9999999999999, page = 1, perpage = 10 } = ctx.query;
 
@@ -143,6 +143,75 @@ module.exports = function(router, threadpool){
                 code: 200,
                 total: count[0].count,
                 data: product_list
+            })
+        }
+        catch(err){
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: err
+            })
+        }
+    })
+
+    router.get('/houtai/productmanage/change_product_info', async (ctx) =>{ // 添加和修改某分类下产品
+        try{
+            const file = ctx.request.files && ctx.request.files.file
+            const {list_name, descript, detail, id, typeId} = ctx.request.body
+            let src = ctx.request.body.file
+            if(file){
+                var path = file.path.replace(/\\/g, '/');
+                var fname = file.name;
+                var nextPath = '';
+                if(file.size>0&&path){
+                    var extArr = fname.split('.');
+                    var ext = extArr[extArr.length-1]
+                    nextPath = path + '.' +ext;
+                    fs.renameSync(path, nextPath)
+                    src = `url(/img/${nextPath.slice(nextPath.lastIndexOf('/')+1)})`
+                }
+            }
+            console.log(id, src)
+            await new Promise((res,rej)=>{
+                const sql = `replace into PRODUCT_LIST(id, typeID, imgSrc, descript, updateTime, detail, list_name)
+                            values('${id || uuid.v4()}','${typeId}','${src}','${descript}','${new Date().getTime()}', ${detail}, '${list_name}')`
+                threadpool.query(sql, function (error, results, fields) {
+                    if (error) {
+                        throw error
+                    };
+                    res(results)
+                });
+            })
+            ctx.body = JSON.stringify({
+                code: 200,
+                data: 1
+            })
+        }
+        catch(err){
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: err
+            })
+        }
+    })
+
+    router.get('/houtai/productmanage/delete_product', async (ctx) =>{ // 删除某分类id 下的产品
+        try{
+            const {id, typeId} = ctx.request.body
+            const sql = `delete from product_list where id = '${id}' AND typeID = '${typeId}'`;
+            
+            await new Promise((res,rej)=>{
+                threadpool.query(sql, function(error, results, fields){
+                    if(error){
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+            ctx.body = JSON.stringify({
+                code: 200,
+                data:1
             })
         }
         catch(err){
