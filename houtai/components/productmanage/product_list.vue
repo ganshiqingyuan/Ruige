@@ -8,33 +8,48 @@
     >
     <div>123</div>
         <el-form>
-            <el-row :gutter="24">
+            <el-row :gutter="20">
                 <el-col :span="6">
                     <el-form-item size="small" prop="list_name" label = '分类名称：'>
-                        <el-input v-model="itemList.list_name"></el-input>
+                        <el-input style="width:100%;" v-model="itemList.list_name"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <!-- <el-col :span="6">
                     <el-form-item prop='detail' size = 'small' label = '详细描述：'>
                         <el-input v-model="itemList.detail"></el-input>
                     </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :span="6">
                     <el-form-item prop='descript' size = 'small' label = '描述：'>
-                        <el-input v-model="itemList.descript"></el-input>
+                        <el-input style="width:100%;" v-model="itemList.descript"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item prop='imgSrc' size = 'small' label = '图片：'>
-                        <el-input v-model="itemList.imgSrc"></el-input>
+                    <el-form-item prop='beginTime' size = 'small' label = '从'>
+                        <el-input style="width:100%;" v-model="itemList.beginTime"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item prop='endTime' size = 'small' label = '至'>
+                        <el-input style="width:100%;" v-model="itemList.endTime"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item prop='imgSrc' size = 'small'>
+                        <el-button>查询</el-button>
+                        <el-button>添加</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
         </el-form>
-        <!-- <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="changeTypeChangeShowFlag(false)">取 消</el-button>
-            <el-button size="small" :loading="uploadLoading" type="primary" @click="submitType">提 交</el-button>
-        </span> -->
+
+        <el-table
+        v-loading='tableLoading'
+        :data="productListData"
+        >
+
+        </el-table>
+        
     </el-dialog>
 </template>
 
@@ -43,12 +58,17 @@ export default {
     data(){
         return {
             listChangeShowFlag: true,
-            itemList:{
-                name:'',
-                descript:'',
-                sort:'',
-                file:'',
-                id:''
+            tableLoading: false,
+
+            productListData: '',
+            itemList: {
+                list_name: '',
+                descript: '',
+                beginTime: '',
+                endTime: '',
+                typeId: this.seePropsType.id,
+                page:1,
+                perpage:10
             }
            
         }
@@ -57,19 +77,30 @@ export default {
         seePropsType: Object
     },
     mounted: function(){
-        const seePropsType = this.seePropsType
-        console.log('seePropsType',seePropsType)
-        if(seePropsType){
-            this.itemList.name = seePropsType.name;
-            this.itemList.descript = seePropsType.descript;
-            this.itemList.sort = seePropsType.sort;
-            this.itemList.file = seePropsType.src;
-            this.itemList.id = seePropsType.id
-        }
+        this.getProductList(1)
     },
     methods:{
         changeListChangeShowFlag: function(flag){
             this.$parent.changeListChangeShowFlag(flag)
+        },
+        getProductList: function(page){
+            console.log('page',page);
+            
+            const requestData = {
+                list_name: this.itemList.list_name,
+                descript: this.itemList.descript,
+                beginTime: this.itemList.beginTime,
+                endTime: this.itemList.endTime,
+                typeId: this.seePropsType.id,
+                page:page,
+                perpage:10
+            }
+            
+            console.log('requestData',requestData);
+            
+            this.$rq.getProductList(requestData).then(res=>{
+                console.log('res',res);
+            })
         }
     }
 }

@@ -73,7 +73,16 @@ var apis = {
             method: 'post',
             data
         })
-    }
+    },
+    ///houtai/productmanage/get_product_list
+    getProductList: function(data){
+        return request({
+            url:"/houtai/productmanage/get_product_list",
+            method:'get',
+            data
+        })
+    },
+
 }
 export default {
     install: function (Vue) {
