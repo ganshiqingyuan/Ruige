@@ -10,7 +10,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'static/dist'),
     chunkFilename:"[hash].[name].js"
   },
   optimization: {
@@ -21,6 +21,12 @@ module.exports = {
       maxAsyncRequests:10,
       chunks:'async'
     },
+  },
+  resolve:{
+    alias:{
+      'houtai':path.resolve(__dirname,"houtai"),
+      'img': path.resolve(__dirname,"img")
+    }
   },
   module:{
     rules:[
@@ -51,6 +57,10 @@ module.exports = {
                 }
             }
           ]
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader'
       }
 
     ],
