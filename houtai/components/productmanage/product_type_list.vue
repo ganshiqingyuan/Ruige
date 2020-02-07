@@ -64,7 +64,7 @@
             label="操作"
             >
                 <template slot-scope="scope">
-                    <img style="height:18px;cursor:pointer;" @click="deleteType(scope.row.id)" :src="deletePng"/>
+                    <img style="height:18px;cursor:pointer;" @click="deleteType(scope.row)" :src="deletePng"/>
                     <img style="height:21px;padding:0 10px;cursor:pointer;" :src="cutJpg"/>
                     <img style="height:18px;cursor:pointer;" @click="seeListType(scope.row)" :src="seeJpg"/>
                     <img style="height:21px;padding:0 10px;cursor:pointer;" :src="cutJpg"/>
@@ -117,10 +117,14 @@ export default {
             ]
         }
     },
+    mounted: function(){
+        this.query_type_list(1)
+    },
     methods:{
-        deleteType: function(id){
+        deleteType: function(item){
             const requestData = {
-                id:id
+                id:item.id,
+                src: item.src
             }
             this.$confirm('确认删除该类别?', '提示', {
                 confirmButtonText: '确定',

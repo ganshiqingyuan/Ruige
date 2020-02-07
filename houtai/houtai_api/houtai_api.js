@@ -1,5 +1,6 @@
 const fs = require("fs")
 const uuid = require("uuid")
+const path = require("path")
 
 module.exports = function(router, threadpool){
     router.get('/houtai/productmanage/get_type_list', async (ctx) =>{
@@ -83,7 +84,7 @@ module.exports = function(router, threadpool){
     }),
     router.post('/houtai/productmanage/delete_type', async (ctx) =>{
         try{
-            const {id} = ctx.request.body
+            const {id, src} = ctx.request.body
             const sql = `delete from product_type where id = '${id}'`;
             
             await new Promise((res,rej)=>{
@@ -94,6 +95,7 @@ module.exports = function(router, threadpool){
                     res(results)
                 })
             })
+            fs.unlinkSync(path.join(__dirname,'../../static',src.replace('url(','').replace(')','').trim()))
             ctx.body = JSON.stringify({
                 code: 200,
                 data:1
@@ -116,7 +118,7 @@ module.exports = function(router, threadpool){
 
             const sql = `SELECT SQL_CALC_FOUND_ROWS * FROM PRODUCT_LIST
                         WHERE typeID = '${typeId}' AND list_name like '%${list_name}%' AND descript like '%${descript}%'
-                        AND updateTime BETWEEN ${beginTime} AND ${endTime}
+                        AND updateTime BETWEEN ${beginTime || 0} AND ${endTime || 9999999999999}
                         limit ${(page-1)*perpage},${perpage}`
             
             const product_list = await new Promise((res,rej)=>{
@@ -154,10 +156,10 @@ module.exports = function(router, threadpool){
         }
     })
 
-    router.get('/houtai/productmanage/change_product_info', async (ctx) =>{ // 添加和修改某分类下产品
+    router.post('/houtai/productmanage/change_product_info', async (ctx) =>{ // 添加和修改某分类下产品
         try{
             const file = ctx.request.files && ctx.request.files.file
-            const {list_name, descript, detail, id, typeId} = ctx.request.body
+            const {list_name = '', descript = '', detail = '', id = '', typeId = ''} = ctx.request.body
             let src = ctx.request.body.file
             if(file){
                 var path = file.path.replace(/\\/g, '/');
@@ -174,7 +176,7 @@ module.exports = function(router, threadpool){
             console.log(id, src)
             await new Promise((res,rej)=>{
                 const sql = `replace into PRODUCT_LIST(id, typeID, imgSrc, descript, updateTime, detail, list_name)
-                            values('${id || uuid.v4()}','${typeId}','${src}','${descript}','${new Date().getTime()}', ${detail}, '${list_name}')`
+                            values('${id || uuid.v4()}','${typeId}','${src}','${descript}','${new Date().getTime()}', '${detail}', '${list_name}')`
                 threadpool.query(sql, function (error, results, fields) {
                     if (error) {
                         throw error
@@ -196,9 +198,9 @@ module.exports = function(router, threadpool){
         }
     })
 
-    router.get('/houtai/productmanage/delete_product', async (ctx) =>{ // 删除某分类id 下的产品
+    router.post('/houtai/productmanage/delete_product', async (ctx) =>{ // 删除某分类id 下的产品
         try{
-            const {id, typeId} = ctx.request.body
+            const {id, typeId, imgSrc} = ctx.request.body
             const sql = `delete from product_list where id = '${id}' AND typeID = '${typeId}'`;
             
             await new Promise((res,rej)=>{
@@ -209,6 +211,8 @@ module.exports = function(router, threadpool){
                     res(results)
                 })
             })
+
+            fs.unlinkSync(path.join(__dirname,'../../static',imgSrc.replace('url(','').replace(')','').trim()))
             ctx.body = JSON.stringify({
                 code: 200,
                 data:1

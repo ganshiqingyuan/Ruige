@@ -75,13 +75,27 @@ var apis = {
         })
     },
     ///houtai/productmanage/get_product_list
-    getProductList: function(data){
+    getProductList: function(params){
         return request({
             url:"/houtai/productmanage/get_product_list",
             method:'get',
+            params
+        })
+    },
+    deleteProduct: function(data){
+        return request({
+            url: '/houtai/productmanage/delete_product',
+            method: 'post',
             data
         })
     },
+    changeProduct: function(data){
+        return request({
+            url: '/houtai/productmanage/change_product_info',
+            method: 'post',
+            data
+        })
+    }
 
 }
 export default {
