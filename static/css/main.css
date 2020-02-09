@@ -261,7 +261,7 @@
 			height: 500px;
 			float: left;
 			margin-left: 40px;
-			background: url(/img/productright.jpg);
+			background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/productright.jpg');
 			background-size:100% 100% ;
 			}
 		.middle-left{

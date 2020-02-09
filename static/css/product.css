@@ -509,7 +509,7 @@
 			width: 500px;
 			height: 500px;
 			float: left;
-			background: url(/img/productleft.jpg);
+			background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/productleft.jpg');
 			background-size:100% 100% ;
 			}
 		.m-right .word-right{
@@ -687,7 +687,7 @@
 			width: 250px;
 			height: 250px;
 			float: left;
-			background: url('/img/productleft.jpg');
+			background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/productright.jpg');
 			background-size:100% 100% ;
 			}
 		.middle .m-left{
