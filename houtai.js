@@ -128,9 +128,9 @@ threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields)
 // return 
 
 //
-// app.use(convert(staticCache(path.join(__dirname, staticPath), {
-//     maxAge: 24 * 60 * 60
-// })));
+app.use(convert(staticCache(path.join(__dirname, staticPath), {
+    maxAge: 24 * 60 * 60
+})));
 
 app.use(static(
   path.join( __dirname,  staticPath)
