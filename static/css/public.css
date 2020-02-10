@@ -119,7 +119,11 @@
 			}
 		.panel ul{
 			width: 100%;
-			} 
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			flex-wrap: wrap;
+		} 
 		.panel li{
 			float: left;
 			text-align: left;

@@ -4,7 +4,7 @@ export default new VueRouter({
     routes:[
         {
             path: '/',
-            redirect: '/houtai/components/productmanage/product_type_list.vue'
+            redirect: '/houtai/productmanage'
         },
         {
             path: '/houtai',

@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + "980c81609989632056bc" + "." + ({"common":"common"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + "13b8efdfc93c3f3b395e" + "." + ({"common":"common"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -5113,7 +5113,7 @@ eval("var g; // This works in non-strict mode\n\ng = function () {\n  return thi
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ \"./node_modules/vue-router/dist/vue-router.esm.js\");\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\n  routes: [{\n    path: '/',\n    redirect: '/houtai/components/productmanage/product_type_list.vue'\n  }, {\n    path: '/houtai',\n    component: function component() {\n      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! houtai/components/houtai.vue */ \"./houtai/components/houtai.vue\"));\n    },\n    children: [{\n      path: '/houtai/productmanage',\n      component: function component() {\n        return Promise.all(/*! import() */[__webpack_require__.e(\"common\"), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! houtai/components/productmanage/product_type_list.vue */ \"./houtai/components/productmanage/product_type_list.vue\"));\n      }\n    }]\n  }]\n}));\n\n//# sourceURL=webpack:///./route/route.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ \"./node_modules/vue-router/dist/vue-router.esm.js\");\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\n  routes: [{\n    path: '/',\n    redirect: '/houtai/productmanage'\n  }, {\n    path: '/houtai',\n    component: function component() {\n      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! houtai/components/houtai.vue */ \"./houtai/components/houtai.vue\"));\n    },\n    children: [{\n      path: '/houtai/productmanage',\n      component: function component() {\n        return Promise.all(/*! import() */[__webpack_require__.e(\"common\"), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! houtai/components/productmanage/product_type_list.vue */ \"./houtai/components/productmanage/product_type_list.vue\"));\n      }\n    }]\n  }]\n}));\n\n//# sourceURL=webpack:///./route/route.js?");
 
 /***/ })
 

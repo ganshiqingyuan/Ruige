@@ -24,7 +24,7 @@
                     :show-file-list="false"
                     :on-change="listChange"
                     :auto-upload="false">
-                    <img v-if="fenleiItem.file" :src="typeof(fenleiItem.file) == 'string'?(imgSrc+fenleiItem.file.replace('url(','').replace(')','').trim()):URL.createObjectURL(fenleiItem.file.raw)" class="avatar">
+                    <img v-if="fenleiItem.file" style="width:50%;" :src="typeof(fenleiItem.file) == 'string'?(imgSrc+fenleiItem.file.replace('url(','').replace(')','').trim()):URL.createObjectURL(fenleiItem.file.raw)" class="avatar">
                     <div v-else >
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
