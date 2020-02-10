@@ -36,7 +36,7 @@ var threadpool  = mysql.createPool({
   database : sqlconfig.database.DATABASE
 });
 
-houtai_api(router, threadpool)
+houtai_api(router, threadpool, reload)
 
 let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 
@@ -70,36 +70,40 @@ smtpTransport = nodemailer.createTransport(
 const staticPath = './static';
 var productdata
 
-threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
-  if (error) {
-      throw error
-  };
-  const id_list = results.map(_=>_.id)
-  const sql = `select * from PRODUCT_LIST where typeID in (${id_list.map(_=>`'${_}'`).join(',')})`
-  threadpool.query(sql,function(error, results2, fields){
-    if(error){
-      throw error
-    }
-    results.forEach(_=>{
-      _.list = results2.filter(__=>__.typeID == _.id);
+reload()
+
+function reload(){
+  threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
+    if (error) {
+        throw error
+    };
+    const id_list = results.map(_=>_.id)
+    const sql = `select * from PRODUCT_LIST where typeID in (${id_list.map(_=>`'${_}'`).join(',')})`
+    threadpool.query(sql,function(error, results2, fields){
+      if(error){
+        throw error
+      }
+      results.forEach(_=>{
+        _.list = results2.filter(__=>__.typeID == _.id);
+      })
+      productdata = results
+  
+      console.log(1)
+  
+      // productdata.forEach(_=>{
+      //   threadpool.query(`update PRODUCT_TYPE set src = '${_.list[0].imgSrc}' where id = '${_.id}'`, function(error, result, fields) {
+      //     if(error){
+      //       console.log(error)
+      //     }
+      //     else{
+      //       console.log("插入成功")
+      //     }
+      //   })
+      // })
     })
-    productdata = results
-
-    console.log(1)
-
-    // productdata.forEach(_=>{
-    //   threadpool.query(`update PRODUCT_TYPE set src = '${_.list[0].imgSrc}' where id = '${_.id}'`, function(error, result, fields) {
-    //     if(error){
-    //       console.log(error)
-    //     }
-    //     else{
-    //       console.log("插入成功")
-    //     }
-    //   })
-    // })
-  })
-  // console.log('The solution is: ', results[0].solution);
-});
+    // console.log('The solution is: ', results[0].solution);
+  });
+}
 
 
 

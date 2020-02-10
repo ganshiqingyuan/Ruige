@@ -75,9 +75,9 @@ module.exports = {
         template: 'index.html',
         inject: true
       }),
-      new webpack.DllReferencePlugin({
-        context: __dirname,
-        manifest: require("./static/js/vendor-manifest.json"),
-      })
+      // new webpack.DllReferencePlugin({
+      //   context: __dirname,
+      //   manifest: require("./static/js/vendor-manifest.json"),
+      // })
   ]
 }

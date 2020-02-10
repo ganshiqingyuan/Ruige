@@ -2,7 +2,7 @@ const fs = require("fs")
 const uuid = require("uuid")
 const path = require("path")
 
-module.exports = function(router, threadpool){
+module.exports = function(router, threadpool, reload){
     router.get('/houtai/productmanage/get_type_list', async (ctx) =>{
         try{
             const {page = 1, perpage = 10, name = '', descript = '', sort = ''} = ctx.query;
@@ -33,6 +33,7 @@ module.exports = function(router, threadpool){
                 total:count.count,
                 data: type_list
             })
+            reload()
         }
         catch(err){
             ctx.body = JSON.stringify({
@@ -73,6 +74,7 @@ module.exports = function(router, threadpool){
                 code: 200,
                 data: 1
             })
+            reload()
         }
         catch(err){
             console.log(err)
@@ -100,6 +102,7 @@ module.exports = function(router, threadpool){
                 code: 200,
                 data:1
             })
+            reload()
         }
         catch(err){
             console.log(err)
@@ -146,6 +149,7 @@ module.exports = function(router, threadpool){
                 total: count[0].count,
                 data: product_list
             })
+            reload()
         }
         catch(err){
             console.log(err)
@@ -188,6 +192,7 @@ module.exports = function(router, threadpool){
                 code: 200,
                 data: 1
             })
+            reload()
         }
         catch(err){
             console.log(err)
@@ -217,6 +222,7 @@ module.exports = function(router, threadpool){
                 code: 200,
                 data:1
             })
+            reload()
         }
         catch(err){
             console.log(err)
