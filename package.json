@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@alicloud/sms-sdk": "^1.0.2",
+    "ali-oss": "^6.5.1",
     "axios": "^0.18.0",
     "babel-plugin-component": "^1.1.1",
     "busboy": "^0.2.14",

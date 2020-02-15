@@ -16,6 +16,18 @@ const { uploadFile } = require('./static/js/upload.js')
 const { uploadFile1 } = require('./static/js/upload1.js')
 const nodemailer = require('nodemailer');
 
+let OSS = require('ali-oss');
+
+let client = new OSS({
+  region: 'oss-cn-hongkong',
+  //云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，部署在服务端使用RAM子账号或STS，部署在客户端使用STS。
+  accessKeyId: 'LTAISnXsHJUOx7B8',
+  accessKeySecret: 'ibrV5ZmezEAfAz2IzTGVCSaN1M97CX',
+  bucket: 'ruigedist'
+});
+
+console.log(client.generateObjectUrl('test.jpg'))
+
 
 
 const SMSClient = require('@alicloud/sms-sdk')
@@ -36,7 +48,7 @@ var threadpool  = mysql.createPool({
   database : sqlconfig.database.DATABASE
 });
 
-houtai_api(router, threadpool, reload)
+houtai_api(router, threadpool, reload, client)
 
 let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 
@@ -69,6 +81,25 @@ smtpTransport = nodemailer.createTransport(
 
 const staticPath = './static';
 var productdata
+
+// threadpool.query(`select src, id, parentId, name, descript, updateTime, sort from PRODUCT_TYPE`, function(error, results, fields){
+//   if(error){
+//     throw error
+//   }
+
+//   results.forEach(_=>{
+//     if(_.src.length>20) return 
+//     threadpool.query(`replace into PRODUCT_TYPE(src,id, parentId, name, descript, updateTime, sort) 
+//                       values('${client.generateObjectUrl(_.src)}', '${_.id}','${_.parentId}','${_.name}','${_.descript}','${_.updateTime}','${_.sort}')`, function(error, result, fields){
+//       if(error){
+//         throw error
+//       }
+//       //console.log("执行成功",_.src.substring(_.src.lastIndexOf('/')+1,_.src.length-1))
+//     })
+//   })
+// })
+// return
+
 
 reload()
 
@@ -273,7 +304,12 @@ router.get("/sproduct/:a",async ( ctx ) => {
   })
 
   await ctx.render('sproduct', {
-    gs_list, productdata, related_arry_set
+    gs_list:gs_list.map(_=>{
+      return {
+        ..._,
+        imgSrc: _.imgSrc
+      }
+    }), productdata, related_arry_set
   })
 })
 
@@ -323,21 +359,21 @@ router.post("/send",async ( ctx ) => {
 	await sendMail('来自客户','<h1>姓名</h1>'+'<p>'+parseQueryStr(postData).name+'</p>'+'<h1>邮箱</h1>'+'<p>'+parseQueryStr(postData).email+'</p>'+'<h1>主题</h1>'+'<p>'+parseQueryStr(postData).subject+'</p>'+
 	    '<h1>电话</h1>'+'<p>'+parseQueryStr(postData).phone+'</p>'+'<h1>公司</h1>'+'<p>'+parseQueryStr(postData).company+'</p>'+'<h1>内容</h1>'+'<p>'+parseQueryStr(postData).word+'</p>');
 	
-smsClient.sendSMS({
-    PhoneNumbers: '15130058651',
-    SignName: '网站留言通知',
-    SignName:"瑞格",
-    TemplateCode: 'SMS_107005112',
-    TemplateParam:JSON.stringify({"a":parseQueryStr(postData).name,"c":parseQueryStr(postData).email.replace(".",""),"b":parseQueryStr(postData).subject,"d":parseQueryStr(postData).phone,"e":parseQueryStr(postData).company,"f":parseQueryStr(postData).word})
-}).then(function (res) {
-    let {Code}=res
-    if (Code === 'OK') {
-        //处理返回参数
-        console.log(res)
-    }
-}, function (err) {
-    console.log(err)
-})
+// smsClient.sendSMS({
+//     PhoneNumbers: '15130058651',
+//     SignName: '网站留言通知',
+//     SignName:"瑞格",
+//     TemplateCode: 'SMS_107005112',
+//     TemplateParam:JSON.stringify({"a":parseQueryStr(postData).name,"c":parseQueryStr(postData).email.replace(".",""),"b":parseQueryStr(postData).subject,"d":parseQueryStr(postData).phone,"e":parseQueryStr(postData).company,"f":parseQueryStr(postData).word})
+// }).then(function (res) {
+//     let {Code}=res
+//     if (Code === 'OK') {
+//         //处理返回参数
+//         console.log(res)
+//     }
+// }, function (err) {
+//     console.log(err)
+// })
 ctx.body=1
 })
 
@@ -419,14 +455,14 @@ function parsePostData( ctx ) {
   })
 }   
 
-function sendMail(subject, html) {
+async function sendMail(subject, html) {
   var mailOptions = {
     from: [mail.from.name, mail.from.auth.user].join(' '),
     to: mail.to.join(','),
     subject: subject,
     html: html
   };
-  smtpTransport.sendMail(mailOptions, function(error, response){
+  await smtpTransport.sendMail(mailOptions, function(error, response){
     if (error) {
       console.log(error);
     } else {

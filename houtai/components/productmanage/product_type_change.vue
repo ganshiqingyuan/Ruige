@@ -24,11 +24,11 @@
                     :show-file-list="false"
                     :on-change="listChange"
                     :auto-upload="false">
-                    <img v-if="fenleiItem.file" style="width:50%;" :src="typeof(fenleiItem.file) == 'string'?(imgSrc+fenleiItem.file.replace('url(','').replace(')','').trim()):URL.createObjectURL(fenleiItem.file.raw)" class="avatar">
+                    <img v-if="fenleiItem.file" style="width:50%;" :src="typeof(fenleiItem.file) == 'string'?(fenleiItem.file):URL.createObjectURL(fenleiItem.file.raw)" class="avatar">
                     <div v-else >
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                        <div v-if="imageType!='03'" class="el-upload__tip" slot="tip">一次上传一张，只支持处理过后的透明png图片</div>
+                        <div  class="el-upload__tip" slot="tip">一次上传一张，只支持处理过后的透明png图片</div>
                     </div>
                 </el-upload>
             </el-form-item>

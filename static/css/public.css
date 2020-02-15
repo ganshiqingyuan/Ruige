@@ -106,8 +106,8 @@
 		}	
 			
 	/*控制响应按钮样式*/		
-			.panel{
-				z-index: 50;
+		.panel{
+			z-index: 50;
 			transition: 0.3s;
 			display: none;
 			position: absolute;

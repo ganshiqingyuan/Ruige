@@ -79,7 +79,7 @@
             prop = 'src'
             >
                 <template slot-scope="scope">
-                    <img style="width:50px;height:50px;" :src="imgSrc+ scope.row.imgSrc.replace('url(','').replace(')','').trim()"/>
+                    <img style="width:50px;height:50px;" :src="scope.row.imgSrc"/>
                 </template>
             </el-table-column>
 
@@ -119,7 +119,7 @@ export default {
             listChangeShowFlag: true,
             tableLoading: false,
             total:0,
-            propsType:'',
+            propsType:{},
             deletePng: deletePng,
             cutJpg: cutJpg,
             seeJpg: seeJpg,

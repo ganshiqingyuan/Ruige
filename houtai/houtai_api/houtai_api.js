@@ -2,7 +2,7 @@ const fs = require("fs")
 const uuid = require("uuid")
 const path = require("path")
 
-module.exports = function(router, threadpool, reload){
+module.exports = function(router, threadpool, reload, al_client){
     router.get('/houtai/productmanage/get_type_list', async (ctx) =>{
         try{
             const {page = 1, perpage = 10, name = '', descript = '', sort = ''} = ctx.query;
@@ -10,14 +10,20 @@ module.exports = function(router, threadpool, reload){
                         WHERE name like '%${name}%' AND descript like '%${descript}%' ${sort?`AND sort = ${sort}`:''}
                         order by sort
                         limit ${(page-1)*perpage},${perpage}`
-            const type_list = await new Promise((res,rej) =>{
+            const type_list = await Promise.all((await new Promise((res,rej) =>{
                 threadpool.query(sql, function (error, results, fields) {
                     if (error) {
                         throw error
                     };
                     res(results)
                 });
-            })
+            }))
+            .map(async _=>{
+                return{
+                    ..._,
+                    src: _.src
+                }
+            }))
 
             const count = await new Promise((res,rej)=>{
                 threadpool.query('select count(*) as count from PRODUCT_TYPE', function(error, results, fields){
@@ -55,8 +61,22 @@ module.exports = function(router, threadpool, reload){
                     var extArr = fname.split('.');
                     var ext = extArr[extArr.length-1]
                     nextPath = path + '.' +ext;
-                    fs.renameSync(path, nextPath)
-                    src = `url(/img/${nextPath.slice(nextPath.lastIndexOf('/')+1)})`
+                    await al_client.put(nextPath.slice(nextPath.lastIndexOf('/')+1), file.path)
+                    src = await al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/')+1))
+                    await fs.unlinkSync(file.path) //删除临时存储文件
+                    
+                    const old_src = await new Promise((res,rej)=>{
+                        const sql = `select src from PRODUCT_TYPE where id = '${id}'`
+                        threadpool.query(sql, function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                    })
+                    if(old_src&&old_src[0]){
+                        await al_client.delete(old_src[0].src.slice(old_src[0].src.lastIndexOf('/')+1))
+                    }
                 }
             }
             console.log(id, src)
@@ -97,7 +117,7 @@ module.exports = function(router, threadpool, reload){
                     res(results)
                 })
             })
-            fs.unlinkSync(path.join(__dirname,'../../static',src.replace('url(','').replace(')','').trim()))
+            await al_client.delete(src.slice(src.lastIndexOf('/')+1))
             ctx.body = JSON.stringify({
                 code: 200,
                 data:1
@@ -124,14 +144,20 @@ module.exports = function(router, threadpool, reload){
                         AND updateTime BETWEEN ${beginTime || 0} AND ${endTime || 9999999999999}
                         limit ${(page-1)*perpage},${perpage}`
             
-            const product_list = await new Promise((res,rej)=>{
+            const product_list = await Promise.all((await new Promise((res,rej)=>{
                 threadpool.query(sql, function(error, results, fields){
                     if(error){
                         throw error
                     }
                     res(results)
                 })
-            })
+            }))
+            .map(async _=>{
+                return{
+                    ..._,
+                    imgSrc: _.imgSrc
+                }
+            }))
 
             const sql1 = `select FOUND_ROWS() as count`
 
@@ -173,11 +199,25 @@ module.exports = function(router, threadpool, reload){
                     var extArr = fname.split('.');
                     var ext = extArr[extArr.length-1]
                     nextPath = path + '.' +ext;
-                    fs.renameSync(path, nextPath)
-                    src = `url(/img/${nextPath.slice(nextPath.lastIndexOf('/')+1)})`
+                    await al_client.put(nextPath.slice(nextPath.lastIndexOf('/')+1), file.path)
+                    src = al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/')+1))
+                    await fs.unlinkSync(file.path) //删除临时存储文件
+                    
+                    const old_src = await new Promise((res,rej)=>{
+                        const sql = `select imgSrc from PRODUCT_LIST where id = '${id}'`
+                        threadpool.query(sql, function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                    })
+                    if(old_src&&old_src[0]){
+                        await al_client.delete(old_src[0].imgSrc.slice(old_src[0].imgSrc.lastIndexOf('/')+1))
+                    }
                 }
             }
-            console.log(id, src)
+
             await new Promise((res,rej)=>{
                 const sql = `replace into PRODUCT_LIST(id, typeID, imgSrc, descript, updateTime, detail, list_name)
                             values('${id || uuid.v4()}','${typeId}','${src}','${descript}','${new Date().getTime()}', '${detail}', '${list_name}')`
@@ -217,7 +257,7 @@ module.exports = function(router, threadpool, reload){
                 })
             })
 
-            fs.unlinkSync(path.join(__dirname,'../../static',imgSrc.replace('url(','').replace(')','').trim()))
+            await al_client.delete(imgSrc.slice(imgSrc.lastIndexOf('/')+1))
             ctx.body = JSON.stringify({
                 code: 200,
                 data:1

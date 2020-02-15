@@ -56,7 +56,7 @@
             prop = 'src'
             >
                 <template slot-scope="scope">
-                    <img style="width:50px;height:50px;" :src="imgSrc+ scope.row.src.replace('url(','').replace(')','').trim()"/>
+                    <img style="width:50px;height:50px;" :src="scope.row.src"/>
                 </template>
             </el-table-column>
 
@@ -95,7 +95,7 @@ import seeJpg from 'img/see.jpg'
 export default {
     data(){
         return{
-            propsType:'',
+            propsType:{},
             seePropsType:'',
             deletePng: deletePng,
             cutJpg: cutJpg,
