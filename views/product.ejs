@@ -31,7 +31,7 @@
 			    						<span class="in-foot3">TOP SALE IN CHINESE VETERINARY MARKET </span>
 			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/1pro">VIEW MORE</a></span>
 			    					</div>
-			    					<img src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/rrayleft.jpg"  alt="products first show"/>
+			    					<img src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/rayright.jpg"  alt="products first show"/>
 			    				</div>
 			    				<div class="imgtwo">
 			    					<div>
@@ -93,7 +93,7 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
 			    	<div class="chose">
 			    		<ul>
 								<% for(var i=0;i<productdata.length;i++){ %> 
-										<li style="background:<%= productdata[i].src %> ; background-size:100% 100% ;">
+										<li style="background:url(<%= productdata[i].src %>) ; background-size:100% 100% ;">
 											<span class="firs"><p><a href="sproduct/<%= productdata[i].id %>">View more</a></p></span>
 											<span><p><%= productdata[i].name %></p></span>
 										</li>

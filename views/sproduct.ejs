@@ -21,7 +21,7 @@
 			<ul class="pro-list">
 				 <% for(var i=0;i<gs_list.length;i++){ %>  
                     <li>
-                    	<span style="background:<%= gs_list[i].imgSrc %> ; background-size:100% 100% ;"></span>
+                    	<span style="background:url(<%= gs_list[i].imgSrc %>) ; background-size:100% 100% ;"></span>
                     	<span>
                     		<h1><%= gs_list[i].list_name %></h1>
                     		<p><%= gs_list[i].descript %></p>
@@ -37,7 +37,7 @@
 					 <% for(var j = 0; j < related_arry_set.length; j++){ %> 
 						<a href="<%= related_arry_set[j].id %>">
 							<li>
-								<div class="bac"  style="background:<%= related_arry_set[j].imgSrc %> ; background-size:100% 100% ;"></div>
+								<div class="bac"  style="background:url(<%= related_arry_set[j].imgSrc %>) ; background-size:100% 100% ;"></div>
 								<p><%= related_arry_set[j].name %></p>
 							</li>
 						</a>
