@@ -77,7 +77,7 @@
 			box-sizing: border-box;
 			width: 100%;
 			padding-top: 40%;
-			background: url(/img/service.jpg);
+			background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/service.jpg');
 			background-size:100% 100% ;
 		}
 		.s-top1{

@@ -14,7 +14,7 @@
 	font-weight: 700;
 }
 .p-content div.imgpartner{
-	background: url(../img/partner.jpg);
+	background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/partner.jpg');
 	background-size:100% 100% ;
 	width: 600px;
 	height: 100%;
