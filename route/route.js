@@ -13,6 +13,10 @@ export default new VueRouter({
                 {
                     path: '/houtai/productmanage',
                     component: () => import('houtai/components/productmanage/product_type_list.vue')
+                },
+                {
+                    path: '/houtai/recommendmanage',
+                    component: () => import('houtai/components/recommendmanage/recommend_manage_list.vue')
                 }
             ]
         },

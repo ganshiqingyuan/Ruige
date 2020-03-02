@@ -57,7 +57,13 @@ export default {
                             path: '/houtai/productmanage',
                             code: '050101',
                             showed: false
-                        },
+                        },{
+                            label: '推荐商品管理',
+                            icon: 'el-icon-c-scale-to-original',
+                            path: '/houtai/recommendmanage',
+                            code: '050101',
+                            showed: false
+                        }
                     ]
                 },
                 {
