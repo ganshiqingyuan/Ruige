@@ -1,6 +1,6 @@
 <template>
     <div class="recommend_manage_list_container">
-        <add-recommend :seePropsType = 'seePropsType' v-if="addRecommendShowFlag"></add-recommend>
+        <add-recommend  v-if="addRecommendShowFlag"></add-recommend>
         <el-form label-width = '110px'>
             <el-row>
                 <el-col :span="5">
@@ -52,6 +52,7 @@
             <el-table-column
             label='详细描述'
             prop = 'detail'
+            show-overflow-tooltip
             >
             </el-table-column>
 
@@ -60,7 +61,7 @@
             prop = 'src'
             >
                 <template slot-scope="scope">
-                    <img style="width:50px;height:50px;" :src="scope.row.src"/>
+                    <img style="width:50px;height:50px;" :src="scope.row.imgSrc"/>
                 </template>
             </el-table-column>
 
@@ -109,19 +110,20 @@ export default {
         }
     },
     mounted: function(){
-        //this.query_recommend_list(1)
+        this.query_recommend_list(1)
     },
     methods:{
-        deleterecommend: function(item){
+        deleteRecommend: function(item){
             const requestData = {
                 id:item.id,
+                flag:0
             }
             this.$confirm('确认将该商品移除推荐?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$rq.deleteRecommend(requestData).then(res=>{
+                this.$rq.changeRecommendStatus(requestData).then(res=>{
                     this.$message('移除成功');
                     this.query_recommend_list(1)
                 })
@@ -136,18 +138,16 @@ export default {
             const requestData = this.queryItem
             requestData.page = page
             this.tableLoading = true
-            this.$rq.getTypeList(requestData).then(res=>{
+            this.$rq.getAllRecommendProductList(requestData).then(res=>{
                 this.recommendData = res.data
                 this.total = res.total
+                this.tableLoading = false
             })
             .catch(err=>{
                 console.info(err)
                 this.tableLoading = false
             })
-        },
-        addRecommend: function(item){
-            
-        },
+        }
     },
     components:{
         addRecommend

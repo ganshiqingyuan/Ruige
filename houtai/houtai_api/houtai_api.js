@@ -10,36 +10,49 @@ module.exports = function(router, threadpool, reload, al_client){
                         WHERE name like '%${name}%' AND descript like '%${descript}%' ${sort?`AND sort = ${sort}`:''}
                         order by sort
                         limit ${(page-1)*perpage},${perpage}`
-            const type_list = await Promise.all((await new Promise((res,rej) =>{
-                threadpool.query(sql, function (error, results, fields) {
-                    if (error) {
-                        throw error
-                    };
-                    res(results)
-                });
-            }))
-            .map(async _=>{
-                return{
-                    ..._,
-                    src: _.src
-                }
-            }))
+            const sql1 = `select FOUND_ROWS()`
 
-            const count = await new Promise((res,rej)=>{
-                threadpool.query('select count(*) as count from PRODUCT_TYPE', function(error, results, fields){
-                    if(error){
-                        throw error
-                    }
-                    res(results[0])
-                })
+            const list_with_count = await new Promise((reso,reje)=>{
+                threadpool.getConnection(async function(err, connection) {
+                    if (err) throw err; // not connected!
+    
+                    const type_list = await Promise.all((await new Promise((res,rej) =>{
+                        threadpool.query(sql, function (error, results, fields) {
+                            if (error) {
+                                throw error
+                            };
+                            res(results)
+                        });
+                    }))
+                    .map(async _=>{
+                        return{
+                            ..._,
+                            src: _.src
+                        }
+                    }))
+        
+                    const count = await new Promise((res,rej)=>{
+                        threadpool.query(sql1, function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                    })
+
+                    reso({
+                        list: type_list,
+                        count: count[0]['FOUND_ROWS()']
+                    })
+                });
             })
+            
 
             ctx.body = JSON.stringify({
                 code: 200,
-                total:count.count,
-                data: type_list
+                total:list_with_count.count,
+                data: list_with_count.list
             })
-            reload()
         }
         catch(err){
             ctx.body = JSON.stringify({
@@ -143,39 +156,48 @@ module.exports = function(router, threadpool, reload, al_client){
                         WHERE typeID = '${typeId}' AND list_name like '%${list_name}%' AND descript like '%${descript}%'
                         AND updateTime BETWEEN ${beginTime || 0} AND ${endTime || 9999999999999}
                         limit ${(page-1)*perpage},${perpage}`
-            
-            const product_list = await Promise.all((await new Promise((res,rej)=>{
-                threadpool.query(sql, function(error, results, fields){
-                    if(error){
-                        throw error
-                    }
-                    res(results)
-                })
-            }))
-            .map(async _=>{
-                return{
-                    ..._,
-                    imgSrc: _.imgSrc
-                }
-            }))
+            const sql1 = `select FOUND_ROWS()`
 
-            const sql1 = `select FOUND_ROWS() as count`
+            const list_with_count = await new Promise((reso,reje)=>{
+                threadpool.getConnection(async function(err, connection) {
+                    if (err) throw err; // not connected!
+    
+                    const product_list = await Promise.all((await new Promise((res,rej)=>{
+                        threadpool.query(sql, function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                    }))
+                    .map(async _=>{
+                        return{
+                            ..._,
+                            imgSrc: _.imgSrc
+                        }
+                    }))
+        
+                    const count = await new Promise((res,rej)=>{
+                        threadpool.query(sql1, function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                    })
 
-            const count = await new Promise((res,rej)=>{
-                threadpool.query(sql1, function(error, results, fields){
-                    if(error){
-                        throw error
-                    }
-                    res(results)
-                })
+                    reso({
+                        list: product_list,
+                        count: count[0]['FOUND_ROWS()']
+                    })
+                });
             })
 
             ctx.body = JSON.stringify({
                 code: 200,
-                total: count[0].count,
-                data: product_list
+                total: list_with_count.count,
+                data: list_with_count.list
             })
-            reload()
         }
         catch(err){
             console.log(err)
@@ -272,4 +294,171 @@ module.exports = function(router, threadpool, reload, al_client){
             })
         }
     })
+
+    // ———————————————————————————————————推荐相关分割线————————————————————————————————————————————————————————————————
+    
+    /**
+     * 获取所有产品列表进行选择推荐
+     */
+    router.get('/houtai/recommendmanage/get_all_product_list', async (ctx) =>{ 
+        try{
+            const { list_name, descript, detail, page, perpage } = ctx.request.query
+            const sql = `SELECT SQL_CALC_FOUND_ROWS * from product_list
+                        where list_name like '%${list_name}%' AND descript like '%${descript}%' AND detail like '%${detail}%' 
+                        limit ${(page-1)*perpage},${perpage}`
+
+            const list_with_count = await new Promise((reso,reje)=>{
+                threadpool.getConnection(async function(err, connection) {
+                    if (err) throw err; // not connected!
+    
+                    const product_list = await new Promise((res,rej)=>{
+                        connection.query(sql, function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                        
+                    })
+        
+                    const count = await new Promise((res,rej)=>{
+                        connection.query('select FOUND_ROWS()', function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                    })
+                    reso({
+                        list: product_list,
+                        count: count[0]['FOUND_ROWS()']
+                    })
+                });
+            })
+
+            ctx.body = JSON.stringify({
+                code: 200,
+                total: list_with_count.count,
+                data: list_with_count.list
+            })
+
+        }
+        catch(err){
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: ''
+            })
+        }
+    })
+
+    /**
+     * 获取推荐商品的列表，现在只有6个
+     */
+    router.get('/houtai/recommendmanage/get_recommend_product_list', async (ctx) =>{
+        try{
+            const { list_name, descript, detail, page, perpage } = ctx.request.query
+            const sql = `SELECT SQL_CALC_FOUND_ROWS * from product_list
+                        where list_name like '%${list_name}%' AND descript like '%${descript}%' AND detail like '%${detail}%' AND recommend = 1 
+                        limit ${(page-1)*perpage},${perpage}`
+
+            const list_with_count = await new Promise((reso,reje)=>{
+                threadpool.getConnection(async function(err, connection) {
+                    if (err) throw err; // not connected!
+    
+                    const product_list = await new Promise((res,rej)=>{
+                        connection.query(sql, function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                        
+                    })
+        
+                    const count = await new Promise((res,rej)=>{
+                        connection.query('select FOUND_ROWS()', function(error, results, fields){
+                            if(error){
+                                throw error
+                            }
+                            res(results)
+                        })
+                    })
+                    reso({
+                        list: product_list,
+                        count: count[0]['FOUND_ROWS()']
+                    })
+                });
+            })
+
+            ctx.body = JSON.stringify({
+                code: 200,
+                total: list_with_count.count,
+                data: list_with_count.list
+            })
+
+        }
+        catch(err){
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: ''
+            })
+        }
+    })
+    
+    /**
+     * 改变某一商品的推荐状态
+     */
+    router.post('/houtai/recommendmanage/change_recommend_status', async (ctx) =>{
+        try{
+            const {id, flag} = ctx.request.body
+
+            if(flag == 1){
+                const judge_sql = `select count(*) as count from product_list where recommend = 1`
+                
+                const count  = await new Promise((res,rej)=>{
+                    threadpool.query(judge_sql, function(error, results, fields){
+                        if(error){
+                            throw error
+                        }
+                        res(results)
+                    })
+                })
+                if(count[0].count > 5){
+                    ctx.body = JSON.stringify({
+                        code: 3,
+                        data:0,
+                        msg:'最多添加6个推荐商品'
+                    })
+                    return
+                }
+
+            }
+
+            const sql = `update product_list set recommend = ${flag} where id = '${id}'`
+            await new Promise((res,rej)=>{
+                threadpool.query(sql, function(error, results, fields){
+                    if(error){
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+
+            ctx.body = JSON.stringify({
+                code: 200,
+                data:1
+            })
+            reload()
+        }
+        catch(err){
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: ''
+            })
+        }
+    })
+
 }

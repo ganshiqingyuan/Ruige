@@ -71,13 +71,16 @@
 
             <el-table-column
             label="操作"
+            width="50"
             >
                 <template slot-scope="scope">
-                    <img style="height:18px;cursor:pointer;" @click="addProduct(scope.row)" :src="dealJpg"/>
+                    <img v-if="!scope.row.recommend" alt="添加到推荐" title="添加到推荐" style="height:18px;cursor:pointer;" @click="addProduct(scope.row)" :src="addPng"/>
+                    <img v-else alt="取消此产品推荐" title="取消此产品推荐" style="height:18px;cursor:pointer;" @click="addProduct(scope.row)" :src="exitPng"/>
                 </template>
             </el-table-column>
         </el-table>
         <el-pagination
+            ref="pagination"
             style="float:right;"
             layout="prev, pager, next, total"
             :total="total"
@@ -91,17 +94,20 @@
 </template>
 
 <script>
-import dealJpg from 'img/deal.jpg'
+import addPng from 'img/add.png'
+import exitPng from 'img/exit.png'
 export default {
     data(){
         return {
+            changed: 0, // 是否有对推荐进行修改
             addRecommendShowFlag: true,
             tableLoading: false,
             total:0,
             propsType:{},
-            dealJpg: dealJpg,
+            addPng: addPng,
+            exitPng: exitPng,
             imgSrc: this.$rq.imgSrc,
-            productListData: '',
+            productListData: [],
             queryItem: {
                 list_name: '',
                 descript: '',
@@ -117,17 +123,37 @@ export default {
     },
     methods:{
         changeAddRecommendShowFlag: function(flag){
+            if(this.changed){
+                this.$parent.query_recommend_list(1)
+            }
             this.$parent.changeAddRecommendShowFlag(flag)
         },
         addProduct: function(item){
-            
+                this.changed = 1
+                const requestData = {
+                    id: item.id,
+                    flag: item.recommend == 1 ? 0 : 1
+                }
+                this.tableLoading = true;
+                this.$rq.changeRecommendStatus(requestData).then(res=>{
+                    if(res){
+                        this.$message(item.recommend == 1 ? '取消推荐成功' : '添加推荐成功')
+                        item.recommend = (item.recommend == 1 ? 0 : 1)
+                        this.tableLoading = false;
+                        //this.getProductList(this.$refs.pagination.lastEmittedPage == -1 ? 1: this.$refs.pagination.lastEmittedPage)
+                    }
+                })
+                .catch(err=>{
+                    console.log(err)
+                    this.tableLoading = false
+                })
         },
         getProductList: function(page){
-            const requestData = {
-                
-            }
+            console.log(this.$refs.pagination)
+            const requestData = this.queryItem;
+            requestData.page = page
             this.tableLoading = true
-            this.$rq.getProductList(requestData).then(res=>{
+            this.$rq.getAllProductList(requestData).then(res=>{
                 this.tableLoading = false
                 if(res){
                     this.total = res.total;

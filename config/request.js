@@ -5,7 +5,8 @@ import {
 } from 'element-ui';
 
 var request = axios.create({
-    baseURL: 'http://47.254.47.158:3001',
+    //baseURL: 'http://47.254.47.158:3001',
+    baseURL: 'http://localhost:3000',
     //timeout:10000,
     headers: {
         "Content-Type": 'application/json'
@@ -29,7 +30,7 @@ request.interceptors.response.use(function (response) {
     } else if (response.data.resultCode === '1') {
         notice({
             title: '提示',
-            message: response.data.resultMessage,
+            message: response.data.msg,
             type: "warning"
         })
         return Promise.reject(false)
@@ -37,7 +38,7 @@ request.interceptors.response.use(function (response) {
     else {
         notice({
             title: '警告',
-            message: response.data.resultMessage,
+            message: response.data.msg,
             type: 'error'
         })
         return Promise.reject(false)
@@ -94,6 +95,29 @@ var apis = {
             url: '/houtai/productmanage/change_product_info',
             method: 'post',
             data
+        })
+    },
+
+    //  推荐管理相关
+    getAllProductList: function(params){
+        return request({
+            url: '/houtai/recommendmanage/get_all_product_list',
+            method: 'get',
+            params
+        })
+    },
+    changeRecommendStatus: function(data){
+        return request({
+            url: '/houtai/recommendmanage/change_recommend_status',
+            method: 'post',
+            data
+        })
+    },
+    getAllRecommendProductList: function(params){
+        return request({
+            url: '/houtai/recommendmanage/get_recommend_product_list',
+            method: 'get',
+            params
         })
     }
 

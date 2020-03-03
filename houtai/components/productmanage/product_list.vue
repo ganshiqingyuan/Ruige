@@ -125,7 +125,7 @@ export default {
             seeJpg: seeJpg,
             dealJpg: dealJpg,
             imgSrc: this.$rq.imgSrc,
-            productListData: '',
+            productListData: [],
             itemList: {
                 list_name: '',
                 descript: '',
