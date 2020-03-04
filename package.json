@@ -34,6 +34,7 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "@alicloud/pop-core": "^1.7.9",
     "@alicloud/sms-sdk": "^1.0.2",
     "ali-oss": "^6.5.1",
     "axios": "^0.18.0",
@@ -53,7 +54,6 @@
     "koa-views": "^6.0.2",
     "koa2-cors": "^2.0.6",
     "mysql": "^2.17.1",
-    "nodemailer": "^4.0.1",
     "supervisor": "^0.12.0",
     "uuid": "^3.3.2",
     "vue": "^2.6.8",

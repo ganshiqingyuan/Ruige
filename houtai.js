@@ -14,31 +14,39 @@ const houtai_api = require('./houtai/houtai_api/houtai_api.js')
 
 const { uploadFile } = require('./static/js/upload.js')
 const { uploadFile1 } = require('./static/js/upload1.js')
-const nodemailer = require('nodemailer');
+
+const sqlconfig = require("./config/sqlconfig.js")
 
 let OSS = require('ali-oss');
 
 let client = new OSS({
   region: 'oss-cn-hongkong',
-  //云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，部署在服务端使用RAM子账号或STS，部署在客户端使用STS。
-  accessKeyId: 'LTAISnXsHJUOx7B8',
-  accessKeySecret: 'ibrV5ZmezEAfAz2IzTGVCSaN1M97CX',
+  accessKeyId: sqlconfig.accessKeyId,
+  accessKeySecret: sqlconfig.accessKeySecret,
   bucket: 'ruigedist'
 });
 
-console.log(client.generateObjectUrl('test.jpg'))
+const Core = require('@alicloud/pop-core');
 
+var sms_client = new Core({
+  accessKeyId: sqlconfig.accessKeyId,
+  accessKeySecret: sqlconfig.accessKeySecret,
+  endpoint: 'https://dysmsapi.aliyuncs.com',
+  apiVersion: '2017-05-25'
+});
 
+var params = {
+  "RegionId": "cn-hangzhou"
+}
 
-const SMSClient = require('@alicloud/sms-sdk')
+var requestOption = {
+  method: 'POST'
+};
 
-const accessKeyId = 'LTAISnXsHJUOx7B8'
-const secretAccessKey = 'ibrV5ZmezEAfAz2IzTGVCSaN1M97CX'
 
 const uuid = require("uuid")
 
 const mysql = require("mysql");
-const sqlconfig = require("./config/sqlconfig.js")
 
 var threadpool  = mysql.createPool({
   host     : sqlconfig.database.HOST,
@@ -50,60 +58,18 @@ var threadpool  = mysql.createPool({
 
 houtai_api(router, threadpool, reload, client)
 
-let smsClient = new SMSClient({accessKeyId, secretAccessKey})
-
-const mail= {
-    from: {
-      name: 'test',
-     service: 'smtp.163.com',
-      auth: {
-        user: '18341323671@163.com',
-       pass: 'hong22954914600'
-     }
-    },
-    to: [
-      '1174607294@qq.com'
-    ]
-  }
-
-smtpTransport = nodemailer.createTransport(
- 	{
- 		 host: 'smtp.163.com',
-    secureConnection: true,  // use SSL  
-    port: 465,
-    auth: {
-        user: '18341323671@163.com',  // 邮箱地址
-        pass: 'hong22954914600'  // 密码（163邮箱的话是设置smtp时的授权码）
-    }
- 	}
- );
-
 
 const staticPath = './static';
 var productdata
-
-// threadpool.query(`select src, id, parentId, name, descript, updateTime, sort from PRODUCT_TYPE`, function(error, results, fields){
-//   if(error){
-//     throw error
-//   }
-
-//   results.forEach(_=>{
-//     if(_.src.length>20) return 
-//     threadpool.query(`replace into PRODUCT_TYPE(src,id, parentId, name, descript, updateTime, sort) 
-//                       values('${client.generateObjectUrl(_.src)}', '${_.id}','${_.parentId}','${_.name}','${_.descript}','${_.updateTime}','${_.sort}')`, function(error, result, fields){
-//       if(error){
-//         throw error
-//       }
-//       //console.log("执行成功",_.src.substring(_.src.lastIndexOf('/')+1,_.src.length-1))
-//     })
-//   })
-// })
-// return
-
-
-reload()
+try{
+  reload()
+}
+catch(err){
+  console.info(err)
+}
 
 function reload(){
+  console.log("开始初始化数据")
   threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
     if (error) {
         throw error
@@ -119,50 +85,12 @@ function reload(){
       })
       productdata = results
   
-      console.log(1)
+      console.log('数据初始化成功')
   
-      // productdata.forEach(_=>{
-      //   threadpool.query(`update PRODUCT_TYPE set src = '${_.list[0].imgSrc}' where id = '${_.id}'`, function(error, result, fields) {
-      //     if(error){
-      //       console.log(error)
-      //     }
-      //     else{
-      //       console.log("插入成功")
-      //     }
-      //   })
-      // })
     })
-    // console.log('The solution is: ', results[0].solution);
   });
 }
 
-
-
-
-//var productdata=JSON.parse(fs.readFileSync('static/data/product.json','utf8'));
-
-
-// productdata.forEach((data,index)=>{
-//   var id = uuid.v4()
-//   threadpool.query(`insert into PRODUCT_TYPE values('${id}','0','${data[0].lastname}','${data[0].data}','${new Date().getTime()}',${index})`, function (error, results, fields) {
-//       if (error) {
-//           throw error
-//       };
-//       for(var i=0;i<data.length;i++){
-//         threadpool.query(`insert into PRODUCT_LIST values('${uuid.v4()}','${id}','${data[i].url}','${data[i].data}','${new Date().getTime()}','${data[i].detail}','${data[i].head}')`, function (error, results, fields) {
-//           if (error) {
-//               throw error
-//           };
-//           // console.log('The solution is: ', results[0].solution);
-//       });
-//       }
-//       // console.log('The solution is: ', results[0].solution);
-//   });
-
-// })
-// return 
-
-//
 app.use(convert(staticCache(path.join(__dirname, staticPath), {
     maxAge: 24 * 60 * 60
 })));
@@ -188,8 +116,18 @@ app.use(views(path.join(__dirname, './views'), {
 }))
 
 router.get("/",async ( ctx ) => {
+
+  const recommendData = await new Promise((res,rej)=>{
+    threadpool.query(`select * from product_list where recommend = 1`, function (error, results2, fields){
+      if (error) {
+          throw error
+      };
+      res(results2)
+    })
+  })
+
 	await ctx.render('sys1', {
-		productdata,
+		productdata,recommendData
         })
 })
 
@@ -331,8 +269,6 @@ router.get("/sproduct/:a/:b",async ( ctx ) => {
     })
   })
 
-  console.log(list_info)
-
   const other_list = await new Promise((res,rej)=>{
     const sql = `SELECT imgSrc, list_name, id
                 FROM PRODUCT_LIST
@@ -353,12 +289,23 @@ router.get("/sproduct/:a/:b",async ( ctx ) => {
 
 
 router.post("/send",async ( ctx ) => {
-	console.log('123');
-	let postData = await parsePostData( ctx )
-	console.log(parseQueryStr(postData).name)
-	await sendMail('来自客户','<h1>姓名</h1>'+'<p>'+parseQueryStr(postData).name+'</p>'+'<h1>邮箱</h1>'+'<p>'+parseQueryStr(postData).email+'</p>'+'<h1>主题</h1>'+'<p>'+parseQueryStr(postData).subject+'</p>'+
-	    '<h1>电话</h1>'+'<p>'+parseQueryStr(postData).phone+'</p>'+'<h1>公司</h1>'+'<p>'+parseQueryStr(postData).company+'</p>'+'<h1>内容</h1>'+'<p>'+parseQueryStr(postData).word+'</p>');
-	
+  console.log(ctx.request.body)
+  const {name, email, subject, phone, company, word} = ctx.request.body
+  
+  const params = {
+    "RegionId": "cn-hangzhou",
+    "PhoneNumbers": "17360700983",
+    "SignName": "瑞格",
+    "TemplateCode": "SMS_107005112",
+    "TemplateParam": JSON.stringify({"a":name,"c":email.replace(".",""),"b":subject,"d":phone,"e":company,"f":word})
+  }
+  
+  sms_client.request('SendSms', params, requestOption).then((result) => {
+    console.log('发送短信成功',JSON.stringify(result));
+  }, (ex) => {
+    console.log(ex);
+  })
+      
 // smsClient.sendSMS({
 //     PhoneNumbers: '15130058651',
 //     SignName: '网站留言通知',
@@ -454,23 +401,6 @@ function parsePostData( ctx ) {
     }
   })
 }   
-
-async function sendMail(subject, html) {
-  var mailOptions = {
-    from: [mail.from.name, mail.from.auth.user].join(' '),
-    to: mail.to.join(','),
-    subject: subject,
-    html: html
-  };
-  await smtpTransport.sendMail(mailOptions, function(error, response){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Message sent: ' + response.message);
-    }
-    smtpTransport.close();
-  });
-};
 
 
 function parseQueryStr( queryStr ) {

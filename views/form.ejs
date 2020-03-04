@@ -74,7 +74,7 @@ Fields marked with an * are required
 		})
 		$(".send").click(function(){
 			if(namecontrol&&emailcontrol&&companycontrol&&messagecontrol){
-			$.post("/send",{"name":$("input").eq(0).val(),"email":$("input").eq(1).val(),"subject":$("input").eq(2).val(),"phone":$("input").eq(3).val(),"company":$("input").eq(4).val(),"word":$("textarea").val()},function(data){
+			$.post("/send",JSON.stringify({"name":$("input").eq(0).val(),"email":$("input").eq(1).val(),"subject":$("input").eq(2).val(),"phone":$("input").eq(3).val(),"company":$("input").eq(4).val(),"word":$("textarea").val()}),function(data){
 			   if(data==1){
 			   	$(".me-warp").css("display","block");
 			   	setTimeout(function(){
