@@ -66,6 +66,7 @@
 						</li>
 					</ul>
 				</div>
+
 				<div class="middlecontent">
 					<div class="middle-left">
 						<h1>SINCE 2000</h1>
@@ -75,7 +76,27 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
 					</div>
 					<div class="middle-right"></div>
 				</div>
-			    <div class="product">
+
+				<div class="recommend">
+					<h1>Recommendations</h1>
+					<ul>
+						<% for(var i=0;i<recommendData.length;i++){ %> 
+						<li>
+							<div>
+								<span>Reco</span>
+							</div>
+							<img src="<%= recommendData[i].imgSrc %>" alt="picture">
+							<span>
+								<p><%= recommendData[i].descript %></p>
+								<p><%= recommendData[i].list_name %></p>
+							</span>
+							<a href="/sproduct/<%= recommendData[i].typeID %>/<%= recommendData[i].id %>"><button>View</button></a>
+						</li>
+						<% } %>
+					</ul>
+				</div>
+
+			    <!-- <div class="product">
 			    	<h1>OUR PRODUCTS</h1>
 					<span>Professional with veterinary medical equipments</span>
 					<div class="spread2">
@@ -151,7 +172,8 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
 			        	</div>
 			        	</div>
 			        </div>
-			    </div>
+				</div> -->
+				
 			    <div class="mainproduct">
 			    	<img src="img/leftswipt.jpg" alt="turnleft" />
 			    	<div>
@@ -178,7 +200,8 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
 			    		</div>
 			    	</div>
 			    	<img src="img/rightswipt.jpg" alt="turnright" />
-			    </div>
+				</div>
+				
 			</div>
 			<%- include('foot') %>
 		</div>
