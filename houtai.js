@@ -91,9 +91,9 @@ function reload(){
   });
 }
 
-// app.use(convert(staticCache(path.join(__dirname, staticPath), {
-//     maxAge: 24 * 60 * 60
-// })));
+app.use(convert(staticCache(path.join(__dirname, staticPath), {
+    maxAge: 24 * 60 * 60
+})));
 
 app.use(static(
   path.join( __dirname,  staticPath)
