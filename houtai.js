@@ -62,7 +62,9 @@ houtai_api(router, threadpool, reload, client)
 const staticPath = './static';
 var productdata
 try{
-  reload()
+  setTimeout(()=>{
+    reload()
+  },100)
 }
 catch(err){
   console.info(err)
@@ -70,12 +72,14 @@ catch(err){
 
 function reload(){
   console.log("开始初始化数据")
-  threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
+  threadpool.query(`select * from product_type`, function (error, results, fields) {
     if (error) {
+        console.log(error)
         throw error
     };
     const id_list = results.map(_=>_.id)
-    const sql = `select * from PRODUCT_LIST where typeID in (${id_list.map(_=>`'${_}'`).join(',')})`
+    console.log(id_list)
+    const sql = `select * from product_list where typeID in (${id_list.map(_=>`'${_}'`).join(',')})`
     threadpool.query(sql,function(error, results2, fields){
       if(error){
         throw error
@@ -92,7 +96,7 @@ function reload(){
 }
 
 app.use(convert(staticCache(path.join(__dirname, staticPath), {
-    maxAge: 24 * 60 * 60
+    maxAge: 0
 })));
 
 app.use(static(
@@ -294,7 +298,7 @@ router.post("/send",async ( ctx ) => {
   
   const params = {
     "RegionId": "cn-hangzhou",
-    "PhoneNumbers": "17360700983",
+    "PhoneNumbers": "15130058651",
     "SignName": "瑞格",
     "TemplateCode": "SMS_107005112",
     "TemplateParam": JSON.stringify({"a":name,"c":email.replace(".",""),"b":subject,"d":phone,"e":company,"f":word})
@@ -306,21 +310,6 @@ router.post("/send",async ( ctx ) => {
     console.log(ex);
   })
       
-// smsClient.sendSMS({
-//     PhoneNumbers: '15130058651',
-//     SignName: '网站留言通知',
-//     SignName:"瑞格",
-//     TemplateCode: 'SMS_107005112',
-//     TemplateParam:JSON.stringify({"a":parseQueryStr(postData).name,"c":parseQueryStr(postData).email.replace(".",""),"b":parseQueryStr(postData).subject,"d":parseQueryStr(postData).phone,"e":parseQueryStr(postData).company,"f":parseQueryStr(postData).word})
-// }).then(function (res) {
-//     let {Code}=res
-//     if (Code === 'OK') {
-//         //处理返回参数
-//         console.log(res)
-//     }
-// }, function (err) {
-//     console.log(err)
-// })
 ctx.body=1
 })
 
@@ -412,37 +401,6 @@ function parseQueryStr( queryStr ) {
   }
   return queryData
 }
-//app.use( async ( ctx ) => {
-//	console.log(ctx.url);
-//	if(ctx.url=="/"){
-//	await ctx.render('sys1', {
-//      })
-//	}
-//	else if(ctx.url=="/product"){
-//		console.log("123");
-//			await ctx.render('product', {
-//      })
-//	}
-//		else if(ctx.url=="/sproduct"){
-//			console.log(ctx)
-//			var products=await JSON.parse(fs.readFileSync('static/data/product.json','utf8'));
-//			await ctx.render('sproduct', {
-//				products,
-//      })
-//	}
-//		else if(ctx.url=="/contact"){
-//			await ctx.render('contact', {
-//      })
-//		}
-//		else if(ctx.url=="/service"){
-//			await ctx.render('service', {
-//      })
-//		}
-//			else if(ctx.url=="/partener"){
-//			await ctx.render('partener', {
-//      })
-//		}
-//})
 
 app.listen(sqlconfig.PORT)
 console.log('[demo] start-quick is starting at port 3000')

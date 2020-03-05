@@ -16,7 +16,7 @@
 				<label for="content"><strong class="textarea">*</strong>Message:</label>
 				<textarea class="company"></textarea>
 				<span class="submit">
-				<input class="send" type="submit" value="Send message" />
+					Send message
 				</span>
 				</div>
 </div>
@@ -74,23 +74,51 @@ Fields marked with an * are required
 		})
 		$(".send").click(function(){
 			if(namecontrol&&emailcontrol&&companycontrol&&messagecontrol){
-			$.post("/send",JSON.stringify({"name":$("input").eq(0).val(),"email":$("input").eq(1).val(),"subject":$("input").eq(2).val(),"phone":$("input").eq(3).val(),"company":$("input").eq(4).val(),"word":$("textarea").val()}),function(data){
-			   if(data==1){
-			   	$(".me-warp").css("display","block");
-			   	setTimeout(function(){
-			   		for(var i=0;i<5;i++){
-			   			$("input").eq(i).val("");
-			   		}
-			   		$("textarea").val("")
-			   			$(".me-warp").css("display","none");
-			   		 namecontrol=false;
-		             messagecontrol=false;
-		             companycontrol=false;
-		             emailcontrol=false;
-		             $("strong").css("color","red")
-			   	},4000)
-			   }
-			})
+
+				$.ajax({
+					contentType: 'application/json',
+					type: 'POST',
+					url:'/send',
+					data:JSON.stringify({"name":$("input").eq(0).val(),"email":$("input").eq(1).val(),"subject":$("input").eq(2).val(),"phone":$("input").eq(3).val(),"company":$("input").eq(4).val(),"word":$("textarea").val()}),
+					success: function(data){
+						if(data==1){
+							$(".me-warp").css("display","block");
+							setTimeout(function(){
+								for(var i=0;i<5;i++){
+									$("input").eq(i).val("");
+								}
+								$("textarea").val("")
+									$(".me-warp").css("display","none");
+								namecontrol=false;
+								messagecontrol=false;
+								companycontrol=false;
+								emailcontrol=false;
+								$("strong").css("color","red")
+							},4000)
+						}
+					},
+					error: function(error){
+						console.log(error)
+					}
+				})
+
+			// $.post("/send", JSON.stringify({"name":$("input").eq(0).val(),"email":$("input").eq(1).val(),"subject":$("input").eq(2).val(),"phone":$("input").eq(3).val(),"company":$("input").eq(4).val(),"word":$("textarea").val()}),{contentType:"application/json"},function(data){
+			//    if(data==1){
+			//    	$(".me-warp").css("display","block");
+			//    	setTimeout(function(){
+			//    		for(var i=0;i<5;i++){
+			//    			$("input").eq(i).val("");
+			//    		}
+			//    		$("textarea").val("")
+			//    			$(".me-warp").css("display","none");
+			//    		 namecontrol=false;
+		    //          messagecontrol=false;
+		    //          companycontrol=false;
+		    //          emailcontrol=false;
+		    //          $("strong").css("color","red")
+			//    	},4000)
+			//    }
+			// })
 			}
 			else{
 				alert("Fields marked with an * are required")

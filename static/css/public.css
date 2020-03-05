@@ -187,10 +187,20 @@
 			color: red;
 		}
 		.submit{
-			padding: 0 25%;
-			margin: auto;
+			margin: 20px 25%;
 			display: block;
-			width: 60%;
+			width: 50%;
+			line-height: 30px;
+			border-radius: 5px;
+			cursor: pointer;
+			height: 30px;
+			float: left;
+			text-align: center;
+			border: 1px solid #ddd;
+		}
+		.submit:hover{
+			background: black;
+			color: white;
 		}
 		.message p{
 			float: left;
