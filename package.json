@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "supervisor houtai.js",
-    "dev": "webpack-dev-server --inline --open --progress --profile --display-cached --port 8083 --host 0.0.0.0 --hot --config entry.js",
+    "dev": "webpack-dev-server --inline --open --progress --profile --display-cached --port 8085 --host 0.0.0.0 --hot --config entry.js",
     "dll": "webpack --config webpack.dll.js",
     "build": "webpack --config prod.js"
   },
