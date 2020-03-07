@@ -49,6 +49,8 @@ const uuid = require("uuid")
 const mysql = require("mysql");
 
 var threadpool  = mysql.createPool({
+  acquireTimeout: 1000,
+  connectionLimit : 20,
   host     : sqlconfig.database.HOST,
   port     : sqlconfig.database.PORT,
   user     : sqlconfig.database.USERNAME,

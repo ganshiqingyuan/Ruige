@@ -390,6 +390,8 @@ module.exports = function(router, threadpool, reload, al_client){
                             res(results)
                         })
                     })
+
+                    connection.release();
                     reso({
                         list: product_list,
                         count: count[0]['FOUND_ROWS()']
