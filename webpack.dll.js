@@ -1,7 +1,7 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const webpack = require("webpack")
-var BundleAnalyzerPlugin   = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  
+//var BundleAnalyzerPlugin   = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  
 
 
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
     ],
   },
   plugins:[
-    new BundleAnalyzerPlugin(),
+    //new BundleAnalyzerPlugin(),
     new VueLoaderPlugin(),
     new webpack.DllPlugin({
         path: path.join(__dirname, 'static/js', '[name]-manifest.json'),
