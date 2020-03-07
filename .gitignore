@@ -1,5 +1,4 @@
 /node_modules
 .vscode
 static/.DS_Store
-static/dist
 config/sqlconfig.js
