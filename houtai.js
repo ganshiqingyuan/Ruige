@@ -56,21 +56,10 @@ var threadpool  = mysql.createPool({
   database : sqlconfig.database.DATABASE
 });
 
-threadpool.on('error', function (err) {
-  console.log('db error', err);
-  // 如果是连接断开，自动重新连接
-  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-    threadpool  = mysql.createPool({
-      host     : sqlconfig.database.HOST,
-      port     : sqlconfig.database.PORT,
-      user     : sqlconfig.database.USERNAME,
-      password : sqlconfig.database.PASSWORD,
-      database : sqlconfig.database.DATABASE
-    });
-  } else {
-      throw err;
-  }
-});
+process.on('uncaughtException', function(err) {
+  console.log('Caught exception: ' + err);
+  throw err
+ });
 
 
 houtai_api(router, threadpool, reload, client)
