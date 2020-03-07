@@ -1,12 +1,18 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const webpack = require("webpack")
+var BundleAnalyzerPlugin   = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  
+
 
 module.exports = {
+  mode:"production",
   entry: {
       vendor:[
           "vue",
-          "vue-router"
+          "vue-router",
+          "axios",
+          "element-ui/lib",
+          "element-ui/lib/theme-chalk/index.css"
       ]
     },
   output: {
@@ -21,13 +27,26 @@ module.exports = {
         use:["vue-loader"]
       },
       {
+        test:/\.css$/,
+        use:["vue-style-loader","css-loader"]
+      },
+      {
         test:/\.js$/,
         use:["babel-loader"]
       },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader',
+        options:{
+          name: 'ziti.[ext]',
+          publicPath:'https://ruigedist.oss-cn-hongkong.aliyuncs.com/'
+        }
+      }
 
     ],
   },
   plugins:[
+    new BundleAnalyzerPlugin(),
     new VueLoaderPlugin(),
     new webpack.DllPlugin({
         path: path.join(__dirname, 'static/js', '[name]-manifest.json'),

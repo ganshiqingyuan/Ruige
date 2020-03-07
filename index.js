@@ -3,7 +3,10 @@ import App from "./app.vue"
 import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
-import config from "./elementconfig.js"
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+Vue.use(ElementUI);
 import router from "./route/route.js"
 import request from "./config/request.js"
 //import store from "./store/store.js"

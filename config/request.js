@@ -1,8 +1,6 @@
 import axios from "axios"
 import router from "../route/route.js"
-import {
-    Notification as notice
-} from 'element-ui';
+import Vue from "vue";
 
 var request = axios.create({
     //baseURL: 'http://47.254.47.158:3001',
@@ -28,7 +26,7 @@ request.interceptors.response.use(function (response) {
     if (response.data.code == '200') {
         return Promise.resolve(response.data);
     } else if (response.data.resultCode === '1') {
-        notice({
+        Vue.prototype.$notify({
             title: '提示',
             message: response.data.msg,
             type: "warning"
@@ -36,7 +34,7 @@ request.interceptors.response.use(function (response) {
         return Promise.reject(false)
     }
     else {
-        notice({
+        Vue.prototype.$notify({
             title: '警告',
             message: response.data.msg,
             type: 'error'
@@ -44,7 +42,7 @@ request.interceptors.response.use(function (response) {
         return Promise.reject(false)
     }
 }, function (error) {
-    notice({
+    Vue.prototype.$notify({
         title: '警告',
         message: error,
         type: 'error'

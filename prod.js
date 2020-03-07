@@ -2,9 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const webpack = require("webpack")
+var BundleAnalyzerPlugin   = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
-  mode:"development",
+  mode:"production",
   entry: {
       main:'./index.js'
   },
@@ -66,18 +68,17 @@ module.exports = {
     ],
   },
   plugins:[
-    new webpack.DefinePlugin({
-      'env': JSON.stringify("environment"),
-    }),
+    new CleanWebpackPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
         filename: 'index.html',
         template: 'index.html',
         inject: true
       }),
-      // new webpack.DllReferencePlugin({
-      //   context: __dirname,
-      //   manifest: require("./static/js/vendor-manifest.json"),
-      // })
+      new BundleAnalyzerPlugin(),
+      new webpack.DllReferencePlugin({
+        context: __dirname,
+        manifest: require("./static/js/vendor-manifest.json"),
+      })
   ]
 }
