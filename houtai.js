@@ -78,27 +78,33 @@ catch(err){
 
 function reload(){
   console.log("开始初始化数据")
-  threadpool.query(`select * from product_type`, function (error, results, fields) {
-    if (error) {
-        console.log(error)
-        throw error
-    };
-    const id_list = results.map(_=>_.id)
-    console.log(id_list)
-    const sql = `select * from product_list where typeID in (${id_list.map(_=>`'${_}'`).join(',')})`
-    threadpool.query(sql,function(error, results2, fields){
-      if(error){
-        throw error
-      }
-      results.forEach(_=>{
-        _.list = results2.filter(__=>__.typeID == _.id);
+  new Promise((res,rej)=>{
+    threadpool.query(`select * from product_type`, function (error, results, fields) {
+      if (error) {
+          console.log(error)
+          throw error
+      };
+      const id_list = results.map(_=>_.id)
+      console.log(id_list)
+      const sql = `select * from product_list where typeID in (${id_list.map(_=>`'${_}'`).join(',')})`
+      threadpool.query(sql,function(error, results2, fields){
+        if(error){
+          throw error
+        }
+        results.forEach(_=>{
+          _.list = results2.filter(__=>__.typeID == _.id);
+        })
+        productdata = results
+    
+        console.log('数据初始化成功')
+    
       })
-      productdata = results
-  
-      console.log('数据初始化成功')
-  
-    })
-  });
+    });
+  })
+  .catch(error=>{
+    console.log(error)
+    throw error
+  })
 }
 
 app.use(convert(staticCache(path.join(__dirname, staticPath), {

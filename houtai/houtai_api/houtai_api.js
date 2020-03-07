@@ -17,7 +17,7 @@ module.exports = function(router, threadpool, reload, al_client){
                     if (err) throw err; // not connected!
     
                     const type_list = await Promise.all((await new Promise((res,rej) =>{
-                        threadpool.query(sql, function (error, results, fields) {
+                        connection.query(sql, function (error, results, fields) {
                             if (error) {
                                 throw error
                             };
@@ -32,13 +32,15 @@ module.exports = function(router, threadpool, reload, al_client){
                     }))
         
                     const count = await new Promise((res,rej)=>{
-                        threadpool.query(sql1, function(error, results, fields){
+                        connection.query(sql1, function(error, results, fields){
                             if(error){
                                 throw error
                             }
                             res(results)
                         })
                     })
+
+                    connection.release();
 
                     reso({
                         list: type_list,
@@ -163,7 +165,7 @@ module.exports = function(router, threadpool, reload, al_client){
                     if (err) throw err; // not connected!
     
                     const product_list = await Promise.all((await new Promise((res,rej)=>{
-                        threadpool.query(sql, function(error, results, fields){
+                        connection.query(sql, function(error, results, fields){
                             if(error){
                                 throw error
                             }
@@ -178,13 +180,15 @@ module.exports = function(router, threadpool, reload, al_client){
                     }))
         
                     const count = await new Promise((res,rej)=>{
-                        threadpool.query(sql1, function(error, results, fields){
+                        connection.query(sql1, function(error, results, fields){
                             if(error){
                                 throw error
                             }
                             res(results)
                         })
                     })
+
+                    connection.release();
 
                     reso({
                         list: product_list,
@@ -329,6 +333,8 @@ module.exports = function(router, threadpool, reload, al_client){
                             res(results)
                         })
                     })
+
+                    connection.release();
                     reso({
                         list: product_list,
                         count: count[0]['FOUND_ROWS()']
