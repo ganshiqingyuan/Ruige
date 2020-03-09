@@ -3,8 +3,8 @@ import router from "../route/route.js"
 import Vue from "vue";
 
 var request = axios.create({
-    baseURL: '/',
-    //baseURL: 'http://localhost:3000',
+    //baseURL: '/',
+    baseURL: 'http://localhost:3000',
     //timeout:10000,
     headers: {
         "Content-Type": 'application/json'
