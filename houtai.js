@@ -10,6 +10,40 @@ const app = new Koa()
 const fs= require("fs")
 const router = require('koa-router')();
 
+const webpack = require('webpack');
+const webpackDevMiddleware = require('koa-webpack-dev-middleware')
+const webpackHotMiddleware = require('koa-webpack-hot-middleware')
+
+const config = require('./ssr/webpackconfig/client.js')
+const compiler = webpack(config)
+
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath
+}))
+app.use(webpackHotMiddleware(compiler, {
+  log: (info) => console.log(info),
+    heartbeat: 1000
+  }
+))
+
+// 服务端渲染vue
+const { createBundleRenderer } = require('vue-server-renderer')
+// const renderer = require('vue-server-renderer').createRenderer({
+//   template: require('fs').readFileSync('./views/buy.template.html', 'utf-8')
+// })
+
+const serverBundle = require('./dist/vue-ssr-server-bundle.json')
+const clientManifest = require('./dist/vue-ssr-client-manifest.json')
+
+const renderer = createBundleRenderer(serverBundle, {
+  runInNewContext: false, // 推荐
+  template: require('fs').readFileSync('./views/buy.template.html', 'utf-8'),
+  clientManifest
+})
+
+
+
+
 const houtai_api = require('./houtai/houtai_api/houtai_api.js')
 
 const { uploadFile } = require('./static/js/upload.js')
@@ -87,7 +121,6 @@ function reload(){
           throw error
       };
       const id_list = results.map(_=>_.id)
-      console.log(id_list)
       const sql = `select * from product_list where typeID in (${id_list.map(_=>`'${_}'`).join(',')})`
       threadpool.query(sql,function(error, results2, fields){
         if(error){
@@ -133,6 +166,7 @@ app.use(views(path.join(__dirname, './views'), {
   extension: 'ejs'
 }))
 
+
 router.get("/",async ( ctx ) => {
 
   const recommendData = await new Promise((res,rej)=>{
@@ -147,6 +181,31 @@ router.get("/",async ( ctx ) => {
 	await ctx.render('sys1', {
 		productdata,recommendData
         })
+})
+
+router.get('/buy/:a/(.*)', async (ctx) =>{
+  console.log(ctx.url)
+  const context = {
+    title: 'hello',
+    url: ctx.url,
+    meta: `
+      <meta ...>
+      <meta ...>
+    `,
+    p_id: ctx.params.a
+  }
+
+  await new Promise((res,rej)=>{
+    renderer.renderToString(context, (err, html) => {
+      if (err) {
+        console.log(err)
+        ctx.body = '错误'
+        res()
+      }
+      ctx.body = html
+      res()
+    })
+  })
 })
 
 router.get("/product",async ( ctx ) => {

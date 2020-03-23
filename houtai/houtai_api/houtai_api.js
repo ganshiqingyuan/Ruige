@@ -2,7 +2,46 @@ const fs = require("fs")
 const uuid = require("uuid")
 const path = require("path")
 
+
 module.exports = function(router, threadpool, reload, al_client){
+    const db = {
+        query: function(sql){
+            console.info(`'${sql}'`)
+            return new Promise((res,rej)=>{
+                threadpool.query(sql, function(error, results, fields){
+                    if(error){
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+        },
+        connection: function(sql){
+            console.info(`'${sql}'`)
+            return new Promise((res,rej)=>{
+                threadpool.getConnection(async function(err, connection){
+                    if(err) throw err;
+
+                    connection.query(sql, function (error, results, fields) {
+                        if (error) {
+                            throw error
+                        };
+                        res([results,connection])
+                    });
+                })
+            })
+        },
+        use_connection: function(connection, sql){
+            console.info(`'${sql}'`)
+            return new Promise((res,rej)=>{
+                connection.query(sql, function(error, results, fields){
+                    if(error) throw error
+                    res([results, connection])
+                })
+            })
+        }
+    }
+
     router.get('/houtai/productmanage/get_type_list', async (ctx) =>{
         try{
             const {page = 1, perpage = 10, name = '', descript = '', sort = ''} = ctx.query;
@@ -94,7 +133,6 @@ module.exports = function(router, threadpool, reload, al_client){
                     }
                 }
             }
-            console.log(id, src)
             await new Promise((res,rej)=>{
                 const sql = `replace into PRODUCT_TYPE(id, parentId, name, descript, updateTime, sort, src)
                             values('${id || uuid.v4()}','','${name}','${descript}','${new Date().getTime()}', ${sort}, '${src}')`
@@ -212,11 +250,59 @@ module.exports = function(router, threadpool, reload, al_client){
         }
     })
 
+    
+    // 修改时初始化商品详情
+    router.get('/houtai/productmanage/get_product_detail', async (ctx) =>{
+        try{
+            const { id } = ctx.query;
+
+            const product_detail = (await db.query(`select * from product_list where id = '${id}'`))[0];
+
+            const spec_data = (await db.query(`select * from product_sku where p_id = '${id}' and is_used = 1`)).map(_=>{
+                return {
+                    ..._,
+                    spec_comp: JSON.parse(_.spec_data)
+                }
+            });
+
+            const spec_name_list = (await db.query(`select spec_name_id, value as spec_name from spec_name where p_id = '${id}' and is_used = 1`));
+
+            const spec_value_list = await db.query(`select value as spec_value, spec_value_id, spec_name_id from spec_value where spec_name_id in (${spec_name_list.reduce((pre,cur)=>pre+ ',' + cur.spec_name_id, 0)}) and is_used = 1`)
+            
+            spec_name_list.forEach(_=>{
+                _.spec_value_arr = spec_value_list.filter(__=>__.spec_name_id == _.spec_name_id)
+            })
+
+            ctx.body = JSON.stringify({
+                code: 200,
+                data: {
+                    product_detail,
+                    spec_data,
+                    spec_name_list
+                }
+            })
+        }
+        catch(err){
+            throw err
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: err
+            })
+        }
+    })
+
+    // 增加和修改商品
     router.post('/houtai/productmanage/change_product_info', async (ctx) =>{ // 添加和修改某分类下产品
         try{
             const file = ctx.request.files && ctx.request.files.file
-            const {list_name = '', descript = '', detail = '', id = '', typeId = ''} = ctx.request.body
-            let src = ctx.request.body.file
+            const {fenleiItem} = ctx.request.body
+
+            const requestData = JSON.parse(fenleiItem)
+            console.log(requestData)
+
+            let src = requestData.file
+
+            const p_id = requestData.id || uuid.v4()
             if(file){
                 var path = file.path.replace(/\\/g, '/');
                 var fname = file.name;
@@ -230,7 +316,7 @@ module.exports = function(router, threadpool, reload, al_client){
                     await fs.unlinkSync(file.path) //删除临时存储文件
                     
                     const old_src = await new Promise((res,rej)=>{
-                        const sql = `select imgSrc from PRODUCT_LIST where id = '${id}'`
+                        const sql = `select imgSrc from PRODUCT_LIST where id = '${requestData.id }'`
                         threadpool.query(sql, function(error, results, fields){
                             if(error){
                                 throw error
@@ -244,9 +330,10 @@ module.exports = function(router, threadpool, reload, al_client){
                 }
             }
 
+            // 插入和替换新的产品表数据
             await new Promise((res,rej)=>{
-                const sql = `replace into PRODUCT_LIST(id, typeID, imgSrc, descript, updateTime, detail, list_name)
-                            values('${id || uuid.v4()}','${typeId}','${src}','${descript}','${new Date().getTime()}', '${detail}', '${list_name}')`
+                const sql = `replace into PRODUCT_LIST(id, typeID, imgSrc, descript, updateTime, detail, list_name, recommend, seo_con, has_spec, stock, price)
+                            values('${p_id}','${requestData.typeId}','${src}','${requestData.descript}','${new Date().getTime()}', '${requestData.detail}', '${requestData.list_name}', 0, '${requestData.seo_con}', ${requestData.has_spec}, ${requestData.stock}, ${requestData.price})`
                 threadpool.query(sql, function (error, results, fields) {
                     if (error) {
                         throw error
@@ -254,6 +341,89 @@ module.exports = function(router, threadpool, reload, al_client){
                     res(results)
                 });
             })
+
+            // 旧的产品表关联所有规格关闭
+            await db.query(`update spec_name set is_used = 0 where p_id = '${p_id}'`)
+            // 旧的规格表对应所有规格选项关闭
+            await db.query(`update spec_value set is_used = 0 where spec_name_id in (${requestData.spec_arr.reduce((pre,cur)=> pre + ',' + cur.spec_name_id, 0)})`)
+            // 旧的产品表关联所有sku关闭
+            await db.query(`update product_sku set is_used = 0 where p_id = '${p_id}'`)
+
+            //  如果不含有规格
+            if(!requestData.has_spec){
+                ctx.body = JSON.stringify({
+                    code: 200,
+                    data: 1
+                })
+                reload()
+                return
+            }
+            
+            // 插入新的规格数据
+            for(var i=0; i<requestData.spec_arr.length; i++){
+                const spec_name_id = requestData.spec_arr[i].spec_name_id || 0
+
+                if(spec_name_id){
+                    await db.query(`update spec_name set value = '${requestData.spec_arr[i].spec_name}', is_used = 1 where spec_name_id = ${spec_name_id}`)
+                    for(var j=0; j<requestData.spec_arr[i].spec_value_arr.length; j++){
+                        const __ = requestData.spec_arr[i].spec_value_arr[j]
+                        if(__.spec_value_id){
+                             await db.query(`update spec_value set value = '${__.spec_value}', is_used = 1 where spec_value_id = ${__.spec_value_id}`)
+                        }
+                        else{
+                             const [results, connection] = await db.connection(`insert into spec_value(spec_name_id, value) values(${spec_name_id}, '${__.spec_value}')`);
+                             const [results1, connection1] = await db.use_connection(connection,`SELECT LAST_INSERT_ID() as id`);
+                             connection1.release();
+                             const ID = results1[0].id;
+                             __.spec_value_id = ID
+                        }
+                    }
+                }
+                else{
+
+                    const [results, connection] = await db.connection(`insert into spec_name(p_id, value) values('${p_id}', '${requestData.spec_arr[i].spec_name}')`);
+                    const [results1, connection1] = await db.use_connection(connection,`SELECT LAST_INSERT_ID() as id`);
+                    connection1.release();
+                    const ID = results1[0].id
+                    requestData.spec_arr[i].spec_name_id = ID
+                    for(var j=0; j<requestData.spec_arr[i].spec_value_arr.length; j++){
+                        const __ = requestData.spec_arr[i].spec_value_arr[j]
+                        const [results, connection] = await db.connection(`insert into spec_value(spec_name_id, value) values(${ID}, '${__.spec_value}')`);
+                        const [results1, connection1] = await db.use_connection(connection,`SELECT LAST_INSERT_ID() as id`);
+                        connection1.release();
+                        const ID2 = results1[0].id
+                        __.spec_value_id = ID2
+                    }
+                }
+            };
+
+            // 插入sku 组合数据
+            for(var i=0; i<requestData.spec_data.length; i++){
+                const item = requestData.spec_data[i];
+
+                item.spec_comp.forEach(_=>{
+                    if(!_.spec_name_id || !_.spec_value_id){
+                        for(var i=0; i<requestData.spec_arr.length; i++){
+                            if(requestData.spec_arr[i].spec_name == _.spec_name){
+                                _.spec_name_id = requestData.spec_arr[i].spec_name_id;
+                                for(var j=0; j<requestData.spec_arr[i].spec_value_arr.length; j++){
+                                    if(requestData.spec_arr[i].spec_value_arr[j].spec_value == _.spec_value){
+                                        _.spec_value_id = requestData.spec_arr[i].spec_value_arr[j].spec_value_id
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
+
+                if(item.sku_id){
+                    await db.query(`update product_sku set price = ${item.price}, stock = ${item.stock}, spec_data = '${JSON.stringify(item.spec_comp)}', is_used = 1 where sku_id = ${item.sku_id}`)
+                }
+                else {
+                    await db.query(`insert into product_sku(p_id, price, stock, spec_data) values('${p_id}', ${item.price}, ${item.stock}, '${JSON.stringify(item.spec_comp)}')`)
+                }
+            }
+
             ctx.body = JSON.stringify({
                 code: 200,
                 data: 1

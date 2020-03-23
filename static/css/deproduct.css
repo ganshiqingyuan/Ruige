@@ -4,6 +4,18 @@
 			overflow: auto;
 			margin-top: 100px;
 		}
+		.go_buy{
+			height: 30px;
+			display: block;
+			width: 100px;
+			text-align: center;
+			line-height: 30px;
+			border-radius: 3px;
+			background: #1ab7f5;
+			color: #ffffff;
+			margin: 1rem auto;
+			cursor: pointer;
+		}
 		.de-left{
 			width: 500px;
 			height: 400px;

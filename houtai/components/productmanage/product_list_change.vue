@@ -79,7 +79,7 @@
                                     <template slot-scope="scope2">
                                         <img style="height:18px;cursor:pointer;" @click="scope.row.spec_value_arr.length>0?scope.row.spec_value_arr.splice(scope2.$index,1):''" :src="deletePng"/>
                                         <img style="height:21px;padding:0 10px;cursor:pointer;" :src="cutJpg"/>
-                                        <img style="height:18px;cursor:pointer;" @click="scope.row.spec_value_arr.push({spec_value:''})" :src="addPng"/>
+                                        <img style="height:18px;cursor:pointer;" @click="scope.row.spec_value_arr.push({spec_value:'', spec_value_id:0})" :src="addPng"/>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -88,12 +88,12 @@
 
                     <el-table-column
                     label="规格种类操作"
-                    width="100"
+                    width="150"
                     >
                         <template slot-scope="scope">
                             <img style="height:18px;cursor:pointer;" @click="fenleiItem.spec_arr.splice(scope.$index,1)" :src="deletePng"/>
                             <img style="height:21px;padding:0 10px;cursor:pointer;" :src="cutJpg"/>
-                            <img style="height:18px;cursor:pointer;" @click="fenleiItem.spec_arr.push({spec_name:'',spec_value_arr:[{spec_value:''}]})" :src="addPng"/>
+                            <img style="height:18px;cursor:pointer;" @click="fenleiItem.spec_arr.push({spec_name:'', spec_name_id:0 ,spec_value_arr:[{spec_value:'', spec_value_id: 0}]})" :src="addPng"/>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -161,112 +161,18 @@ export default {
                 has_spec: 0,
                 spec_arr:[
                     {
-                        spec_name:'颜色',
+                        spec_name:'',
+                        spec_name_id:0,
                         spec_value_arr:[
                             {
-                                spec_value:'黑色'
-                            },
-                            {
-                                spec_value:'白色'
-                            }
-                        ]
-                    },
-                    {
-                        spec_name:'大小',
-                        spec_value_arr:[
-                            {
-                                spec_value:'大'
-                            },
-                            {
-                                spec_value:'小'
-                            }
-                        ]
-                    },
-                    {
-                        spec_name:'胖瘦',
-                        spec_value_arr:[
-                            {
-                                spec_value:'胖'
-                            },
-                            {
-                                spec_value:'瘦'
+                                spec_value:'',  
+                                spec_value_id: 0
                             }
                         ]
                     }
                 ],
                 spec_data:[
-                    {
-                        price: 0,
-                        stock: 0,
-                        spec_comp:[
-                            {
-                                spec_name:'颜色',
-                                spec_name_id: 0,
-                                spec_value:'黑色',
-                                spec_value_id:0
-                            },
-                            {
-                                spec_name:'大小',
-                                spec_name_id: 0,
-                                spec_value:'大',
-                                spec_value_id:0
-                            }
-                        ]
-                    },
-                    {
-                        price: 0,
-                        stock: 0,
-                        spec_comp:[
-                            {
-                                spec_name:'颜色',
-                                spec_name_id: 0,
-                                spec_value:'黑色',
-                                spec_value_id:0
-                            },
-                            {
-                                spec_name:'大小',
-                                spec_name_id: 0,
-                                spec_value:'小',
-                                spec_value_id:0
-                            }
-                        ]
-                    },
-                    {
-                        price: 0,
-                        stock: 0,
-                        spec_comp:[
-                            {
-                                spec_name:'颜色',
-                                spec_name_id: 0,
-                                spec_value:'白色',
-                                spec_value_id:0
-                            },
-                            {
-                                spec_name:'大小',
-                                spec_name_id: 0,
-                                spec_value:'大',
-                                spec_value_id:0
-                            }
-                        ]
-                    },
-                    {
-                        price: 0,
-                        stock: 0,
-                        spec_comp:[
-                            {
-                                spec_name:'颜色',
-                                spec_name_id: 0,
-                                spec_value:'白色',
-                                spec_value_id:0
-                            },
-                            {
-                                spec_name:'大小',
-                                spec_name_id: 0,
-                                spec_value:'小',
-                                spec_value_id:0
-                            }
-                        ]
-                    }
+                    
                 ],
                 price: 0, // 没有规格的时候的价格
                 stock:0, // 没有规格时候的库存
@@ -303,11 +209,37 @@ export default {
             this.fenleiItem.detail = propsType.detail;
             this.fenleiItem.file = propsType.imgSrc;
             this.fenleiItem.id = propsType.id
+
+            this.init_product_detail(propsType.id)
         }
     },
     methods:{
         changeProductChangeShowFlag: function(flag){
             this.$emit('changeProductChangeShowFlag',flag)
+        },
+        init_product_detail: function(id){
+            this.$rq.get_product_detail({id:id}).then(res=>{
+                if(res){
+                    const item = res.data
+                    this.fenleiItem.list_name = item.product_detail.list_name;
+                    this.fenleiItem.descript = item.product_detail.descript;
+                    this.fenleiItem.detail = item.product_detail.detail;
+                    this.fenleiItem.file = item.product_detail.imgSrc;
+                    this.fenleiItem.id = item.product_detail.id;
+                    this.fenleiItem.seo_con = item.product_detail.seo_con;
+                    this.fenleiItem.has_spec = item.product_detail.has_spec;
+                    this.fenleiItem.stock = item.product_detail.stock;
+                    this.fenleiItem.price = item.product_detail.price;
+
+                    if(item.spec_name_list.length)
+                    this.fenleiItem.spec_arr = item.spec_name_list;
+
+                    setTimeout(()=>{
+                        if(item.spec_data.length)
+                        this.fenleiItem.spec_data = item.spec_data;
+                    })
+                }
+            })
         },
         listChange: function(file){
             console.log(file)
@@ -333,6 +265,7 @@ export default {
                         formData.append('detail',this.fenleiItem.detail)
                         formData.append('id',this.fenleiItem.id)
                         formData.append('typeId',this.fenleiItem.typeId)
+                        formData.append('fenleiItem', JSON.stringify(this.fenleiItem))
                         this.$rq.changeProduct(formData).then(res=>{
                             this.uploadLoading = false
                             if(res){
@@ -355,52 +288,56 @@ export default {
                 }
             })
         },
-        dker: function(arr1, arr2){
+        merge: function(arry1, arry2){
             var result_arr = []
-            for(var i=0; i<arr1.length; i++){
-                for(var j=0; j<arr2.length; j++){
-                    result_arr.push(arr1[i].concat(arr2[j]))
+            for(var i=0; i<arry1.length; i++){
+            for(var j=0; j< arry2.spec_value_arr.length; j++){
+            result_arr.push({
+                sku_id: 0,
+                price: 0,
+                stock: 0,
+                spec_comp: arry1[i].spec_comp.concat({
+                spec_name: arry2.spec_name,
+                spec_name_id: 0,
+                spec_value: arry2.spec_value_arr[j].spec_value,
+                spec_value_id: arry2.spec_value_arr[j].spec_value_id
+                })
+            })
+                    }
                 }
-            }
-            return result_arr
+            return result_arr;
         }
     },
     watch:{
         'fenleiItem.spec_arr':{
             handler(value){
-                var ret_arr = []
-                console.log('改变')
-                console.log(value)
-                if(value.length == 2){
-                    //const dker_arr = this.dker(this.fenleiItem.spec_arr[0].spec_value_arr.map(_=>[_]),this.fenleiItem.spec_arr[1].spec_value_arr.map(_=>[_]))
-                    for(var i=0; i<value[0].spec_value_arr.length; i++){
-                        for(var j=0; j<value[1].spec_value_arr.length; j++){
-                            ret_arr.push({
-                                price: 0,
-                                stock: 0,
-                                spec_comp: value.map((_,index)=>{
-                                    if(index == 0)
-                                    return {
-                                        spec_name: _.spec_name,
-                                        spec_name_id: _.spec_id,
-                                        spec_value: _.spec_value_arr[i].spec_value,
-                                        spec_value_id: _.spec_value_arr[i].id
-                                    }
-                                    else {
-                                        return {
-                                            spec_name: _.spec_name,
-                                            spec_name_id: _.spec_id,
-                                            spec_value: _.spec_value_arr[j].spec_value,
-                                            spec_value_id: _.spec_value_arr[j].id
-                                        }
-                                    }
-                                })
-                            })
-                        }
-                    }
+                if(!value.length){
+                    this.fenleiItem.spec_data = [];
+                    return
                 }
 
-                this.fenleiItem.spec_data = ret_arr
+                var init_arr = value[0].spec_value_arr.map(_=>{
+                    return {
+                        sku_id:0,
+                        price: 0,
+                        stock: 0,
+                        spec_comp:[
+                            {
+                                spec_name: value[0].spec_name,
+                                spec_name_id: 0,
+                                spec_value:_.spec_value,
+                                spec_value_id:0
+                            },
+                        ]
+                    }
+                })
+
+                for(var i=1; i< value.length; i++){
+                    init_arr = this.merge(init_arr, value[i])
+                }
+                console.log(init_arr);
+
+                this.fenleiItem.spec_data = init_arr
                 
 
             },

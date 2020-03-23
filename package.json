@@ -8,7 +8,9 @@
     "start": "supervisor houtai.js",
     "dev": "webpack-dev-server --inline --open --progress --profile --display-cached --port 8085 --host 0.0.0.0 --hot --config entry.js",
     "dll": "webpack --config webpack.dll.js",
-    "build": "webpack --config prod.js"
+    "build": "webpack --config prod.js",
+    "build:ssr:server": "webpack --config ssr/webpackconfig/server.js",
+    "build:ssr:client": "webpack --config ssr/webpackconfig/client.js"
   },
   "author": "",
   "license": "ISC",
@@ -42,6 +44,7 @@
     "axios": "^0.18.0",
     "babel-plugin-component": "^1.1.1",
     "busboy": "^0.2.14",
+    "chokidar": "^3.3.1",
     "ejs": "^2.5.6",
     "element-ui": "^2.6.3",
     "koa": "^2.2.0",
@@ -54,13 +57,19 @@
     "koa-static": "^3.0.0",
     "koa-static-cache": "^5.1.1",
     "koa-views": "^6.0.2",
+    "koa-webpack-dev-middleware": "^2.0.2",
+    "koa-webpack-hot-middleware": "^1.0.3",
     "koa2-cors": "^2.0.6",
     "mysql": "^2.17.1",
+    "npm": "^6.14.2",
     "supervisor": "^0.12.0",
     "uuid": "^3.3.2",
     "vue": "^2.6.8",
     "vue-router": "^3.0.2",
+    "vue-server-renderer": "^2.6.8",
     "vuex": "^3.1.0",
-    "webpack-bundle-analyzer": "^3.6.0"
+    "vuex-router-sync": "^5.0.0",
+    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-node-externals": "^1.7.2"
   }
 }

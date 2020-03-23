@@ -95,6 +95,13 @@ var apis = {
             data
         })
     },
+    get_product_detail: function(params){
+        return request({
+            url: '/houtai/productmanage/get_product_detail',
+            method: 'get',
+            params
+        })
+    },
 
     //  推荐管理相关
     getAllProductList: function(params){

@@ -1,0 +1,91 @@
+const nodeExternals = require('webpack-node-externals')
+const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const path = require('path')
+const webpack = require('webpack')
+
+module.exports = {
+  // 将 entry 指向应用程序的 server entry 文件
+  entry: ['webpack-hot-middleware/client','./ssr/entry-client.js'],
+  mode:'development',
+
+  // 这允许 webpack 以 Node 适用方式(Node-appropriate fashion)处理动态导入(dynamic import)，
+  // 并且还会在编译 Vue 组件时，
+  // 告知 `vue-loader` 输送面向服务器代码(server-oriented code)。
+
+  // 对 bundle renderer 提供 source map 支持
+  devtool: 'source-map',
+
+  // 此处告知 server bundle 使用 Node 风格导出模块(Node-style exports)
+  output: {
+    path: path.resolve(__dirname, '../../static/js'),
+    publicPath: '/js/',
+    filename: 'main22.js',
+  },
+
+  optimization: {
+    splitChunks: {
+      name:'common',
+      minSize:1,
+      minChunks:1,
+      maxAsyncRequests:10,
+      chunks:'async'
+    },
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          compilerOptions: {
+            preserveWhitespace: false
+          }
+        }
+      },
+      {
+        test:/\.css$/,
+        use:["vue-style-loader","css-loader"]
+      },
+      {
+        test:/\.less$/,
+        use:["vue-style-loader","css-loader","less-loader"]
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: '[name].[ext]?[hash]'
+        }
+      },
+    ]
+  },
+
+  // https://webpack.js.org/configuration/externals/#function
+  // https://github.com/liady/webpack-node-externals
+  // 外置化应用程序依赖模块。可以使服务器构建速度更快，
+  // 并生成较小的 bundle 文件。
+//   externals: nodeExternals({
+//     // 不要外置化 webpack 需要处理的依赖模块。
+//     // 你可以在这里添加更多的文件类型。例如，未处理 *.vue 原始文件，
+//     // 你还应该将修改 `global`（例如 polyfill）的依赖模块列入白名单
+//     whitelist: /\.css$/
+//   }),
+
+  // 这是将服务器的整个输出
+  // 构建为单个 JSON 文件的插件。
+  // 默认文件名为 `vue-ssr-server-bundle.json`
+  plugins: [
+    new VueLoaderPlugin(),
+    new VueSSRClientPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ]
+}
