@@ -1,18 +1,6 @@
 <template>
 <div id ='app'>
-    <div class="nav_header">
-        <div class="left_logo">ruige</div>
-        <div class="item_right">
-            <ul>
-                <li>
-                    CART
-                </li>
-                <li>
-                    SEARCH
-                </li>
-            </ul>
-        </div>
-    </div>
+    <Header></Header>
     <div class="pro_container">
         <div class="pro_left_img">
             <div class="pro_img"></div>
@@ -55,6 +43,7 @@
 </template>
 
 <script>
+import Header from '../common/header/header.vue'
 export default {
     asyncData ({ store, route }) {
         // 触发 action 后，会返回 Promise
@@ -124,6 +113,7 @@ export default {
         }
     },
     components:{
+        Header
     }
 }
 </script>
@@ -131,40 +121,6 @@ export default {
 
 <style lang='less'>
 #test,#app{
-    .nav_header{
-        width: 100%;
-        height: 1.5rem;
-        background: #ddd;
-        box-sizing: border-box;
-        padding: 0 2rem;
-        .left_logo{
-            width: 3rem;
-            float: left;
-            height: 1.5rem;
-            font: normal normal 500 1rem/1.5rem "Times New Roman";
-            color: #000000;
-        }
-        .item_right{
-            float: right;
-            width: calc(100% - 3rem);
-            height: 100%;
-            ul{
-                width: 100%;
-                margin: 0;
-                height: 100%;
-                overflow: auto;
-                li{
-                    list-style: none;
-                    float: right;
-                    width: 7rem;
-                    height: 100%;
-                    font: normal normal 500 0.6rem/1.5rem "Times New Roman";
-                    cursor: pointer;
-                    color: black;
-                }
-            }
-        }
-    }
     .pro_container{
         width: 90%;
         margin: auto;
@@ -290,7 +246,10 @@ export default {
                     height: 2rem;
                     line-height: 2rem;
                     padding: 0 0.4rem;
-                    background: #1ab7f5;
+                    // background: #1ab7f5;
+                    background-color: #0070c9;
+                    background: linear-gradient(#42a1ec,#0070c9);
+                    border: 1px solid #07c;
                     color: #ffffff;
                     font-size: 1rem;
                     display: inline-block;
