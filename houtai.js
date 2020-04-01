@@ -81,7 +81,7 @@ catch(err){
 function reload(){
   console.log("开始初始化数据")
   new Promise((res,rej)=>{
-    threadpool.query(`select * from product_type`, function (error, results, fields) {
+    threadpool.query(`select * from product_type order by sort`, function (error, results, fields) {
       if (error) {
           console.log(error)
           throw error
