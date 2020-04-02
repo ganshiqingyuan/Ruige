@@ -133,6 +133,35 @@ module.exports = function(router, threadpool, reload, al_client){
                 })
             })
             await al_client.delete(src.slice(src.lastIndexOf('/')+1))
+
+
+            const products = await new Promise((res,rej)=>{
+                const sql = `select imgSrc from product_list where typeID = '${id}'`;
+                threadpool.query(sql, function(error, results, fields){
+                    if(error){
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+
+            console.log(products);
+
+            products.forEach(async _=>{
+                await al_client.delete(_.imgSrc.slice(src.lastIndexOf('/')+1))
+            })
+
+            await new Promise((res,rej)=>{
+                const sql = `delete from product_list where typeId = '${id}'`;
+                threadpool.query(sql, function(error,results, fields){
+                    if(error){
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+
+
             ctx.body = JSON.stringify({
                 code: 200,
                 data:1
@@ -365,7 +394,7 @@ module.exports = function(router, threadpool, reload, al_client){
         try{
             const { list_name, descript, detail, page, perpage } = ctx.request.query
             const sql = `SELECT SQL_CALC_FOUND_ROWS * from product_list
-                        where list_name like '%${list_name}%' AND descript like '%${descript}%' AND detail like '%${detail}%' AND recommend = 1 
+                        where list_name like '%${list_name}%' AND descript like '%${descript}%' AND detail like '%${detail}%' AND recommend != 0 order by recommend
                         limit ${(page-1)*perpage},${perpage}`
 
             const list_with_count = await new Promise((reso,reje)=>{

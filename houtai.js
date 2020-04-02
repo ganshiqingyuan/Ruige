@@ -136,7 +136,7 @@ app.use(views(path.join(__dirname, './views'), {
 router.get("/",async ( ctx ) => {
 
   const recommendData = await new Promise((res,rej)=>{
-    threadpool.query(`select * from product_list where recommend = 1`, function (error, results2, fields){
+    threadpool.query(`select * from product_list where recommend != 0 order by recommend`, function (error, results2, fields){
       if (error) {
           throw error
       };
