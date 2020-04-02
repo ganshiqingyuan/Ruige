@@ -77,7 +77,7 @@ module.exports = function(router, threadpool, reload, al_client){
                     var ext = extArr[extArr.length-1]
                     nextPath = path + '.' +ext;
                     await al_client.put(nextPath.slice(nextPath.lastIndexOf('/')+1), file.path)
-                    src = await al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/')+1))
+                    src = await al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/')+1)).replace('http','https')
                     await fs.unlinkSync(file.path) //删除临时存储文件
                     
                     const old_src = await new Promise((res,rej)=>{
@@ -226,7 +226,7 @@ module.exports = function(router, threadpool, reload, al_client){
                     var ext = extArr[extArr.length-1]
                     nextPath = path + '.' +ext;
                     await al_client.put(nextPath.slice(nextPath.lastIndexOf('/')+1), file.path)
-                    src = al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/')+1))
+                    src = al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/')+1)).replace('http','https')
                     await fs.unlinkSync(file.path) //删除临时存储文件
                     
                     const old_src = await new Promise((res,rej)=>{
