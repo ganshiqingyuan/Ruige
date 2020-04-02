@@ -394,7 +394,7 @@ module.exports = function(router, threadpool, reload, al_client){
         try{
             const { list_name, descript, detail, page, perpage } = ctx.request.query
             const sql = `SELECT SQL_CALC_FOUND_ROWS * from product_list
-                        where list_name like '%${list_name}%' AND descript like '%${descript}%' AND detail like '%${detail}%' AND recommend != 0 order by recommend
+                        where list_name like '%${list_name}%' AND descript like '%${descript}%' AND detail like '%${detail}%' AND recommend != 0 order by recommend desc
                         limit ${(page-1)*perpage},${perpage}`
 
             const list_with_count = await new Promise((reso,reje)=>{
