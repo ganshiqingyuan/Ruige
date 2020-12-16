@@ -117,6 +117,15 @@ var apis = {
                   method: 'get',
                   params
             })
+      },
+
+      // 新闻相关
+      getNewsList: function (params) {
+            return request({
+                  url: '/houtai/newsmanage/get_news_list',
+                  method: 'get',
+                  params
+            })
       }
 
 }

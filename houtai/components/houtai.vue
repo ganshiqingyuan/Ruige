@@ -88,7 +88,7 @@ export default {
             {
               label: "新闻列表",
               icon: "el-icon-c-scale-to-original",
-              path: "/app/main/systemconfig/newsmanage",
+              path: "/houtai/newsmanage",
               code: "050101",
               showed: false,
             },
