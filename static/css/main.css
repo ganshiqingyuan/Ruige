@@ -55,6 +55,7 @@
   line-height: 40px;
   width: 100%;
   text-align: center;
+  padding-top: 5rem;
 }
 .aboutus > span,
 .product > span {
@@ -401,12 +402,17 @@
   height: 80px;
 }
 .news_right {
-  /* background: pink; */
   padding: 10px;
 }
 .right_title {
   font-size: 18px;
   color: #222222;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 2行 */
+  -webkit-box-orient: vertical;
+  width: 80%;
 }
 .right_content {
   overflow: hidden;
@@ -417,6 +423,14 @@
   width: 80%;
   font-size: 16px;
   color: #888888;
+}
+.view_more{
+  width: 80%;
+  float: left;
+  text-align: right;
+  padding-right: 20px;
+  font-size: 20px;
+  color: rgb(81, 195, 251);
 }
 @media only screen and (max-width: 1040px) {
   .middlecontent {
