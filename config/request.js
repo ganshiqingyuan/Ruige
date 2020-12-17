@@ -126,6 +126,14 @@ var apis = {
                   method: 'get',
                   params
             })
+      },
+
+      changeNews: function (data) {
+            return request({
+                  url: '/houtai/newsmanage/change_news',
+                  method: 'post',
+                  data
+            })
       }
 
 }

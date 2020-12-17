@@ -2,7 +2,7 @@ const fs = require("fs")
 const uuid = require("uuid")
 const path = require("path")
 
-module.exports = function (router, threadpool, reload, al_client) {
+module.exports = function (router, threadpool, reload, al_client, news_client) {
       router.get('/houtai/productmanage/get_type_list', async (ctx) => {
             try {
                   const { page = 1, perpage = 10, name = '', descript = '', sort = '' } = ctx.query;
@@ -548,6 +548,120 @@ module.exports = function (router, threadpool, reload, al_client) {
                         data: list_with_count.list
                   })
 
+            }
+            catch (err) {
+                  console.log(err)
+                  ctx.body = JSON.stringify({
+                        code: 500,
+                        data: ''
+                  })
+            }
+      })
+
+      router.post('/houtai/newsmanage/change_news', async (ctx) => {
+            try {
+                  const file = ctx.request.files && ctx.request.files.file
+                  var { id, title, content } = ctx.request.body
+                  let src = ctx.request.body.file
+                  if (file) {
+                        var path = file.path.replace(/\\/g, '/');
+                        var fname = file.name;
+                        var nextPath = '';
+                        if (file.size > 0 && path) {
+                              var extArr = fname.split('.');
+                              var ext = extArr[extArr.length - 1]
+                              nextPath = path + '.' + ext;
+                              await news_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
+                              src = await news_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
+                              await fs.unlinkSync(file.path) //删除临时存储文件
+
+                              const old_src = await new Promise((res, rej) => {
+                                    const sql = `select titleImg from news where id = '${id}'`
+                                    threadpool.query(sql, function (error, results, fields) {
+                                          if (error) {
+                                                throw error
+                                          }
+                                          res(results)
+                                    })
+                              })
+                              if (old_src && old_src[0]) {
+                                    await news_client.delete(old_src[0].src.slice(old_src[0].src.lastIndexOf('/') + 1))
+                              }
+                        }
+                  }
+                  if (content) {
+                        if (!id) {
+                              var newImglength = content.match('<img src="data:image').length
+                              var regex = /<img src="data:image[^>]*>/
+                              for (var i = 0; i < newImglength; i++) {
+                                    var imgstr = content.match(regex)[0];
+                                    var imgType = imgstr.substring(imgstr.indexOf('/') + 1, imgstr.indexOf(';'))
+                                    var buffer = Buffer.from(imgstr.substring(imgstr.indexOf(`,`) + 1, imgstr.lastIndexOf(`"`)), 'base64');
+
+                                    var uuName = uuid.v4() + '.' + imgType
+
+                                    await news_client.put(uuName, buffer)
+                                    var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
+                                    content = content.replace(regex, `<img tpye = "url" src = "${newstr}"/>`)
+                              }
+                        }
+                        else {
+                              const old_content = await new Promise((res, rej) => {
+                                    const sql = `select content from news where id = '${id}'`
+                                    threadpool.query(sql, function (error, results, fields) {
+                                          if (error) {
+                                                throw error
+                                          }
+                                          res(results)
+                                    })
+                              })
+                              const new_content = content;
+
+                              var newImglength = content.match('<img src="data:image').length
+                              var regex = /<img src="data:image[^>]*>/
+                              for (var i = 0; i < newImglength; i++) {
+                                    var imgstr = content.match(regex)[0];
+                                    var imgType = imgstr.substring(imgstr.indexOf('/') + 1, imgstr.indexOf(';'))
+                                    var buffer = Buffer.from(imgstr.substring(imgstr.indexOf(`,`) + 1, imgstr.lastIndexOf(`"`)), 'base64');
+
+                                    var uuName = uuid.v4() + '.' + imgType
+
+                                    await news_client.put(uuName, buffer)
+                                    var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
+                                    content = content.replace(regex, `<img src = "${newstr}"/>`)
+                              }
+
+                              // 删掉旧的无用的图片
+                              const old_regex = /<img src=[^>]*>/
+                              const oldImgLength = old_content.match('<img src=') && old_content.match('<img src=').length || 0
+                              for (var i = 0; i < oldImgLength.length; i++) {
+                                    const str = old_content.match(old_regex)[0]
+                                    const src = str.substring(str.indexOf(`"`) + 1, str.lastIndexOf(`"`))
+                                    if (new_content.indexOf(str) == -1) {
+                                          await funs_client.delete(src.slice(str.lastIndexOf('/' + 1)))
+                                    }
+                                    old_content.replace(old_regex, 123)
+                              }
+
+
+
+                        }
+                  }
+                  await new Promise((res, rej) => {
+                        const sql = `replace into news(id, title, titleImg, content)
+                            values('${id || uuid.v4()}', '${title}', '${src}', '${content}')`
+                        threadpool.query(sql, function (error, results, fields) {
+                              if (error) {
+                                    throw error
+                              };
+                              res(results)
+                        });
+                  })
+                  ctx.body = JSON.stringify({
+                        code: 200,
+                        data: 1
+                  })
+                  reload()
             }
             catch (err) {
                   console.log(err)

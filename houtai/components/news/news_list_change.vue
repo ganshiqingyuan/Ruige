@@ -6,15 +6,64 @@
     :visible.sync="newsListChangeShowFlag"
     width="1000px"
   >
-    <quill-editor
-      ref="myQuillEditor"
-      v-model="content"
-      :options="editorOption"
-      @blur="onEditorBlur($event)"
-      @focus="onEditorFocus($event)"
-      @ready="onEditorReady($event)"
-      @change="onEditorChange"
-    />
+    <el-form label-width="150px">
+      <el-form-item label="新闻标题：" size="small">
+        <el-input v-model="newsEntity.title"></el-input>
+      </el-form-item>
+      <el-form-item size="small" label="图片：">
+        <el-upload
+          ref="upload"
+          style="text-align:center;"
+          action=""
+          :show-file-list="false"
+          :on-change="listChange"
+          :auto-upload="false"
+        >
+          <img
+            v-if="newsEntity.titleImg"
+            style="width:50%;"
+            :src="
+              typeof newsEntity.titleImg == 'string'
+                ? newsEntity.titleImg
+                : URL.createObjectURL(newsEntity.titleImg.raw)
+            "
+            class="avatar"
+          />
+          <div v-else>
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">
+              将文件拖到此处，或<em>点击上传</em>
+            </div>
+            <div class="el-upload__tip" slot="tip">
+              一次上传一张，只支持处理过后的透明png图片
+            </div>
+          </div>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="内容：" size="small">
+        <quill-editor
+          ref="myQuillEditor"
+          v-model="content"
+          :options="editorOption"
+          @blur="onEditorBlur($event)"
+          @focus="onEditorFocus($event)"
+          @ready="onEditorReady($event)"
+          @change="onEditorChange"
+        />
+      </el-form-item>
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+      <el-button size="small" @click="changeNewsListChangeShowFlag(false)"
+        >取 消</el-button
+      >
+      <el-button
+        size="small"
+        :loading="uploadLoading"
+        type="primary"
+        @click="submitNews"
+        >提 交</el-button
+      >
+    </span>
   </el-dialog>
 </template>
 
@@ -30,7 +79,14 @@ export default {
     return {
       newsListChangeShowFlag: true,
       content: "",
+      URL: URL,
       editorOption: {},
+      newsEntity: {
+        title: "",
+        titleImg: "",
+        content: "",
+      },
+      uploadLoading: false,
     };
   },
   methods: {
@@ -48,7 +104,26 @@ export default {
     },
     onEditorChange({ quill, html, text }) {
       console.log("editor change!", quill, html, text);
-      this.content = html;
+      this.newsEntity.content = html;
+    },
+    listChange: function(file) {
+      if (file.size > 100000) {
+        this.$notify({
+          message: "封面图片过大",
+          type: "warning",
+        });
+        this.$refs.upload.uploadFiles.pop();
+        return;
+      }
+      this.newsEntity.titleImg = file;
+    },
+    submitNews: function() {
+      const requestData = new FormData();
+      requestData.append("title", this.newsEntity.title);
+      requestData.append("content", this.newsEntity.content);
+      this.$rq.changeNews(requestData).then((res) => {
+        console.log(res);
+      });
     },
   },
   components: {
