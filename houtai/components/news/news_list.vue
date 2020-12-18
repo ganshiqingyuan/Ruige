@@ -125,6 +125,7 @@ export default {
       };
 
       this.$rq.getNewsList(requestData).then((res) => {
+        console.log(res);
         this.newsList = res.data;
         this.total = res.total;
         this.tableLoading = false;
