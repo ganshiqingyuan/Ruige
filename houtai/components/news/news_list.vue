@@ -56,7 +56,7 @@
 
       <el-table-column label="封面图片" prop="titleImg">
         <template slot-scope="scope">
-          <img style="width:50px;height:50px;" :src="scope.row.src" />
+          <img style="width:50px;height:50px;" :src="scope.row.titleImg" />
         </template>
       </el-table-column>
 
@@ -117,9 +117,8 @@ export default {
       const requestData = {
         title: this.queryItem.title,
         content: this.queryItem.content,
-        beginTime: new Date(this.queryItem.beginTime).getTime() || 0,
-        endTime:
-          new Date(this.queryItem.endTime).getTime() || new Date().getTime(),
+        beginTime: this.queryItem.beginTime || new Date(0),
+        endTime: this.queryItem.endTime || new Date(),
         page: this.queryItem.page,
         perpage: 10,
       };

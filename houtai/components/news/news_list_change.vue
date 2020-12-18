@@ -118,11 +118,38 @@ export default {
       this.newsEntity.titleImg = file;
     },
     submitNews: function() {
+      if (!this.newsEntity.titleImg) {
+        this.$notify({
+          message: "请上传封面图片图片",
+          type: "warning",
+        });
+        return;
+      }
+      if (!this.newsEntity.title) {
+        this.$notify({
+          message: "请输入新闻标题",
+          type: "warning",
+        });
+        return;
+      }
+      if (!this.newsEntity.content) {
+        this.$notify({
+          message: "新闻内容为空",
+          type: "warning",
+        });
+        return;
+      }
       const requestData = new FormData();
       requestData.append("title", this.newsEntity.title);
       requestData.append("content", this.newsEntity.content);
+      if (typeof this.newsEntity.titleImg != "string") {
+        requestData.append("file", this.newsEntity.titleImg.raw);
+      }
       this.$rq.changeNews(requestData).then((res) => {
-        console.log(res);
+        if (res) {
+          this.$message("添加成功");
+          this.changeNewsListChangeShowFlag(false);
+        }
       });
     },
   },

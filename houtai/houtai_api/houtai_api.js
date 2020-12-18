@@ -508,7 +508,7 @@ module.exports = function (router, threadpool, reload, al_client, news_client) {
                   console.log('进入')
                   const { title, content, beginTime, endTime, page, perpage } = ctx.request.query
                   const sql = `SELECT SQL_CALC_FOUND_ROWS * from  news
-                        where title like '%${title}%' AND content like '%${content}%' AND creationTimestamp between ${beginTime} and ${endTime}
+                        where title like '%${title}%' AND content like '%${content}%' AND unix_timestamp(creationTimestamp) between ${new Date(beginTime).getTime()} and ${new Date(endTime).getTime()}
                         limit ${(page - 1) * perpage},${perpage}`
 
                   const list_with_count = await new Promise((reso, reje) => {
