@@ -1,6 +1,10 @@
 <template>
   <div class="news_list_container">
-    <news-list-change v-if="newsListShowFlag"></news-list-change>
+    <news-list-change
+      v-if="newsListShowFlag"
+      :news="changedNews"
+    ></news-list-change>
+    <news-view :newsHtml="viewsNews" v-if="newsViewShowFlag"></news-view>
     <el-form label-width="120px">
       <el-row>
         <el-col :span="8">
@@ -39,20 +43,40 @@
         <el-col :span="8">
           <el-form-item prop="imgSrc" size="small">
             <el-button @click="query_news_list(1)">查询</el-button>
-            <el-button @click="changeNewsListChangeShowFlag(true)"
-              >添加</el-button
-            >
+            <el-button @click="addNews">添加</el-button>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
 
     <el-table v-loading="tableLoading" :data="newsList">
-      <el-table-column label="时间" prop="createTimestamp"> </el-table-column>
+      <el-table-column label="时间" prop="creationTimestamp">
+        <template slot-scope="scope">
+          <p>
+            {{ formatDate(scope.row.creationTimestamp, "yyyy-MM-dd HH:mm:ss") }}
+          </p>
+        </template>
+      </el-table-column>
 
       <el-table-column label="标题" prop="title"> </el-table-column>
 
-      <el-table-column label="内容" prop="content"> </el-table-column>
+      <el-table-column label="内容" prop="content">
+        <template slot-scope="scope">
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="点击预览新闻内容"
+            placement="top"
+          >
+            <img
+              style="height:21px;padding:0 10px;cursor:pointer;"
+              alt="点击预览内容"
+              @click="viewNews(scope.row.content)"
+              :src="seeJpg"
+            />
+          </el-tooltip>
+        </template>
+      </el-table-column>
 
       <el-table-column label="封面图片" prop="titleImg">
         <template slot-scope="scope">
@@ -94,12 +118,21 @@
 
 <script>
 import newsListChange from "./news_list_change.vue";
-
+import newsView from "./news_view.vue";
+import deletePng from "img/delete.png";
+import dealJpg from "img/deal.jpg";
+import cutJpg from "img/cut.jpg";
+import seeJpg from "img/see.jpg";
 export default {
   name: "newsList",
   data() {
     return {
+      deletePng: deletePng,
+      dealJpg: dealJpg,
+      cutJpg: cutJpg,
+      seeJpg: seeJpg,
       newsListShowFlag: false,
+      newsViewShowFlag: false,
       tableLoading: false,
       queryItem: {
         title: "",
@@ -110,6 +143,8 @@ export default {
       },
       newsList: [],
       total: 0,
+      viewsNews: "",
+      changedNews: "",
     };
   },
   methods: {
@@ -130,14 +165,76 @@ export default {
         this.tableLoading = false;
       });
     },
+    changeNewsViewChangeShowFlag: function(flag) {
+      this.newsViewShowFlag = flag;
+    },
     changeNewsListChangeShowFlag: function(flag) {
       this.newsListShowFlag = flag;
     },
-    deleteNews: function(item) {},
-    changeNews: function(item) {},
+    deleteNews: function(item) {
+      const requestData = {
+        id: item.id,
+      };
+
+      this.$confirm("确认删除该条新闻?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$rq
+            .deleteNews(requestData)
+            .then((res) => {
+              if (res) {
+                this.$message("删除成功");
+                this.query_news_list(1);
+              }
+            })
+            .catch((error) => {
+              this.$message("删除失败");
+            });
+        })
+        .catch(() => {});
+    },
+    changeNews: function(item) {
+      this.changedNews = item;
+      this.changeNewsListChangeShowFlag(true);
+    },
+    viewNews: function(content) {
+      this.viewsNews = content;
+      this.changeNewsViewChangeShowFlag(true);
+    },
+    addNews: function() {
+      this.changedNews = "";
+      this.changeNewsListChangeShowFlag(true);
+    },
+    formatDate: function(date, format) {
+      date = new Date(date);
+      if (!format) format = "yyyy-MM-dd";
+      var dict = {
+        yyyy: date.getFullYear(),
+        M: date.getMonth() + 1,
+        d: date.getDate(),
+        H: date.getHours(),
+        m: date.getMinutes(),
+        s: date.getSeconds(),
+        MM: ("" + (date.getMonth() + 101)).substr(1),
+        dd: ("" + (date.getDate() + 100)).substr(1),
+        HH: ("" + (date.getHours() + 100)).substr(1),
+        mm: ("" + (date.getMinutes() + 100)).substr(1),
+        ss: ("" + (date.getSeconds() + 100)).substr(1),
+      };
+      return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function() {
+        return dict[arguments[0]];
+      });
+    },
+  },
+  mounted: function() {
+    this.query_news_list();
   },
   components: {
     newsListChange,
+    newsView,
   },
 };
 </script>

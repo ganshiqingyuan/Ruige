@@ -134,6 +134,14 @@ var apis = {
                   method: 'post',
                   data
             })
+      },
+
+      deleteNews: function (data) {
+            return request({
+                  url: '/houtai/newsmanage/delete_news',
+                  method: 'post',
+                  data
+            })
       }
 
 }

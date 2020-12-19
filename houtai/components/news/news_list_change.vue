@@ -43,12 +43,11 @@
       <el-form-item label="内容：" size="small">
         <quill-editor
           ref="myQuillEditor"
-          v-model="content"
+          v-model="newsEntity.content"
           :options="editorOption"
           @blur="onEditorBlur($event)"
           @focus="onEditorFocus($event)"
           @ready="onEditorReady($event)"
-          @change="onEditorChange"
         />
       </el-form-item>
     </el-form>
@@ -68,20 +67,16 @@
 </template>
 
 <script>
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-
 import { quillEditor } from "vue-quill-editor";
 export default {
   name: "newListChange",
   data() {
     return {
       newsListChangeShowFlag: true,
-      content: "",
       URL: URL,
       editorOption: {},
-      newsEntity: {
+      newsEntity: this.$props.news || {
+        id: "",
         title: "",
         titleImg: "",
         content: "",
@@ -89,6 +84,7 @@ export default {
       uploadLoading: false,
     };
   },
+  props: ["news"],
   methods: {
     changeNewsListChangeShowFlag: function(flag) {
       this.$parent.changeNewsListChangeShowFlag(flag);
@@ -101,10 +97,6 @@ export default {
     },
     onEditorReady(quill) {
       console.log("editor ready!", quill);
-    },
-    onEditorChange({ quill, html, text }) {
-      console.log("editor change!", quill, html, text);
-      this.newsEntity.content = html;
     },
     listChange: function(file) {
       if (file.size > 100000) {
@@ -142,15 +134,28 @@ export default {
       const requestData = new FormData();
       requestData.append("title", this.newsEntity.title);
       requestData.append("content", this.newsEntity.content);
-      if (typeof this.newsEntity.titleImg != "string") {
-        requestData.append("file", this.newsEntity.titleImg.raw);
-      }
-      this.$rq.changeNews(requestData).then((res) => {
-        if (res) {
-          this.$message("添加成功");
-          this.changeNewsListChangeShowFlag(false);
-        }
-      });
+      requestData.append("id", this.newsEntity.id);
+      requestData.append(
+        "file",
+        typeof this.newsEntity.titleImg != "string"
+          ? this.newsEntity.titleImg.raw
+          : this.newsEntity.titleImg
+      );
+      this.uploadLoading = true;
+      this.$rq
+        .changeNews(requestData)
+        .then((res) => {
+          if (res) {
+            this.$message("添加成功");
+            this.changeNewsListChangeShowFlag(false);
+            this.$parent.query_news_list();
+            this.uploadLoading = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.uploadLoading = false;
+        });
     },
   },
   components: {

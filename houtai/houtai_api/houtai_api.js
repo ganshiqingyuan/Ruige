@@ -558,6 +558,75 @@ module.exports = function (router, threadpool, reload, al_client, news_client) {
             }
       })
 
+      router.post('/houtai/newsmanage/delete_news', async (ctx) => {
+            try {
+                  const { id } = ctx.request.body
+                  if (!id) {
+                        ctx.body = JSON.stringify({
+                              code: 400,
+                              data: '缺少新闻id参数'
+                        })
+                        return
+                  }
+                  const [entity] = await new Promise((res, rej) => {
+                        const sql = `select titleImg, content from news where id = '${id}'`
+                        threadpool.query(sql, function (error, results, fields) {
+                              if (error) {
+                                    throw error
+                              }
+                              res(results)
+                        })
+                  })
+
+                  if (!entity) {
+                        ctx.body = JSON.stringify({
+                              code: 400,
+                              data: '不存在的新闻id'
+                        })
+                        return
+                  }
+
+                  // 删除数据
+                  const sql = `delete from news where id = '${id}'`
+                  threadpool.query(sql, function (error, results, fields) {
+                        if (error) {
+                              throw error
+                        }
+                  })
+
+                  // 删除封面图
+                  if (entity.titleImg) {
+                        news_client.delete(entity.titleImg.slice(entity.titleImg.lastIndexOf('/') + 1))
+                  }
+
+                  // 删除内容中的oss
+                  if (entity.content) {
+                        old_content = entity.content
+                        var regex = /<img src=[^>]*>/
+                        const oldImgLength = old_content.match(new RegExp(regex, 'g')) && old_content.match(new RegExp(regex, 'g')).length || 0
+                        for (var i = 0; i < oldImgLength; i++) {
+                              const str = old_content.match(regex)[0]
+                              const src = str.substring(str.indexOf(`"`) + 1, str.lastIndexOf(`"`))
+                              news_client.delete(src.slice(src.lastIndexOf('/') + 1))
+                              old_content = old_content.replace(str, 123)
+                        }
+                  }
+
+                  ctx.body = JSON.stringify({
+                        code: 200,
+                        data: entity
+                  })
+
+            }
+            catch (err) {
+                  console.log(err)
+                  ctx.body = JSON.stringify({
+                        code: 500,
+                        data: ''
+                  })
+            }
+      })
+
       router.post('/houtai/newsmanage/change_news', async (ctx) => {
             try {
                   const file = ctx.request.files && ctx.request.files.file
@@ -573,7 +642,7 @@ module.exports = function (router, threadpool, reload, al_client, news_client) {
                               nextPath = path + '.' + ext;
                               await news_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
                               src = await news_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
-                              await fs.unlinkSync(file.path) //删除临时存储文件
+                              fs.unlinkSync(file.path) //删除临时存储文件
 
                               const old_src = await new Promise((res, rej) => {
                                     const sql = `select titleImg from news where id = '${id}'`
@@ -585,14 +654,15 @@ module.exports = function (router, threadpool, reload, al_client, news_client) {
                                     })
                               })
                               if (old_src && old_src[0]) {
-                                    await news_client.delete(old_src[0].src.slice(old_src[0].src.lastIndexOf('/') + 1))
+                                    news_client.delete(old_src[0].titleImg.slice(old_src[0].titleImg.lastIndexOf('/') + 1))
                               }
                         }
                   }
                   if (content) {
                         if (!id) {
-                              var newImglength = content.match('<img src="data:image').length
                               var regex = /<img src="data:image[^>]*>/
+                              var newImglength = content.match(new RegExp(regex, 'g')) && content.match(new RegExp(regex, 'g')).length || 0
+                              console.log(newImglength)
                               for (var i = 0; i < newImglength; i++) {
                                     var imgstr = content.match(regex)[0];
                                     var imgType = imgstr.substring(imgstr.indexOf('/') + 1, imgstr.indexOf(';'))
@@ -602,11 +672,11 @@ module.exports = function (router, threadpool, reload, al_client, news_client) {
 
                                     await news_client.put(uuName, buffer)
                                     var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
-                                    content = content.replace(regex, `<img tpye = "url" src = "${newstr}"/>`)
+                                    content = content.replace(regex, `<img src="${newstr}"/>`)
                               }
                         }
                         else {
-                              const old_content = await new Promise((res, rej) => {
+                              const [old_content] = await new Promise((res, rej) => {
                                     const sql = `select content from news where id = '${id}'`
                                     threadpool.query(sql, function (error, results, fields) {
                                           if (error) {
@@ -615,10 +685,9 @@ module.exports = function (router, threadpool, reload, al_client, news_client) {
                                           res(results)
                                     })
                               })
-                              const new_content = content;
 
-                              var newImglength = content.match('<img src="data:image').length
                               var regex = /<img src="data:image[^>]*>/
+                              var newImglength = content.match(new RegExp(regex, 'g')) && content.match(new RegExp(regex, 'g')).length || 0
                               for (var i = 0; i < newImglength; i++) {
                                     var imgstr = content.match(regex)[0];
                                     var imgType = imgstr.substring(imgstr.indexOf('/') + 1, imgstr.indexOf(';'))
@@ -628,26 +697,29 @@ module.exports = function (router, threadpool, reload, al_client, news_client) {
 
                                     await news_client.put(uuName, buffer)
                                     var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
-                                    content = content.replace(regex, `<img src = "${newstr}"/>`)
+                                    content = content.replace(regex, `<img src="${newstr}"/>`)
                               }
+
+                              const new_content = content;
 
                               // 删掉旧的无用的图片
                               const old_regex = /<img src=[^>]*>/
-                              const oldImgLength = old_content.match('<img src=') && old_content.match('<img src=').length || 0
-                              for (var i = 0; i < oldImgLength.length; i++) {
-                                    const str = old_content.match(old_regex)[0]
+                              const oldImgLength = old_content.content.match(new RegExp(old_regex, 'g')) && old_content.content.match(new RegExp(old_regex, 'g')).length || 0
+                              for (var i = 0; i < oldImgLength; i++) {
+                                    const str = old_content.content.match(old_regex)[0]
                                     const src = str.substring(str.indexOf(`"`) + 1, str.lastIndexOf(`"`))
-                                    if (new_content.indexOf(str) == -1) {
-                                          await funs_client.delete(src.slice(str.lastIndexOf('/' + 1)))
+                                    if (new_content.indexOf(src) == -1) {
+                                          console.log(src.slice(src.lastIndexOf('/') + 1))
+                                          news_client.delete(src.slice(src.lastIndexOf('/') + 1))
                                     }
-                                    old_content.replace(old_regex, 123)
+                                    old_content.content = old_content.content.replace(old_regex, 123)
                               }
 
 
 
                         }
                   }
-                  await new Promise((res, rej) => {
+                  new Promise((res, rej) => {
                         const sql = `replace into news(id, title, titleImg, content)
                             values('${id || uuid.v4()}', '${title}', '${src}', '${content}')`
                         threadpool.query(sql, function (error, results, fields) {
