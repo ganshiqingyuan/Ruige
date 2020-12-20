@@ -412,7 +412,6 @@
   display: -webkit-box;
   -webkit-line-clamp: 1; /* 2行 */
   -webkit-box-orient: vertical;
-  width: 80%;
 }
 .right_content {
   overflow: hidden;
@@ -420,11 +419,10 @@
   display: -webkit-box;
   -webkit-line-clamp: 2; /* 2行 */
   -webkit-box-orient: vertical;
-  width: 80%;
   font-size: 16px;
   color: #888888;
 }
-.view_more{
+.view_more {
   width: 80%;
   float: left;
   text-align: right;
