@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= news.title %></title>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="<%= news.title %>" />
+    <meta name="description" content="<%= news.title %>" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="/css/resect.css" />
+    <link rel="stylesheet" href="/css/public.css" />
+    <link rel="stylesheet" href="/css/newsList.css" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      sizes="any"
+      href="/img/r.svg"
+    />
+    <link rel="icon" sizes="any" href="/img/r.svg" />
+    <script src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/jq.js"></script>
+  </head>
+  <body>
+    <%- include('head') %>
+    <div class="new-list-top"></div>
+    <div class="new-watch-content">
+      <div class="title"></div>
+      <div class="content"></div>
+    </div>
+    <%- include('foot') %>
+  </body>
+</html>
