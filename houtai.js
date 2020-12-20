@@ -86,9 +86,10 @@ var sitemap
 try {
     setTimeout(() => {
         reload().then(res => {
-            rebuildSitemap()
+            return reloadNews().then(res2 => {
+                rebuildSitemap()
+            })
         })
-        reloadNews()
     }, 100)
 }
 catch (err) {
