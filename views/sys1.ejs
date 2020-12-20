@@ -103,44 +103,27 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
                         <div class="news">
                               <h1>News</h1>
                               <ul>
-                                     <li>
-                                          <div class="news_left">
-                                                <img src="../img/aboutback.jpg" alt="">
-                                          </div>
-                                          <div class="news_right">
-                                                <p class="right_title">这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题</p>
-                                                <p class="right_content">这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签</p>
-                                          </div>
-                                    </li>
-                                     <li>
-                                          <div class="news_left">
-                                                <img src="../img/aboutback.jpg" alt="">
-                                          </div>
-                                          <div class="news_right">
-                                                <p class="right_title">这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题</p>
-                                                <p class="right_content">这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签</p>
-                                          </div>
-                                    </li>
-                                     <li>
-                                          <div class="news_left">
-                                                <img src="../img/aboutback.jpg" alt="">
-                                          </div>
-                                          <div class="news_right">
-                                                <p class="right_title">这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题</p>
-                                                <p class="right_content">这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签</p>
-                                          </div>
-                                    </li>
-                                     <li>
-                                          <div class="news_left">
-                                                <img src="../img/aboutback.jpg" alt="">
-                                          </div>
-                                          <div class="news_right">
-                                                <p class="right_title">这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题这是c标题，这是c标题</p>
-                                                <p class="right_content">这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签这是p标签，内容标签</p>
-                                          </div>
-                                    </li>
-															</ul>
-															<div class="view_more">View More News</div>
+                                <% for(var i = 0; i < newsList.length; i++){ %>
+        <a href="newsList/<%= newsList[i].id %>">
+          <li>
+            <div class="news_left">
+              <img src="<%= newsList[i].titleImg %>" alt="" />
+            </div>
+            <div class="news_right">
+              <p class="right_title">
+                <%= newsList[i].title %>
+              </p>
+              <p class="right_content">
+                <%= newsList[i].content %>
+              </p>
+            </div>
+          </li>
+        </a>
+        <% } %>
+                            </ul>
+                            <a href="/newsList">
+                                <div class="view_more">View More News</div>
+                            </a>
                         </div>
 
 			    <div class="mainproduct">

@@ -11,7 +11,8 @@
     />
     <link rel="stylesheet" href="/css/resect.css" />
     <link rel="stylesheet" href="/css/public.css" />
-    <link rel="stylesheet" href="/css/newsList.css" />
+    <link rel="stylesheet" href="/css/newsWatch.css" />
+    <link rel="stylesheet" href="/css/quill.css" />
     <link
       rel="shortcut icon"
       type="image/x-icon"
@@ -23,10 +24,14 @@
   </head>
   <body>
     <%- include('head') %>
-    <div class="new-list-top"></div>
-    <div class="new-watch-content">
-      <div class="title"></div>
-      <div class="content"></div>
+    <div class="news_watch_top"></div>
+    <div class="news_watch_content">
+      <h1 class="title">
+        <%= news.title %>
+      </h1>
+      <div class="ql-editor">
+        <%- news.content %>
+      </div>
     </div>
     <%- include('foot') %>
   </body>

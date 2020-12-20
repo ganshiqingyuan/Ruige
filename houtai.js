@@ -262,7 +262,7 @@ router.get("/", async (ctx) => {
     })
 
     await ctx.render('sys1', {
-        productdata, recommendData
+        productdata, recommendData, newsList
     })
 })
 
@@ -272,7 +272,7 @@ router.get("/newsList", async (ctx) => {
     })
 })
 
-router.get("newsList/:id", async (ctx) => {
+router.get("/newsList/:id", async (ctx) => {
     await ctx.render("newsWatch", {
         productdata, news: newsList.find(_ => _.id == ctx.params.id)
     })

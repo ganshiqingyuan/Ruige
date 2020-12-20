@@ -4,3 +4,36 @@
   background: url("https://ruigedist.oss-cn-hongkong.aliyuncs.com/fourcat.jpg");
   background-size: 100% 100%;
 }
+.news_list_content ul li {
+  margin: 2% 10%;
+}
+
+.news_list_content ul li .news_left {
+  float: left;
+  margin-right: 10px;
+}
+.news_list_content ul li .news_left img {
+  width: 80px;
+  height: 80px;
+}
+.news_list_content ul li .news_right {
+  padding: 10px;
+}
+.news_list_content ul li .news_right .right_title {
+  font-size: 18px;
+  color: #222222;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 2行 */
+  -webkit-box-orient: vertical;
+}
+.news_list_content ul li .news_right .right_content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 2行 */
+  -webkit-box-orient: vertical;
+  font-size: 16px;
+  color: #888888;
+}
