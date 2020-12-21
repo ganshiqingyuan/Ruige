@@ -29,7 +29,7 @@
         <div class="top_news">
           <div
             class="left_img"
-            style="background: url(https://blog.opencollective.com//content/images/size/w600/2020/12/Capture.JPG); background-size:100% 100% ;"
+            style="background: url(<%= newsList[0].titleImg %>); background-size:100% 100% ;"
           ></div>
           <div class="right_content">
             <div class="right_content_header">
@@ -57,7 +57,7 @@
                 <%= newsList[i].title %>
               </p>
               <p class="news_content_content">
-                <%= newsList[i].content %>
+                <%= newsList[i].content.replace(/<\/?.+?\/?>/g, '') %>
               </p>
               <p class="news_content_time">
                 <%= newsList[i].creationTimestamp %>
