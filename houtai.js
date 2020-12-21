@@ -99,7 +99,7 @@ catch (err) {
 function reloadNews() {
     console.log("开始初始化新闻数据")
     return new Promise((res, rej) => {
-        threadpool.query(`select * from news order by creationTimestamp`, function (error, results, fields) {
+        threadpool.query(`select id, DATE_FORMAT(creationTimestamp,'%Y-%m-%d %H:%i:%S') as creationTimestamp, title, titleImg, content from news order by creationTimestamp`, function (error, results, fields) {
             if (error) {
                 console.log(error)
                 throw error

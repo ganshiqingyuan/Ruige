@@ -25,19 +25,42 @@
     <%- include('head') %>
     <div class="new-list-top"></div>
     <div class="news_list_content">
+      <a href="">
+        <div class="top_news">
+          <div
+            class="left_img"
+            style="background: url(https://blog.opencollective.com//content/images/size/w600/2020/12/Capture.JPG); background-size:100% 100% ;"
+          ></div>
+          <div class="right_content">
+            <div class="right_content_header">
+              <%= newsList[0].title %>
+            </div>
+            <div class="right_content_content">
+              <%= newsList[0].content.replace(/<\/?.+?\/?>/g, '') %>
+            </div>
+            <div class="right_content_time">
+              <%= newsList[0].creationTimestamp %>
+            </div>
+          </div>
+        </div>
+      </a>
       <ul>
         <% for(var i = 0; i < newsList.length; i++){ %>
         <a href="newsList/<%= newsList[i].id %>">
           <li>
-            <div class="news_left">
-              <img src="<%= newsList[i].titleImg %>" alt="" />
-            </div>
-            <div class="news_right">
-              <p class="right_title">
+            <div
+              class="news_img"
+              style="background: url(<%= newsList[i].titleImg %>); background-size:100% 100% ;"
+            ></div>
+            <div class="news_content">
+              <p class="news_content_title">
                 <%= newsList[i].title %>
               </p>
-              <p class="right_content">
+              <p class="news_content_content">
                 <%= newsList[i].content %>
+              </p>
+              <p class="news_content_time">
+                <%= newsList[i].creationTimestamp %>
               </p>
             </div>
           </li>
