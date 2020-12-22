@@ -1,399 +1,404 @@
-
 /*控制底部样式*/
-.b-footer{
-			width: 100%;
-			min-height: 300px;
-			height: auto;
-			background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/bottomback.jpg');
-			background-size:100% 100% ;
-			margin-top: 100px;
-			overflow: auto;
-		}
-		.navigation{
-			height: 300px;
-			width: 25%;
-			min-width: 230px;
-			float: left;
-			text-align: center;
-		}
-		.navigation img{
-			width: 144px;
-			height: 115px;
-			margin-top: 92.5px;
-		}
-		.navigation1{
-			height: 300px;
-			width: 25%;
-			min-width: 230px;
-			float: left;
-		}
-		.navigation2{
-			height: 300px;
-			width: 25%;
-			min-width: 230px;
-			float: left;
-		}		
-		.navigation3{
-			height: 300px;
-			width: 25%;
-			min-width: 230px;
-			float: left;
-		}
-		.navigation3 span{
-			display: block;
-			width: 200px;
-			
-			margin: auto;
-		}
-		.navigation3 span h1{
-			font-weight: 700;
-			margin-top: 60px;
-			font-size: 16px;
-			color:#4d4d4d ;
-			text-align: left;
-			width: 100%;
-		}
-		.navigation3 span p{
-			font-size: 14px;
-			margin-top: 10px;
-			line-height: 30px;
-			word-wrap: break-word;
-			width: 100%;
-			color: rgb(150,150,150);
-		}
-		.navigation2 dl{
-			box-sizing: border-box;
-			width: 200px;
-			margin: auto;
-			height: 220px;
-			margin-top: 80px;
-		}
-		.navigation2 dl dt{
-			word-wrap: break-word; 
-			width: 50px;
-			line-height: 25px;
-			font-size: 14px;
-			color: rgb(150,150,150);
-			float: left;
-		}
-		.navigation2 dl dd{
-			margin-left: 0;
-			width: 150px;
-			float: left;
-			line-height: 25px;
-			font-size: 14px;
-			word-wrap: break-word; 
-			color: rgb(150,150,150);
-		}
-		.navigation1 ul{
-			margin: 0;
-			box-sizing: border-box;
-			width: 100px;
-			height: 220px;
-			margin: auto;
-			margin-top: 40px;
-			}
-		.navigation1 li{
-			list-style: none;
-			font-size: 13px;
-			width: 70%;
-			line-height: 40px;
-			height: 40px;
-			float: left;
-			}	
-		.navigation1 li a{
-			color: rgb(150,150,150);
-		}	
-			
-	/*控制响应按钮样式*/		
-		.panel{
-			z-index: 50;
-			transition: 0.3s;
-			display: none;
-			position: absolute;
-			width: 70%;
-			left: 50%;
-			top: 110px;
-			margin-left: -35%;
-			background: rgba(255,255,255,0.6);
-			}
-		.panel ul{
-			width: 100%;
-			display: flex;
-			flex-direction: row;
-			justify-content: space-around;
-			flex-wrap: wrap;
-		} 
-		.panel li{
-			float: left;
-			text-align: left;
-			color: black;
-			margin: 20px 0;
-			box-sizing: border-box;
-			width: 33.3%;
-			}
-		.panel li dd{
-			color: black;
-			font-size: 12px;
-			font-weight: 400;
-			padding-left: 10px;
-			margin-top: 10px;
-			}
-		.panel li dt{
-			font-weight: 600;
-			padding: 10px 10px;
-			font-size: 15px;
-		}	
-			
-/*控制表单样式*/			
-		.message{
-			overflow: auto;
-			margin: 50px 10% 0;
-			box-sizing: border-box;
-			width:80%;
-			height: auto;
-			position: relative;
-		}
-		.message div{
-			width: 50%;
-			height: 100%;
-			float: left;
-		}
-		.message label{
-			text-align: left;
-			font-size: 18px;
-			margin-top: 30px;
-			line-height: 30px;
-			float: left;
-			width: 25%;
-			height: 30px;
-		}
-		.message input{
-			font-size: 15px;
-			margin-top: 30px;
-			float: left;
-			width: 65%;
-			height: 30px;
-		}
-		.message textarea{
-			line-height: 25px;
-			font-size: 20px;
-			margin-top: 30px;
-			width: 70%;
-			height: 200px;
-			float: left;
-		}
-		strong{
-			color: red;
-		}
-		.submit{
-			margin: 20px 25%;
-			display: block;
-			width: 50%;
-			line-height: 30px;
-			border-radius: 5px;
-			cursor: pointer;
-			height: 30px;
-			float: left;
-			text-align: center;
-			border: 1px solid #ddd;
-		}
-		.submit:hover{
-			background: black;
-			color: white;
-		}
-		.message p{
-			float: left;
-			width: 100%;
-			height: auto;
-			line-height: 30px;
-			text-align: center;
-			margin:20px auto;
-			color: blue;
-		}
-		.message .me-warp{
-			display: none;
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			z-index: 10;
-			background: white;
-			text-align: center;
-			color: black;
-			box-sizing: border-box;
-			padding: 20% 20%;
-			font-size: 20px;
-		}
-		.form-tip{
-			width: 80%;
-			margin: auto;
-			margin-top: 30px;
-			text-align: center;
-			color: rgb(81,195,251);
-			font-size: 20px;
-		}
-		@media only screen and (max-width:500px ) {
-			.message div{
-			width: 100%;
-			height: 100%;
-			float: left;
-		}
-		.form-tip{
-			padding: 10px;
-			border: 1px solid rgb(81,195,251);
-		}
-		.message label{
-			text-align: left;
-			font-size: 18px;
-			margin-top: 30px;
-			line-height: 30px;
-			float: left;
-			width: 100%;
-			height: 30px;
-		}
-		.message input{
-			box-sizing: border-box;
-			font-size: 15px;
-			margin-top: 30px;
-			float: left;
-			width: 95%;
-			height: 29px;
-		}
-		.message textarea{
-			box-sizing: border-box;
-			text-indent: 20px;
-			line-height: 25px;
-			font-size: 20px;
-			margin-top: 30px;
-			width: 100%;
-			height: 200px;
-			float: left;
-		}
-		}	
-/*控制头部导航样式	*/		
-.h-header{
-			overflow: auto;
-			box-sizing: border-box;
-			width: 100%;
-			position: absolute;
-			left: 0;
-			top: 0;
-			z-index: 100;
-		}
-		.h-header .imglogo{
-			display: block;
-			width: 15%;
-			padding-top: 5%;
-			margin-top: 1%;
-			background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/ruige2.png');
-			background-size:100% 100% ;
-			float: left;
-			margin-left: 50px;
-		}
-		.h-header li{
-			display: block;
-			font-family: "微软雅黑";
-			cursor: pointer;
-			text-align: center;
-			color: black;
-			font-weight: 700;
-			float: right;
-			height: 40px;
-			line-height: 40px;
-			margin: 20px 20px;
-		}
-		.h-header li a{
-			font-size: 17px;
-		}
-		.h-header ul{
-			overflow: auto;
-			display: block;
-			}
-		.spread{
-			width: 50px;
-			height: 50px;
-			float: right;
-			margin-top: 20px;
-			display: none;
-		}
-		.line{
-			margin-top: 12.5px;
-			margin-left: 10px;
-			padding: 5px 0;
-			background-color: black;
-			background-clip:content-box;
-			border-top:5px solid black ;
-			border-bottom:5px solid black;
-			width: 30px;
-			height: 5px;
-		}	
+.b-footer {
+  width: 100%;
+  min-height: 300px;
+  height: auto;
+  background: url("https://ruigedist.oss-cn-hongkong.aliyuncs.com/bottomback.jpg");
+  background-size: 100% 100%;
+  margin-top: 100px;
+  overflow: auto;
+}
+.navigation {
+  height: 300px;
+  width: 25%;
+  min-width: 230px;
+  float: left;
+  text-align: center;
+}
+.navigation img {
+  width: 144px;
+  height: 115px;
+  margin-top: 92.5px;
+}
+.navigation1 {
+  height: 300px;
+  width: 25%;
+  min-width: 230px;
+  float: left;
+}
+.navigation2 {
+  height: 300px;
+  width: 25%;
+  min-width: 230px;
+  float: left;
+}
+.navigation3 {
+  height: 300px;
+  width: 25%;
+  min-width: 230px;
+  float: left;
+}
+.navigation3 span {
+  display: block;
+  width: 200px;
+
+  margin: auto;
+}
+.navigation3 span h1 {
+  font-weight: 700;
+  margin-top: 60px;
+  font-size: 16px;
+  color: #4d4d4d;
+  text-align: left;
+  width: 100%;
+}
+.navigation3 span p {
+  font-size: 14px;
+  margin-top: 10px;
+  line-height: 30px;
+  word-wrap: break-word;
+  width: 100%;
+  color: rgb(150, 150, 150);
+}
+.navigation2 dl {
+  box-sizing: border-box;
+  width: 200px;
+  margin: auto;
+  height: 220px;
+  margin-top: 80px;
+}
+.navigation2 dl dt {
+  word-wrap: break-word;
+  width: 50px;
+  line-height: 25px;
+  font-size: 14px;
+  color: rgb(150, 150, 150);
+  float: left;
+}
+.navigation2 dl dd {
+  margin-left: 0;
+  width: 150px;
+  float: left;
+  line-height: 25px;
+  font-size: 14px;
+  word-wrap: break-word;
+  color: rgb(150, 150, 150);
+}
+.navigation1 ul {
+  margin: 0;
+  box-sizing: border-box;
+  width: 100px;
+  height: 220px;
+  margin: auto;
+  margin-top: 40px;
+}
+.navigation1 li {
+  list-style: none;
+  font-size: 13px;
+  width: 70%;
+  line-height: 40px;
+  height: 40px;
+  float: left;
+}
+.navigation1 li a {
+  color: rgb(150, 150, 150);
+}
+
+/*控制响应按钮样式*/
+.panel {
+  z-index: 50;
+  transition: 0.3s;
+  display: none;
+  position: absolute;
+  width: 70%;
+  left: 50%;
+  top: 110px;
+  margin-left: -35%;
+  background: rgba(255, 255, 255, 0.6);
+}
+.panel ul {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.panel li {
+  float: left;
+  text-align: left;
+  color: black;
+  margin: 20px 0;
+  box-sizing: border-box;
+  width: 33.3%;
+}
+.panel li dd {
+  color: black;
+  font-size: 12px;
+  font-weight: 400;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+.panel li dt {
+  font-weight: 600;
+  padding: 10px 10px;
+  font-size: 15px;
+}
+
+/*控制表单样式*/
+.message {
+  overflow: auto;
+  margin: 50px 10% 0;
+  box-sizing: border-box;
+  width: 80%;
+  height: auto;
+  position: relative;
+}
+.message div {
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+.message label {
+  text-align: left;
+  font-size: 18px;
+  margin-top: 30px;
+  line-height: 30px;
+  float: left;
+  width: 25%;
+  height: 30px;
+}
+.message input {
+  font-size: 15px;
+  margin-top: 30px;
+  float: left;
+  width: 65%;
+  height: 30px;
+}
+.message textarea {
+  line-height: 25px;
+  font-size: 20px;
+  margin-top: 30px;
+  width: 70%;
+  height: 200px;
+  float: left;
+}
+strong {
+  color: red;
+}
+.submit {
+  margin: 20px 25%;
+  display: block;
+  width: 50%;
+  line-height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 30px;
+  float: left;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+.submit:hover {
+  background: black;
+  color: white;
+}
+.message p {
+  float: left;
+  width: 100%;
+  height: auto;
+  line-height: 30px;
+  text-align: center;
+  margin: 20px auto;
+  color: blue;
+}
+.message .me-warp {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: white;
+  text-align: center;
+  color: black;
+  box-sizing: border-box;
+  padding: 20% 20%;
+  font-size: 20px;
+}
+.form-tip {
+  width: 80%;
+  margin: auto;
+  margin-top: 30px;
+  text-align: center;
+  color: rgb(81, 195, 251);
+  font-size: 20px;
+}
+@media only screen and (max-width: 500px) {
+  .message div {
+    width: 100%;
+    height: 100%;
+    float: left;
+  }
+  .form-tip {
+    padding: 10px;
+    border: 1px solid rgb(81, 195, 251);
+  }
+  .message label {
+    text-align: left;
+    font-size: 18px;
+    margin-top: 30px;
+    line-height: 30px;
+    float: left;
+    width: 100%;
+    height: 30px;
+  }
+  .message input {
+    box-sizing: border-box;
+    font-size: 15px;
+    margin-top: 30px;
+    float: left;
+    width: 95%;
+    height: 29px;
+  }
+  .message textarea {
+    box-sizing: border-box;
+    text-indent: 20px;
+    line-height: 25px;
+    font-size: 20px;
+    margin-top: 30px;
+    width: 100%;
+    height: 200px;
+    float: left;
+  }
+}
+/*控制头部导航样式	*/
+.h-header {
+  overflow: auto;
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+.h-header .imglogo {
+  display: block;
+  width: 15%;
+  padding-top: 5%;
+  margin-top: 1%;
+  background: url("https://ruigedist.oss-cn-hongkong.aliyuncs.com/ruige2.png");
+  background-size: 100% 100%;
+  float: left;
+  margin-left: 50px;
+}
+.h-header li {
+  display: block;
+  font-family: "微软雅黑";
+  cursor: pointer;
+  text-align: center;
+  color: black;
+  font-weight: 700;
+  float: right;
+  height: 40px;
+  line-height: 40px;
+  margin: 20px 20px;
+}
+.h-header li a {
+  font-size: 17px;
+}
+.h-header ul {
+  overflow: auto;
+  display: block;
+}
+.spread {
+  width: 50px;
+  height: 50px;
+  float: right;
+  margin-top: 20px;
+  display: none;
+}
+.line {
+  margin-top: 12.5px;
+  margin-left: 10px;
+  padding: 5px 0;
+  background-color: black;
+  background-clip: content-box;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+  width: 30px;
+  height: 5px;
+}
 @media only screen and (max-width: 1000px) {
-	.navigation,.navigation1,.navigation2{
-		width: 33%;
-	}
-	.navigation3{
-		width: 100%;
-	}
-	.h-header ul{
-			overflow: auto;
-			display: block;
-			margin-top: 90px;
-			height: 101px;
-			background: rgba(150,150,150,0.5);
-			z-index: 101;
-			}
-			.h-header ul{
-				display: none;
-			}
-			.panel>ul{
-				display: none;
-			}
-			.spread{
-				border-radius:5px ;
-			width: 50px;
-			height: 50px;
-			float: right;
-			margin: 20px 20px;
-			display: block;
-		}
-			.h-header li{
-			text-align: center;
-			color: black;
-			font-weight: 700;
-			width: 100%;
-			float: left;
-			margin: 0;
-			height: 20px;
-			line-height: 20px;
-		}
-		}	
-@media only screen and (max-width:700px ) {
-	.navigation,.navigation1{
-		width: 50%;
-	}
-	.h-header .imglogo{
-			display: block;
-			width: 20%;
-			padding-top: 10%;
-			margin-top: 5%;
-			background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/ruige2.png');
-			background-size:100% 100% ;
-			float: left;
-			margin-left: 50px;
-		}
-	.navigation2,.navigation3{
-		width: 50%;
-	}
-}		
-@media only screen and (max-width:500px ) {
-	.navigation,.navigation1{
-		width: 100%;
-		height: 200px;
-	}
-	.navigation2,.navigation3{
-		width: 100%;
-		height: 200px;
-	}
-}				
+  .navigation,
+  .navigation1,
+  .navigation2 {
+    width: 33%;
+  }
+  .navigation3 {
+    width: 100%;
+  }
+  .h-header ul {
+    overflow: auto;
+    display: block;
+    margin-top: 90px;
+    background: rgba(150, 150, 150, 1);
+    z-index: 101;
+  }
+  .h-header ul {
+    display: none;
+  }
+  .panel > ul {
+    display: none;
+  }
+  .spread {
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    float: right;
+    margin: 20px 20px;
+    display: block;
+  }
+  .h-header li {
+    text-align: center;
+    color: black;
+    font-weight: 700;
+    width: 100%;
+    float: left;
+    margin: 0;
+    height: 20px;
+    margin-top: 10px;
+    line-height: 20px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .navigation,
+  .navigation1 {
+    width: 50%;
+  }
+  .h-header .imglogo {
+    display: block;
+    width: 20%;
+    padding-top: 10%;
+    margin-top: 5%;
+    background: url("https://ruigedist.oss-cn-hongkong.aliyuncs.com/ruige2.png");
+    background-size: 100% 100%;
+    float: left;
+    margin-left: 50px;
+  }
+  .navigation2,
+  .navigation3 {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .navigation,
+  .navigation1 {
+    width: 100%;
+    height: 200px;
+  }
+  .navigation2,
+  .navigation3 {
+    width: 100%;
+    height: 200px;
+  }
+}

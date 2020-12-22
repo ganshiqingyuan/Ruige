@@ -20,6 +20,7 @@
     />
     <link rel="icon" sizes="any" href="/img/r.svg" />
     <script src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/jq.js"></script>
+    <script type="text/javascript" src="/js/public.js"></script>
   </head>
   <body>
     <%- include('head') %>
@@ -45,7 +46,8 @@
         </div>
       </a>
       <ul>
-        <% for(var i = 0; i < newsList.length; i++){ %>
+        <% for(var i = 0; i < (newsList.length > 5 ? 5 : newsList.length) ;
+        i++){ %>
         <a href="newsList/<%= newsList[i].id %>">
           <li>
             <div

@@ -32,7 +32,6 @@
 					<ul>
 						<li>
 						<h1 class="culture">
-							<img style="width: 20px; height:20px; margin-top: 2.5px;" src="../img/plus.jpg" alt="about"/>
 							<p>Value</p></h1>
 						<span>
 							<p>Quality</p>
@@ -42,7 +41,6 @@
 						</li>
 						<li>
 						<h1 class="culture">
-							<img style="width: 20px; height:20px; margin-top: 2.5px;" src="../img/plus.jpg" alt="about" />
 							<p>Vison</p></h1>
 						<span>
 							Being core strength for improving life quality
@@ -51,7 +49,6 @@
 						</li>
 						<li>
 						<h1 class="culture">
-							<img style="width: 20px; height:20px; margin-top: 2.5px;" src="../img/plus.jpg" alt="about"  />
 							<p>Mission</p></h1>
 						<span>
 							Provide best solution for medical research and clinical applications.
@@ -60,7 +57,6 @@
 						</li>
 						<li>
 						<h1 class="culture">
-							<img style="width: 20px; height:20px; margin-top: 2.5px;" src="../img/plus.jpg" alt="about"  />
 							<p>Advantage</p></h1>
 						<span>
 							Provide comprehensive and high quality solution for users.
@@ -88,7 +84,7 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
 							<div class="rec">
 								<span>Reco</span>
 							</div>
-							<div class="with_img" style="background: url(<%= recommendData[i].imgSrc %>);background-size: 100% 100%;" alt="picture"></div>
+							<div class="with_img" style="background: url(<%=recommendData[i].imgSrc%>);background-size: 100% 100%;" alt="picture"></div>
 							<span>
 								<p class="first"><%= recommendData[i].descript %></p>
 								<p class="second"><%= recommendData[i].list_name %></p>
@@ -99,32 +95,36 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
 					</ul>
                         </div>
 
-
+                        <% if (newsList.length){ %>
                         <div class="news">
                               <h1>News</h1>
                               <ul>
                                 <% for(var i = 0; i < newsList.length; i++){ %>
-        <a href="newsList/<%= newsList[i].id %>">
-          <li>
-            <div class="news_left">
-              <img src="<%= newsList[i].titleImg %>" alt="" />
-            </div>
-            <div class="news_right">
-              <p class="right_title">
-                <%= newsList[i].title %>
-              </p>
-              <p class="right_content">
-                <%= newsList[i].content %>
-              </p>
-            </div>
-          </li>
-        </a>
-        <% } %>
+                                <a href="newsList/<%= newsList[i].id %>">
+                                <li>
+                                    <div class="news_left">
+                                    <img src="<%= newsList[i].titleImg %>" alt="" />
+                                    </div>
+                                    <div class="news_right">
+                                    <p class="right_title">
+                                        <%= newsList[i].title %>
+                                    </p>
+                                    <p class="right_content">
+                                        <%= newsList[i].content.replace(/<\/?.+?\/?>/g, '') %>
+                                    </p>
+                                    <p class="right_time">
+                                        <%= newsList[i].creationTimestamp %>
+                                    </p>
+                                    </div>
+                                </li>
+                                </a>
+                                <% } %>
                             </ul>
                             <a href="/newsList">
                                 <div class="view_more">View More News</div>
                             </a>
                         </div>
+                        <% } %>
 
 			    <div class="mainproduct">
 			    	<img src="img/leftswipt.jpg" alt="turnleft" />

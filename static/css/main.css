@@ -101,7 +101,6 @@
   font-size: 25px;
   line-height: 25px;
   color: black;
-  text-indent: 30px;
 }
 .aboutus li span {
   color: rgba(150, 150, 150, 1);
@@ -229,7 +228,12 @@
   font-size: 0.8rem;
   border-radius: 10px;
   color: white;
-  /* border: 1px solid rgba(16,95,240,0.7); */
+  border: 1px solid rgb(82 196 251);
+}
+
+.recommend ul li button:hover {
+  color: orange;
+  text-decoration: underline;
 }
 
 .c-content {
@@ -389,8 +393,19 @@
   font-size: 23px;
   font-weight: 700;
 }
+
+.news ul a {
+  display: block;
+}
 .news ul li {
-  margin: 2% 10%;
+  margin: 30px 10%;
+  overflow: auto;
+  padding: 10px;
+}
+
+.news ul a:hover {
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
 }
 
 .news_left {
@@ -398,14 +413,20 @@
   margin-right: 10px;
 }
 .news_left img {
-  width: 80px;
-  height: 80px;
+  width: 160px;
+  height: 100px;
 }
 .news_right {
-  padding: 10px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
 }
 .right_title {
-  font-size: 18px;
+  font-size: 20px;
   color: #222222;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -420,6 +441,15 @@
   -webkit-line-clamp: 2; /* 2行 */
   -webkit-box-orient: vertical;
   font-size: 16px;
+  color: #888888;
+}
+.right_time {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 2行 */
+  -webkit-box-orient: vertical;
+  font-size: 14px;
   color: #888888;
 }
 .view_more {
@@ -551,8 +581,9 @@
     font-size: 0.8rem;
     border-radius: 10px;
     color: white;
-    /* border: 1px solid rgba(16,95,240,0.7); */
+    border: 1px solid rgb(82 196 251);
   }
+
   @media only screen and (min-width: 100px) and (max-width: 700px) {
     .mainproduct {
       opacity: 0;
@@ -736,6 +767,15 @@
       width: 30px;
       height: 30px;
       display: block;
+    }
+
+    .view_more {
+      width: 100%;
+      float: left;
+      text-align: center;
+      padding-right: 20px;
+      font-size: 20px;
+      color: rgb(81, 195, 251);
     }
   }
   @media only screen and (min-width: 100px) and (max-width: 500px) {
