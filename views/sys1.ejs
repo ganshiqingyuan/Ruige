@@ -106,12 +106,14 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
                                     <img src="<%= newsList[i].titleImg %>" alt="" />
                                     </div>
                                     <div class="news_right">
-                                    <p class="right_title">
-                                        <%= newsList[i].title %>
-                                    </p>
-                                    <p class="right_content">
-                                        <%= newsList[i].content.replace(/<\/?.+?\/?>/g, '') %>
-                                    </p>
+                                    <div>
+                                        <p class="right_title">
+                                            <%= newsList[i].title %>
+                                        </p>
+                                        <p class="right_content">
+                                            <%= newsList[i].content.replace(/<\/?.+?\/?>/g, '') %>
+                                        </p>
+                                    </div>
                                     <p class="right_time">
                                         <%= newsList[i].creationTimestamp %>
                                     </p>

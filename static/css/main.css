@@ -56,6 +56,7 @@
   width: 100%;
   text-align: center;
   padding-top: 5rem;
+  font-weight: bold;
 }
 .aboutus > span,
 .product > span {
@@ -100,10 +101,12 @@
   height: 25px;
   font-size: 25px;
   line-height: 25px;
-  color: black;
+  color: rgb(49, 50, 51);
+  font-family: Inter, sans-serif;
+  font-weight: bold;
 }
 .aboutus li span {
-  color: rgba(150, 150, 150, 1);
+  color: rgb(118, 119, 122);
   margin-top: 10px;
   display: block;
   font-size: 20px;
@@ -398,7 +401,7 @@
   display: block;
 }
 .news ul li {
-  margin: 30px 10%;
+  margin: 10px 10%;
   overflow: auto;
   padding: 10px;
 }
@@ -427,6 +430,7 @@
 }
 .right_title {
   font-size: 20px;
+  line-height: 25px;
   color: #222222;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -438,9 +442,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* 2行 */
+  -webkit-line-clamp: 3; /* 2行 */
   -webkit-box-orient: vertical;
-  font-size: 16px;
+  font-size: 14px;
   color: #888888;
 }
 .right_time {
@@ -449,14 +453,13 @@
   display: -webkit-box;
   -webkit-line-clamp: 1; /* 2行 */
   -webkit-box-orient: vertical;
-  font-size: 14px;
+  font-size: 12px;
   color: #888888;
 }
 .view_more {
   width: 80%;
-  float: left;
+  margin: auto;
   text-align: right;
-  padding-right: 20px;
   font-size: 20px;
   color: rgb(81, 195, 251);
 }
@@ -773,12 +776,24 @@
       width: 100%;
       float: left;
       text-align: center;
-      padding-right: 20px;
       font-size: 20px;
       color: rgb(81, 195, 251);
     }
   }
   @media only screen and (min-width: 100px) and (max-width: 500px) {
+    .news ul li {
+      margin: 10px 5%;
+      overflow: auto;
+      padding: 10px;
+    }
+    .news_left {
+      float: left;
+      margin-right: 5px;
+    }
+    .news_left img {
+      width: 130px;
+      height: 100px;
+    }
     .middlecontent {
       box-sizing: border-box;
       width: 300px;
