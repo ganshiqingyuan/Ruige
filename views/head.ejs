@@ -12,7 +12,7 @@
 						<div class="line"></div>
 					</div>
 					<ul class="ul">
-						<li><a href="/contact">CONTACT1</a></li>
+						<li><a href="/contact">CONTACT</a></li>
 						<li><a href="/partener">PARTENER</a></li>
 						<li><a href="/service">SERVICE & TRAINING</a></li>
 						<li class="prod"><a href="/product">PRODUCTS</a></li>
@@ -21,11 +21,11 @@
 			</div>
 <div class="panel">
 					  	 <ul>
-					  	 	 <% for(var i=0;i<productdata.length;i++){ %>  
+					  	 	 <% for(var i=0;i<productdata.length;i++){ %>
 					  	 	<li>
 					  	 		<dl>
 					  	 			<dt><a href="/sproduct/<%= productdata[i].id %>"><%= productdata[i].name %> </a></dt>
-					  	 			<% for(var j=0;j<productdata[i].list.length;j++){ %>  
+					  	 			<% for(var j=0;j<productdata[i].list.length;j++){ %>
 					  	 			<dd><a href="/sproduct/<%= productdata[i].id %>/<%= productdata[i].list[j].id %>"><%= productdata[i].list[j].list_name %> </a></dd>
 					  	 			<% } %>
 					  	 		</dl>
