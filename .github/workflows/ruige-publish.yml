@@ -1,0 +1,31 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Node.js Package
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  publish-gpr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute SSH commmands on remote server
+        uses: JimCronqvist/action-ssh@master
+        env:
+          NAME: "test-deploy"
+          USER: "root"
+        with:
+          hosts: '170.106.8.145'
+          privateKey: ${{ secrets.DEPLOY_KEY }}
+          debug: false
+          command: |
+            echo $'\n' "------ ruige reload  -------------------" $'\n'
+            docker stop ruige
+            docker rmi ruige
+            docker build -f ~/docker_ruige -t ruige .
+            docker run --rm -d -p3001:3001 --name ruige ruige
+            echo $'\n' "------ CODE READY SUCCESSFUL!!! ---------" $'\n'
