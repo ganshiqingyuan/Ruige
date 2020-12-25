@@ -26,7 +26,7 @@ export default new VueRouter({
         },
         {
             path: '/login',
-            component: () => import("houtai/login/login.vue")
+            component: () => import("houtai/components/admin/login.vue")
         }
     ]
 })
