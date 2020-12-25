@@ -13,16 +13,14 @@ jobs:
   publish-gpr:
     runs-on: ubuntu-latest
     steps:
-      - name: Execute SSH commmands on remote server
-        uses: JimCronqvist/action-ssh@master
-        env:
-          NAME: "exec"
-          USER: "root"
-        with:
-          hosts: 'root@170.106.8.145:22'
-          privateKey: ${{ secrets.DEPLOY_KEY }}
-          debug: true
-          command: |
+    - name: ssh-to-server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
             echo $'\n' "------ ruige reload  -------------------" $'\n'
             docker stop ruige
             docker rmi ruige
