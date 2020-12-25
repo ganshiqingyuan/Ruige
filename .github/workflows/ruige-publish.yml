@@ -21,7 +21,7 @@ jobs:
         with:
           hosts: 'root@170.106.8.145:22'
           privateKey: ${{ secrets.DEPLOY_KEY }}
-          debug: false
+          debug: true
           command: |
             echo $'\n' "------ ruige reload  -------------------" $'\n'
             docker stop ruige
