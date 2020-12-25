@@ -19,7 +19,7 @@ jobs:
           NAME: "test-deploy"
           USER: "root"
         with:
-          hosts: 'root@170.106.8.145 -p22'
+          hosts: 'root@170.106.8.145'
           privateKey: ${{ secrets.DEPLOY_KEY }}
           debug: false
           command: |
