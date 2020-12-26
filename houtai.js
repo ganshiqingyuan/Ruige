@@ -9,11 +9,12 @@ const { Readable } = require('stream')
 const koaBody = require('koa-body');
 var cors = require('koa2-cors');
 const path = require('path')
-const app = new Koa()
+const app = new Koa({
+    proxy: true,
+    proxyIpHeader: 'X-Real-IP',
+})
 const fs = require("fs")
 const router = require('koa-router')();
-
-const houtai_api = require('./houtai/houtai_api/houtai_api.js')
 
 const { uploadFile } = require('./static/js/upload.js')
 const { uploadFile1 } = require('./static/js/upload1.js')
@@ -68,6 +69,10 @@ var threadpool = mysql.createPool({
     password: sqlconfig.database.PASSWORD,
     database: sqlconfig.database.DATABASE
 });
+
+const houtai_api = require('./houtai/houtai_api/houtai_api.js')
+const auth = require('./houtai/houtai_api/auth.js')
+const db = (require('./houtai/houtai_api/db.js'))(threadpool)
 
 process.on('uncaughtException', function (err) {
     console.log('Caught exception: ' + err);
@@ -523,6 +528,7 @@ router.get('/sitemap.xml', async (ctx) => {
 
 houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client)
 
+app.use(auth(threadpool, db))
 
 app.use(router.routes())
     .use(router.allowedMethods());

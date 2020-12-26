@@ -142,6 +142,18 @@ var apis = {
             method: 'post',
             data
         })
+    },
+
+    // 用户相关
+    login: function (data) {
+        return Request({
+            url: '/houtai/login',
+            method: 'post',
+            data
+
+
+
+        })
     }
 
 }

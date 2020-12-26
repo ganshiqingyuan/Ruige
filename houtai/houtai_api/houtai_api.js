@@ -1,8 +1,13 @@
 const fs = require("fs")
 const uuid = require("uuid")
 const path = require("path")
+var LRU = require("lru-cache")
 
 module.exports = function (router, threadpool, reload, reloadNews, rebuildSitemap, al_client, news_client) {
+    var adminCache = new LRU({
+        max: 1000,
+        maxAge: 60 * 1000 * 60
+    })
     router.get('/houtai/productmanage/get_type_list', async (ctx) => {
         try {
             const { page = 1, perpage = 10, name = '', descript = '', sort = '' } = ctx.query;
@@ -754,6 +759,49 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 data: ''
             })
         }
+    })
+
+    // 登录相关
+    router.get('/getCaptcha', async (ctx) => {
+        var codeConfig = {
+            size: 5,// 验证码长度
+            noise: 2, // 干扰线条的数量
+            height: 44
+        }
+        var captcha = svgCaptcha.create(codeConfig);
+        var cookie = uuid.v4()
+        adminCache.set(cookie, captcha.text.toLowerCase())
+        ctx.cookies.set('auth', cookie)
+        var codeData = {
+            img: captcha.data
+        }
+        res.send(codeData);
+
+    })
+
+    router.post('/login', async (ctx) => {
+        const { username, password, captcha } = ctx.body
+        const auth = ctx.cookies.get('auth')
+        if (captcha != adminCache.get(auth)) {
+            ctx.body = JSON.stringify({
+                code: 1,
+                data: '用户名货密码或验证码不正确'
+            })
+            return
+        }
+
+        if (username != 'liuruige' || password != 'liuruige') {
+            ctx.body = JSON.stringify({
+                code: 1,
+                data: '用户名货密码或验证码不正确'
+            })
+            return
+        }
+        ctx.body = JSON.stringify({
+            code: 200,
+            data: 'liuruige'
+        })
+
     })
 
 }
