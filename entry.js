@@ -12,8 +12,17 @@ module.exports = {
         index: "index.html",
         publicPath: "/",
         proxy: {
-            '/houtai': 'http://localhost:3000'
+            '/houtai': {
+                target: 'http://localhost:3000'
+            },
+            '/getCaptcha': {
+                target: 'http://localhost:3000'
+            },
+            '/login': {
+                target: 'http://localhost:3000'
+            }
         }
+
 
     },
     output: {

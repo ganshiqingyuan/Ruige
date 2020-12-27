@@ -85,8 +85,6 @@ process.on('uncaughtException', function (err) {
 const staticPath = './static';
 
 //  全局缓存
-var productdata
-var newsList
 var sitemap
 try {
     setTimeout(() => {
@@ -109,7 +107,7 @@ function reloadNews() {
                 console.log(error)
                 throw error
             };
-            newsList = results
+            global.newsList = results
             res(results)
         });
     })
@@ -137,7 +135,7 @@ function reload() {
                 results.forEach(_ => {
                     _.list = results2.filter(__ => __.typeID == _.id);
                 })
-                productdata = results
+                global.productdata = results
                 res(results)
                 console.log('数据初始化成功')
 

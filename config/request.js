@@ -12,6 +12,7 @@ var request = axios.create({
 });
 
 request.interceptors.request.use(function (config) {
+    config.headers.auth = localStorage.auth;
     return config
 }, function (error) {
     notice({
@@ -25,7 +26,16 @@ request.interceptors.response.use(function (response) {
     console.log(response)
     if (response.data.code == '200') {
         return Promise.resolve(response.data);
-    } else if (response.data.resultCode === '1') {
+    } else if (response.data.code == '303') {
+        Vue.prototype.$notify({
+            title: '提示',
+            message: '请登录',
+            type: "warning"
+        })
+        router.push({ path: '/login' })
+        return Promise.reject(false)
+    }
+    else if (response.data.code == '1') {
         Vue.prototype.$notify({
             title: '提示',
             message: response.data.msg,
@@ -146,13 +156,10 @@ var apis = {
 
     // 用户相关
     login: function (data) {
-        return Request({
-            url: '/houtai/login',
+        return request({
+            url: '/login',
             method: 'post',
             data
-
-
-
         })
     }
 

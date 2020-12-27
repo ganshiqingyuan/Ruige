@@ -2,6 +2,7 @@ const fs = require("fs")
 const uuid = require("uuid")
 const path = require("path")
 var LRU = require("lru-cache")
+var svgCaptcha = require('svg-captcha');
 
 module.exports = function (router, threadpool, reload, reloadNews, rebuildSitemap, al_client, news_client) {
     var adminCache = new LRU({
@@ -772,20 +773,19 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
         var cookie = uuid.v4()
         adminCache.set(cookie, captcha.text.toLowerCase())
         ctx.cookies.set('auth', cookie)
-        var codeData = {
-            img: captcha.data
-        }
-        res.send(codeData);
+        ctx.set('Content-Type', 'image/svg+xml')
+        ctx.body = captcha.data;
 
     })
 
     router.post('/login', async (ctx) => {
-        const { username, password, captcha } = ctx.body
+        const { username, password, captcha } = ctx.request.body
         const auth = ctx.cookies.get('auth')
         if (captcha != adminCache.get(auth)) {
             ctx.body = JSON.stringify({
                 code: 1,
-                data: '用户名货密码或验证码不正确'
+                data: '',
+                msg: '用户名或密码或验证码不正确'
             })
             return
         }
@@ -793,7 +793,8 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
         if (username != 'liuruige' || password != 'liuruige') {
             ctx.body = JSON.stringify({
                 code: 1,
-                data: '用户名货密码或验证码不正确'
+                data: '',
+                msg: '用户名或密码或验证码不正确'
             })
             return
         }
