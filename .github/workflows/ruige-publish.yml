@@ -24,6 +24,6 @@ jobs:
             echo $'\n' "------ ruige reload  -------------------" $'\n'
             docker stop ruige
             docker rmi ruige
-            docker build -f ~/docker_ruige/Dockerfile -t ruige ~/docker_ruige/
+            docker build -f ~/docker_ruige/Dockerfile --force-rm -t ruige ~/docker_ruige/
             docker run --rm -d -p3001:3001 --name ruige ruige
             echo $'\n' "------ CODE READY SUCCESSFUL!!! ---------" $'\n'
