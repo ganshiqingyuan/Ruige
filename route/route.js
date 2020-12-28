@@ -21,6 +21,10 @@ export default new VueRouter({
                 {
                     path: '/houtai/newsmanage',
                     component: () => import('houtai/components/news/news_list.vue')
+                },
+                {
+                    path: '/houtai/userRecord',
+                    component: () => import('houtai/components/userRecord/user_record.vue')
                 }
             ]
         },

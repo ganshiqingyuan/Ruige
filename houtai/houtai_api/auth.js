@@ -24,7 +24,7 @@ async function createIpInfo(cookie, ip, db, url) {
     // 调用腾讯云接口获取地址
     const params = {
         "AddressIps": [
-            ip
+            ip.substr(ip.lastIndexOf(':') + 1)
         ],
         "Fields": {
             "Country": true,

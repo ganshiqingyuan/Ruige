@@ -136,7 +136,7 @@ export default {
             {
               label: "各个页面浏览量统计",
               icon: "el-icon-c-scale-to-original",
-              path: "/app/main/systemconfig/usermanager",
+              path: "/houtai/userRecord",
               code: "050101",
               showed: false,
             },
