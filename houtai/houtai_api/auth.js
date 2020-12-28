@@ -39,7 +39,7 @@ async function createIpInfo(cookie, ip, db, url) {
     };
     const data = await client.DescribeIpGeolocationInfos(params);
 
-    db.query(`insert into user(cookie, count, ip, location, history) values('${cookie}', 1, '${ip || ''}' , '${data && data.AddressInfo && data.AddressInfo[0] || ''}', '${url}')`)
+    db.query(`insert into user(cookie, count, ip, location, history) values('${cookie}', 1, '${ip || ''}' , '${data && data.AddressInfo && JSON.stringify(data.AddressInfo[0]) || ''}', '${url}')`)
 }
 
 function getUrlName(url) {
