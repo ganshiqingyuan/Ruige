@@ -161,6 +161,15 @@ var apis = {
             method: 'post',
             data
         })
+    },
+
+    // 用户访问记录相关
+    getUserRecordList: function (params) {
+        return request({
+            url: '/houtai/userRecord/user_record_list',
+            method: 'get',
+            params
+        })
     }
 
 }

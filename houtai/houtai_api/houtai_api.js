@@ -4,7 +4,7 @@ const path = require("path")
 var LRU = require("lru-cache")
 var svgCaptcha = require('svg-captcha');
 
-module.exports = function (router, threadpool, reload, reloadNews, rebuildSitemap, al_client, news_client) {
+module.exports = function (router, threadpool, reload, reloadNews, rebuildSitemap, al_client, news_client, db) {
     var adminCache = new LRU({
         max: 1000,
         maxAge: 60 * 1000 * 60
@@ -752,6 +752,32 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 code: 200,
                 data: 1
             })
+        }
+        catch (err) {
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: ''
+            })
+        }
+    })
+    // 用户统计相关
+    router.get('/houtai/userRecord/user_record_list', async (ctx) => {
+        try {
+            const { location, ip, creationTimeFrom, creationTimeTo, page, perpage = 10 } = ctx.request.query;
+            const sql = `SELECT SQL_CALC_FOUND_ROWS * from  user
+                        where location like '%${location || ''}%' AND ip like '%${ip || ''}%' AND unix_timestamp(creationTime) between ${new Date(creationTimeFrom).getTime() / 1000 || new Date(0).getTime() / 1000} and ${new Date(creationTimeTo).getTime() / 1000 || new Date().getTime() / 1000}
+                        limit ${(page - 1) * perpage},${perpage}`;
+            const [users, connection] = await db.connection(sql);
+            const [count, connection1] = await db.use_connection(connection, `select FOUND_ROWS()`);
+            connection1.release();
+
+            ctx.body = JSON.stringify({
+                code: 200,
+                total: count[0]['FOUND_ROWS()'],
+                data: users
+            })
+
         }
         catch (err) {
             console.log(err)

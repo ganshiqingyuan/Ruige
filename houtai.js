@@ -524,7 +524,7 @@ router.get('/sitemap.xml', async (ctx) => {
     }
 })
 
-houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client)
+houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client, db)
 
 app.use(auth(threadpool, db))
 
