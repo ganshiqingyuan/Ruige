@@ -290,14 +290,14 @@ router.get("/product", async (ctx) => {
 router.get("/newproduct", async (ctx) => {
     var typeData
     await new Promise(function (res, rej) {
-        threadpool.query(`select * from PRODUCT_TYPE`, function (error, results, fields) {
+        threadpool.query(`select * from product_type`, function (error, results, fields) {
             if (error) {
                 throw error
             };
             typeData = results;
             console.log(typeData.length)
             typeData.forEach((item, index) => {
-                threadpool.query(`select * from PRODUCT_LIST where typeID='${item.id}'`, function (error, results, fields) {
+                threadpool.query(`select * from product where typeID='${item.id}'`, function (error, results, fields) {
                     if (error) {
                         throw error
                     };
@@ -342,7 +342,7 @@ router.get("/sproduct/:a", async (ctx) => {
     const type_id = ctx.params.a;
     // 获取当前分类下产品列表
     const gs_list = await new Promise((res, rej) => {
-        threadpool.query(`SELECT * FROM PRODUCT_LIST WHERE typeID = '${type_id}'`, (err, results, fields) => {
+        threadpool.query(`SELECT * FROM product_list WHERE typeID = '${type_id}'`, (err, results, fields) => {
             if (err) {
                 rej(err)
             }
@@ -351,7 +351,7 @@ router.get("/sproduct/:a", async (ctx) => {
     })
     // 获取当前分类信息
     const gs_info = await new Promise((res, rej) => {
-        threadpool.query(`SELECT * FROM PRODUCT_TYPE WHERE id = '${type_id}'`, (err, results, fields) => {
+        threadpool.query(`SELECT * FROM product_type WHERE id = '${type_id}'`, (err, results, fields) => {
             if (err) {
                 rej(err)
             }
@@ -362,7 +362,7 @@ router.get("/sproduct/:a", async (ctx) => {
     const gs_sort = gs_info.sort;
 
     const gs_type_length = await new Promise((res, rej) => {
-        threadpool.query(`SELECT COUNT(*) as length FROM PRODUCT_TYPE`, (err, results, fields) => {
+        threadpool.query(`SELECT COUNT(*) as length FROM product_type`, (err, results, fields) => {
             if (err) {
                 rej(err)
             }
@@ -374,7 +374,7 @@ router.get("/sproduct/:a", async (ctx) => {
 
     const related_arry = await new Promise((res, rej) => {
         threadpool.query(`SELECT type.id, type.name, list.imgSrc
-                      FROM PRODUCT_TYPE type JOIN PRODUCT_LIST list
+                      FROM product_type type JOIN product_list list
                       ON type.id = list.typeID
                       WHERE type.sort IN (${related_sort.map(_ => `'${_}'`).join(',')})`, (err, results, fields) => {
             if (err) {
@@ -408,7 +408,7 @@ router.get("/sproduct/:a/:b", async (ctx) => {
 
     // 获取商品信息
     const list_info = await new Promise((res, rej) => {
-        const sql = `SELECT * FROM PRODUCT_LIST
+        const sql = `SELECT * FROM product_list
                 WHERE id = '${listID}'`
 
         threadpool.query(sql, (err, result, fields) => {
@@ -421,7 +421,7 @@ router.get("/sproduct/:a/:b", async (ctx) => {
 
     const other_list = await new Promise((res, rej) => {
         const sql = `SELECT imgSrc, list_name, id
-                FROM PRODUCT_LIST
+                FROM product_list
                 WHERE typeID = '${typeID}' AND id <> '${listID}'`
 
         threadpool.query(sql, (err, results, fields) => {

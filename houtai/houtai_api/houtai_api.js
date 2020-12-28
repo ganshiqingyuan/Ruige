@@ -12,7 +12,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
     router.get('/houtai/productmanage/get_type_list', async (ctx) => {
         try {
             const { page = 1, perpage = 10, name = '', descript = '', sort = '' } = ctx.query;
-            const sql = `SELECT * FROM PRODUCT_TYPE
+            const sql = `SELECT * FROM product_type
                         WHERE name like '%${name}%' AND descript like '%${descript}%' ${sort ? `AND sort = ${sort}` : ''}
                         order by sort
                         limit ${(page - 1) * perpage},${perpage}`
@@ -87,7 +87,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                     await fs.unlinkSync(file.path) //删除临时存储文件
 
                     const old_src = await new Promise((res, rej) => {
-                        const sql = `select src from PRODUCT_TYPE where id = '${id}'`
+                        const sql = `select src from product_type where id = '${id}'`
                         threadpool.query(sql, function (error, results, fields) {
                             if (error) {
                                 throw error
@@ -101,7 +101,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 }
             }
             await new Promise((res, rej) => {
-                const sql = `replace into PRODUCT_TYPE(id, parentId, name, descript, updateTime, sort, src)
+                const sql = `replace into product_type(id, parentId, name, descript, updateTime, sort, src)
                             values('${id || uuid.v4()}','','${name}','${descript}','${new Date().getTime()}', ${sort}, '${src}')`
                 threadpool.query(sql, function (error, results, fields) {
                     if (error) {
@@ -191,7 +191,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
         try {
             const { typeId, list_name = '', descript = '', beginTime = 0, endTime = 9999999999999, page = 1, perpage = 10 } = ctx.query;
 
-            const sql = `SELECT SQL_CALC_FOUND_ROWS * FROM PRODUCT_LIST
+            const sql = `SELECT SQL_CALC_FOUND_ROWS * FROM product_list
                         WHERE typeID = '${typeId}' AND list_name like '%${list_name}%' AND descript like '%${descript}%'
                         AND updateTime BETWEEN ${beginTime || 0} AND ${endTime || 9999999999999}
                         limit ${(page - 1) * perpage},${perpage}`
@@ -267,7 +267,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                     await fs.unlinkSync(file.path) //删除临时存储文件
 
                     const old_src = await new Promise((res, rej) => {
-                        const sql = `select imgSrc from PRODUCT_LIST where id = '${id}'`
+                        const sql = `select imgSrc from product_list where id = '${id}'`
                         threadpool.query(sql, function (error, results, fields) {
                             if (error) {
                                 throw error
@@ -282,7 +282,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
             }
 
             await new Promise((res, rej) => {
-                const sql = `replace into PRODUCT_LIST(id, typeID, imgSrc, descript, updateTime, detail, list_name)
+                const sql = `replace into product_list(id, typeID, imgSrc, descript, updateTime, detail, list_name)
                             values('${id || uuid.v4()}','${typeId}','${src}','${descript}','${new Date().getTime()}', '${detail}', '${list_name}')`
                 threadpool.query(sql, function (error, results, fields) {
                     if (error) {
