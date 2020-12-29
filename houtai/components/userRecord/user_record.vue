@@ -57,6 +57,29 @@
       <el-table-column label="ip" prop="ip"> </el-table-column>
 
       <el-table-column show-overflow-tooltip label="location" prop="location">
+        <template slot-scope="scope">
+          <el-popover placement="left" width="200" trigger="hover">
+            <ul>
+              <li
+                v-for="(item, index) of scope.row.location.split(',')"
+                :key="index"
+              >
+                {{ item }}
+              </li>
+            </ul>
+            <p style="cursor: pointer;" slot="reference">
+              {{
+                scope.row.location
+                  ? JSON.parse(scope.row.location).Country +
+                    "," +
+                    JSON.parse(scope.row.location).Province +
+                    "," +
+                    JSON.parse(scope.row.location).City
+                  : ""
+              }}
+            </p>
+          </el-popover>
+        </template>
       </el-table-column>
 
       <el-table-column label="访问次数" prop="count"> </el-table-column>
