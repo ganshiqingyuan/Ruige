@@ -1,6 +1,7 @@
 const uuid = require("uuid")
 const tencentcloud = require("tencentcloud-sdk-nodejs");
-const sqlconfig = require("../../config/sqlconfig.js")
+const sqlconfig = require("../../config/sqlconfig.js");
+const auth = require("../../config/admin.js")
 
 const VpcClient = tencentcloud.vpc.v20170312.Client;
 
@@ -121,7 +122,7 @@ module.exports = function (threadpool, db) {
             return
         }
         else {
-            if (!ctx.header.auth || ctx.header.auth != 'liuruige') {
+            if (!ctx.header.auth || ctx.header.auth != auth.auth) {
                 ctx.body = JSON.stringify({
                     code: 303,
                     data: ''

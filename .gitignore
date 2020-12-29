@@ -2,3 +2,4 @@
 .vscode
 static/.DS_Store
 config/sqlconfig.js
+config/admin.js
