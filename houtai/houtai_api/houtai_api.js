@@ -3,6 +3,7 @@ const uuid = require("uuid")
 const path = require("path")
 var LRU = require("lru-cache")
 var svgCaptcha = require('svg-captcha');
+const auth = require('../../config/admin.js')
 
 module.exports = function (router, threadpool, reload, reloadNews, rebuildSitemap, al_client, news_client, db) {
     var adminCache = new LRU({
@@ -816,7 +817,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
             return
         }
 
-        if (username != 'liuruige' || password != 'liuruige') {
+        if (username != auth.username || password != auth.password) {
             ctx.body = JSON.stringify({
                 code: 1,
                 data: '',
@@ -826,7 +827,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
         }
         ctx.body = JSON.stringify({
             code: 200,
-            data: 'liuruige'
+            data: auth.auth
         })
 
     })

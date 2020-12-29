@@ -63,10 +63,10 @@
 
       <el-table-column label="访问历史" prop="history">
         <template slot-scope="scope">
-          <el-popover placement="bottom" width="500" trigger="click">
+          <el-popover placement="left" width="500" trigger="click">
             <ul>
               <li
-                v-for="(item, index) of scope.row.history.split(',')"
+                v-for="(item, index) of scope.row.history.split(',').reverse()"
                 :key="index"
               >
                 {{ item }}
@@ -168,5 +168,9 @@ export default {
   background: #ffffff;
   width: 96%;
   margin: 15px auto;
+}
+.el-popover {
+  height: 200px;
+  overflow: auto;
 }
 </style>
