@@ -50,7 +50,7 @@
     </el-form>
 
     <el-table v-loading="tableLoading" :data="userRecordList">
-      <el-table-column label="id" prop="id"> </el-table-column>
+      <el-table-column width="50" label="id" prop="id"> </el-table-column>
 
       <el-table-column show-overflow-tooltip label="cookie" prop="cookie">
       </el-table-column>
@@ -82,9 +82,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="访问次数" prop="count"> </el-table-column>
+      <el-table-column width="100" label="访问次数" prop="count">
+      </el-table-column>
 
-      <el-table-column label="访问历史" prop="history">
+      <el-table-column label="访问历史" width="100" prop="history">
         <template slot-scope="scope">
           <el-popover
             popper-class="user_record_popover"
