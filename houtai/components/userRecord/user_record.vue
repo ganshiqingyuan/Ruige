@@ -63,12 +63,7 @@
 
       <el-table-column label="访问历史" prop="history">
         <template slot-scope="scope">
-          <el-popover
-            placement="right"
-            width="400"
-            style="max-height:400px; overflow:auto;"
-            trigger="click"
-          >
+          <el-popover placement="bottom" width="500" trigger="click">
             <ul>
               <li
                 v-for="(item, index) of scope.row.history.split(',')"
