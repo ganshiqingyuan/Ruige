@@ -768,6 +768,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
             const { location, ip, creationTimeFrom, creationTimeTo, page, perpage = 10 } = ctx.request.query;
             const sql = `SELECT SQL_CALC_FOUND_ROWS * from  user
                         where location like '%${location || ''}%' AND ip like '%${ip || ''}%' AND unix_timestamp(creationTime) between ${new Date(creationTimeFrom).getTime() / 1000 || new Date(0).getTime() / 1000} and ${new Date(creationTimeTo).getTime() / 1000 || new Date().getTime() / 1000}
+                        order by creationTime DESC
                         limit ${(page - 1) * perpage},${perpage}`;
             const [users, connection] = await db.connection(sql);
             const [count, connection1] = await db.use_connection(connection, `select FOUND_ROWS()`);
