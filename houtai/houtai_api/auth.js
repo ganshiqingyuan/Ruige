@@ -21,7 +21,7 @@ const clientConfig = {
 const client = new VpcClient(clientConfig);
 
 async function createIpInfo(cookie, ip, db, url) {
-    console.log(ip)
+    url = getUrlName(url)
     // 调用腾讯云接口获取地址
     const params = {
         "AddressIps": [
@@ -44,6 +44,7 @@ async function createIpInfo(cookie, ip, db, url) {
 }
 
 function getUrlName(url) {
+    console.log(url)
     if (url == '/' || !url) {
         return '主页'
     }
@@ -117,7 +118,7 @@ module.exports = function (threadpool, db) {
             cookie = uuid.v4();
             var ip = ctx.ip
             ctx.cookies.set('auth', cookie);
-            createIpInfo(cookie, ip, db)
+            createIpInfo(cookie, ip, db, ctx.url)
             await next()
             return
         }
