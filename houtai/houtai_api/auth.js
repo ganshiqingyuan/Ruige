@@ -44,7 +44,7 @@ async function createIpInfo(cookie, ip, db, url) {
 }
 
 function getUrlName(url) {
-    if (url == '/') {
+    if (url == '/' || !url) {
         return '主页'
     }
     const str = url.substr(url.lastIndexOf('/') + 1);
