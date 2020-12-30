@@ -67,7 +67,7 @@ export default {
 <style lang="less">
 .login_warp {
   .login_form {
-    width: 400px;
+    width: 500px;
     margin: 300px auto;
   }
 }
