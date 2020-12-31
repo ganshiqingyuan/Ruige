@@ -71,7 +71,7 @@ function getUrlName(url) {
     }
 
     if (str == 'sitemap.xml') {
-        return '发送邮件'
+        return '站点地图'
     }
 
     for (var i = 0; i < global.newsList.length; i++) {
