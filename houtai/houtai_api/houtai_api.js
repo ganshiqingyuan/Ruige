@@ -738,7 +738,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
             }
             await new Promise((res, rej) => {
                 const sql = `replace into news(id, title, titleImg, content)
-                            values('${id || uuid.v4()}', '${title}', '${src}', '${content}')`
+                            values('${id || uuid.v4()}', '${title.replace(/\'/g, "''")}', '${src}', '${content.replace(/\'/g, "''")}')`
                 threadpool.query(sql, function (error, results, fields) {
                     if (error) {
                         throw error
