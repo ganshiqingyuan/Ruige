@@ -70,6 +70,10 @@ function getUrlName(url) {
         return '发送邮件'
     }
 
+    if (str == 'sitemap.xml') {
+        return '发送邮件'
+    }
+
     for (var i = 0; i < global.newsList.length; i++) {
         if (str == global.newsList[i].id) {
             return '访问：' + global.newsList[i].title
