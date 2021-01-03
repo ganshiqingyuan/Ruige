@@ -103,7 +103,7 @@ module.exports = function (threadpool, db) {
         }
         if (!ctx.url.match(/houtai/)) {
             var cookie
-            if (cookie = ctx.cookies.get('auth')) {
+            if (cookie = ctx.cookies.get('ruige_auth')) {
                 const user = (await db.query(`select * from user where cookie = '${cookie}'`))[0];
                 if (user) {
                     if (user.history.length < 10000) {
@@ -121,7 +121,7 @@ module.exports = function (threadpool, db) {
 
             cookie = uuid.v4();
             var ip = ctx.ip
-            ctx.cookies.set('auth', cookie);
+            ctx.cookies.set('ruige_auth', cookie);
             createIpInfo(cookie, ip, db, ctx.url)
             await next()
             return

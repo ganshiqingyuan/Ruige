@@ -800,7 +800,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
         var captcha = svgCaptcha.create(codeConfig);
         var cookie = uuid.v4()
         adminCache.set(cookie, captcha.text.toLowerCase())
-        ctx.cookies.set('auth', cookie)
+        ctx.cookies.set('ruige_auth', cookie)
         ctx.set('Content-Type', 'image/svg+xml')
         ctx.body = captcha.data;
 
@@ -808,7 +808,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
 
     router.post('/login', async (ctx) => {
         const { username, password, captcha } = ctx.request.body
-        const auth = ctx.cookies.get('auth')
+        const auth = ctx.cookies.get('ruige_auth')
         if (captcha != adminCache.get(auth)) {
             ctx.body = JSON.stringify({
                 code: 1,
