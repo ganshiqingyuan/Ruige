@@ -9,34 +9,74 @@
   overflow: auto;
 }
 .navigation {
-  height: 300px;
+  height: 400px;
   width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-width: 230px;
   float: left;
   text-align: center;
 }
-.navigation img {
-  width: 144px;
-  height: 115px;
-  margin-top: 92.5px;
-}
 .navigation1 {
-  height: 300px;
+  height: 400px;
   width: 25%;
   min-width: 230px;
   float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .navigation2 {
-  height: 300px;
+  height: 400px;
   width: 25%;
   min-width: 230px;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.navigation2 h3 {
+  height: 40px;
+  line-height: 40px;
+  color: rgb(150, 150, 150);
+  width: 200px;
+  font-size: 20px;
+}
+.navigation2 ul {
+  margin: 0;
+  box-sizing: border-box;
+  width: 200px;
+  height: 220px;
+}
+.navigation2 li {
+  list-style: none;
+  font-size: 13px;
+  width: 100%;
+  line-height: 40px;
+  height: 40px;
+  color: rgb(150, 150, 150);
   float: left;
 }
 .navigation3 {
-  height: 300px;
+  height: 400px;
   width: 25%;
   min-width: 230px;
   float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.navigation2 h3 {
+  height: 40px;
+  line-height: 40px;
+  color: rgb(150, 150, 150);
+  width: 200px;
+  font-size: 20px;
 }
 .navigation3 span {
   display: block;
@@ -60,37 +100,48 @@
   width: 100%;
   color: rgb(150, 150, 150);
 }
-.navigation2 dl {
+.navigation img {
+  box-sizing: border-box;
+  width: 100px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: rgb(150, 150, 150);
+}
+.navigation dl {
   box-sizing: border-box;
   width: 200px;
-  margin: auto;
-  height: 220px;
-  margin-top: 80px;
+  overflow: auto;
 }
-.navigation2 dl dt {
+.navigation dl dt {
   word-wrap: break-word;
-  width: 50px;
+  text-align: left;
   line-height: 25px;
   font-size: 14px;
   color: rgb(150, 150, 150);
   float: left;
 }
-.navigation2 dl dd {
+.navigation dl dd {
   margin-left: 0;
   width: 150px;
   float: left;
   line-height: 25px;
   font-size: 14px;
+  text-align: left;
   word-wrap: break-word;
   color: rgb(150, 150, 150);
+}
+.navigation1 h3 {
+  height: 40px;
+  line-height: 40px;
+  color: rgb(150, 150, 150);
+  width: 120px;
+  font-size: 20px;
 }
 .navigation1 ul {
   margin: 0;
   box-sizing: border-box;
-  width: 100px;
+  width: 120px;
   height: 220px;
-  margin: auto;
-  margin-top: 40px;
 }
 .navigation1 li {
   list-style: none;
