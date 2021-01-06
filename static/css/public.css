@@ -18,6 +18,8 @@
   min-width: 230px;
   float: left;
   text-align: center;
+  padding-bottom: 60px;
+  box-sizing: border-box;
 }
 .navigation1 {
   height: 400px;
@@ -45,12 +47,14 @@
   color: rgb(150, 150, 150);
   width: 200px;
   font-size: 20px;
+  text-align: center;
 }
 .navigation2 ul {
   margin: 0;
   box-sizing: border-box;
   width: 200px;
   height: 220px;
+  text-align: center;
 }
 .navigation2 li {
   list-style: none;
@@ -77,18 +81,21 @@
   color: rgb(150, 150, 150);
   width: 200px;
   font-size: 20px;
+  text-align: center;
 }
-.navigation2 h3 {
+/* .navigation2 h3 {
   height: 40px;
   line-height: 40px;
   color: rgb(150, 150, 150);
   width: 200px;
   font-size: 20px;
-}
+  background: red;
+  text-align: center;
+} */
 .navigation img {
   box-sizing: border-box;
   width: 100px;
-  margin-bottom: 10px;
+  /* margin-bottom: 38px; */
   font-size: 16px;
   color: rgb(150, 150, 150);
 }
@@ -100,8 +107,8 @@
 .navigation dl dt {
   word-wrap: break-word;
   text-align: left;
-  line-height: 25px;
-  font-size: 14px;
+  line-height: 30px;
+  font-size: 16px;
   color: rgb(150, 150, 150);
   float: left;
 }
@@ -109,7 +116,7 @@
   margin-left: 0;
   width: 150px;
   float: left;
-  line-height: 25px;
+  line-height: 30px;
   font-size: 14px;
   text-align: left;
   word-wrap: break-word;
@@ -121,20 +128,22 @@
   color: rgb(150, 150, 150);
   width: 120px;
   font-size: 20px;
+  text-align: center;
 }
 .navigation1 ul {
   margin: 0;
   box-sizing: border-box;
   width: 120px;
   height: 220px;
+  text-align: center;
 }
 .navigation1 li {
   list-style: none;
   font-size: 13px;
-  width: 70%;
+  width: 100%;
   line-height: 40px;
   height: 40px;
-  float: left;
+  text-align: center;
 }
 .navigation1 li a {
   color: rgb(150, 150, 150);
@@ -306,6 +315,102 @@ strong {
     height: 200px;
     float: left;
   }
+  .navigation {
+    height: 400px;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 230px;
+    float: left;
+    text-align: left;
+  }
+  .navigation1 {
+    height: 400px;
+    width: 25%;
+    min-width: 230px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .navigation2 {
+    height: 400px;
+    width: 25%;
+    min-width: 230px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .navigation1 h3 {
+    height: 40px;
+    line-height: 40px;
+    color: rgb(150, 150, 150);
+    width: 120px;
+    font-size: 20px;
+    text-align: left;
+  }
+  .navigation1 ul {
+    margin: 0;
+    box-sizing: border-box;
+    width: 120px;
+    height: 220px;
+    text-align: left;
+  }
+  .navigation1 li {
+    list-style: none;
+    font-size: 13px;
+    width: 100%;
+    line-height: 40px;
+    height: 40px;
+    text-align: left;
+  }
+  .navigation2 h3 {
+    height: 40px;
+    line-height: 40px;
+    color: rgb(150, 150, 150);
+    width: 200px;
+    font-size: 20px;
+    text-align: left;
+  }
+  .navigation2 ul {
+    margin: 0;
+    box-sizing: border-box;
+    width: 200px;
+    height: 220px;
+    text-align: left;
+  }
+  .navigation2 li {
+    list-style: none;
+    font-size: 13px;
+    width: 100%;
+    line-height: 40px;
+    height: 40px;
+    color: rgb(150, 150, 150);
+    float: left;
+  }
+  .navigation3 {
+    height: 100px;
+    width: 25%;
+    min-width: 230px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .navigation3 h3 {
+    height: 40px;
+    line-height: 40px;
+    color: rgb(150, 150, 150);
+    width: 200px;
+    font-size: 20px;
+    text-align: left;
+  }
 }
 /*控制头部导航样式	*/
 .h-header {
@@ -405,6 +510,12 @@ strong {
     margin-top: 10px;
     line-height: 20px;
   }
+  .navigation3 {
+    width: 100%;
+    height: 100px;
+    box-sizing: border-box;
+    padding-bottom: 80px;
+  }
 }
 @media only screen and (max-width: 700px) {
   .navigation,
@@ -424,6 +535,7 @@ strong {
   .navigation2,
   .navigation3 {
     width: 50%;
+    height: 400px;
   }
 }
 @media only screen and (max-width: 500px) {
@@ -438,7 +550,7 @@ strong {
   .navigation2,
   .navigation3 {
     width: 100%;
-    height: 300px;
+    height: 225px;
     align-items: flex-start;
     box-sizing: border-box;
     padding-left: 80px;
@@ -448,5 +560,9 @@ strong {
   }
   .navigation dl dd {
     width: 200px;
+  }
+  .navigation {
+    padding-bottom: 0px;
+    height: 245px;
   }
 }
