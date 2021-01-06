@@ -11,7 +11,7 @@
 
 .news_list_content .top_news {
   width: 80%;
-  max-width: 1200px;
+  max-width: 1000px;
   border-radius: 5px;
   display: flex;
   flex-direction: row;
@@ -79,12 +79,9 @@
 }
 
 .news_list_content ul {
-  max-width: 1200px;
+  max-width: 1000px;
   width: 80%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  overflow: auto;
   background: #ffffff;
   margin: auto;
   margin-top: 30px;
@@ -95,6 +92,7 @@
   display: block;
   width: 30%;
   margin-left: 5%;
+  float: left;
   cursor: pointer;
   margin-top: 30px;
   border-radius: 5px;

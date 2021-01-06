@@ -37,7 +37,8 @@
               <%= newsList[0].title %>
             </div>
             <div class="right_content_content">
-              <%= newsList[0].content.replace(/<\/?.+?\/?>/g, '') %>
+              <%= newsList[0].content.replace(/<\/?.+?\/?>/g,
+              '').replace(/&nbsp/g, '') %>
             </div>
             <div class="right_content_time">
               <%= newsList[0].creationTimestamp %>
@@ -46,8 +47,7 @@
         </div>
       </a>
       <ul>
-        <% for(var i = 0; i < (newsList.length > 5 ? 5 : newsList.length) ;
-        i++){ %>
+        <% for(var i = 1; i < newsList.length ; i++){ %>
         <a href="newsList/<%= newsList[i].id %>">
           <li>
             <div
@@ -59,7 +59,8 @@
                 <%= newsList[i].title %>
               </p>
               <p class="news_content_content">
-                <%= newsList[i].content.replace(/<\/?.+?\/?>/g, '') %>
+                <%= newsList[i].content.replace(/<\/?.+?\/?>/g,
+                '').replace(/&nbsp/g, '') %>
               </p>
               <p class="news_content_time">
                 <%= newsList[i].creationTimestamp %>

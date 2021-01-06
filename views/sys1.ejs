@@ -111,7 +111,7 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
                                             <%= newsList[i].title %>
                                         </p>
                                         <p class="right_content">
-                                            <%= newsList[i].content.replace(/<\/?.+?\/?>/g, '') %>
+                                            <%= newsList[i].content.replace(/<\/?.+?\/?>/g, '').replace(/&nbsp/g, '') %>
                                         </p>
                                     </div>
                                     <p class="right_time">
