@@ -833,4 +833,127 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
 
     })
 
+    /*——————————————————————  底部商品分类推荐 ——————————————————————————*/
+    router.get('/houtai/recommendmanage/get_recommend_product_type_list', async (ctx) => {
+        try {
+            const { name, descript, detail, page = 1, perpage = 10 } = ctx.request.query
+            const sql = `SELECT SQL_CALC_FOUND_ROWS * from product_type
+                        where name like '%${name}%' AND descript like '%${descript}%' AND recommend != NULL order by recommend desc
+                        limit ${(page - 1) * perpage},${perpage}`
+
+            const list_with_count = await new Promise((reso, reje) => {
+                threadpool.getConnection(async function (err, connection) {
+                    if (err) throw err; // not connected!
+
+                    const product_type_list = await new Promise((res, rej) => {
+                        connection.query(sql, function (error, results, fields) {
+                            if (error) {
+                                throw error
+                            }
+                            res(results)
+                        })
+
+                    })
+
+                    const count = await new Promise((res, rej) => {
+                        connection.query('select FOUND_ROWS()', function (error, results, fields) {
+                            if (error) {
+                                throw error
+                            }
+                            res(results)
+                        })
+                    })
+
+                    connection.release();
+                    reso({
+                        list: product_type_list,
+                        count: count[0]['FOUND_ROWS()']
+                    })
+                });
+            })
+
+            ctx.body = JSON.stringify({
+                code: 200,
+                total: list_with_count.count,
+                data: list_with_count.list
+            })
+
+        }
+        catch (err) {
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: ''
+            })
+        }
+    })
+
+    /**
+     * 改变某一商品分类的底部推荐状态
+     */
+    router.post('/houtai/recommendmanage/change_product_type_recommend_status', async (ctx) => {
+        try {
+            const { id, flag } = ctx.request.body
+
+            if (flag == 1) {
+                const judge_sql = `select count(*) as count from product_type where recommend != NULL`
+
+                const count = await new Promise((res, rej) => {
+                    threadpool.query(judge_sql, function (error, results, fields) {
+                        if (error) {
+                            throw error
+                        }
+                        res(results)
+                    })
+                })
+                if (count[0].count > 5) {
+                    ctx.body = JSON.stringify({
+                        code: 3,
+                        data: 0,
+                        msg: '最多添加6个推荐商品'
+                    })
+                    return
+                }
+
+                const sql = `update product_type set recommend = ${count[0].count + 1} where id = '${id}'`
+                await new Promise((res, rej) => {
+                    threadpool.query(sql, function (error, results, fields) {
+                        if (error) {
+                            throw error
+                        }
+                        res(results)
+                    })
+                })
+
+            }
+            else {
+                const sql = `update product_type set recommend = NULL where id = '${id}'`
+                await new Promise((res, rej) => {
+                    threadpool.query(sql, function (error, results, fields) {
+                        if (error) {
+                            throw error
+                        }
+                        res(results)
+                    })
+                })
+            }
+
+
+            ctx.body = JSON.stringify({
+                code: 200,
+                data: 1
+            })
+            reload().then(r => {
+                rebuildSitemap()
+            })
+        }
+        catch (err) {
+            console.log(err)
+            ctx.body = JSON.stringify({
+                code: 500,
+                data: ''
+            })
+        }
+    })
+
 }
