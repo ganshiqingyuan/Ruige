@@ -838,7 +838,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
         try {
             const { name, descript, detail, page = 1, perpage = 10 } = ctx.request.query
             const sql = `SELECT SQL_CALC_FOUND_ROWS * from product_type
-                        where name like '%${name}%' AND descript like '%${descript}%' AND recommend != NULL order by recommend desc
+                        where name like '%${name}%' AND descript like '%${descript}%' AND recommend is not null order by recommend desc
                         limit ${(page - 1) * perpage},${perpage}`
 
             const list_with_count = await new Promise((reso, reje) => {
@@ -896,7 +896,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
             const { id, flag } = ctx.request.body
 
             if (flag == 1) {
-                const judge_sql = `select count(*) as count from product_type where recommend != NULL`
+                const judge_sql = `select count(*) as count, MAX(recommend) as max from product_type where recommend is not null`
 
                 const count = await new Promise((res, rej) => {
                     threadpool.query(judge_sql, function (error, results, fields) {
@@ -906,16 +906,16 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                         res(results)
                     })
                 })
-                if (count[0].count > 5) {
+                if (count[0].count > 4) {
                     ctx.body = JSON.stringify({
                         code: 3,
                         data: 0,
-                        msg: '最多添加6个推荐商品'
+                        msg: '最多添加5个推荐商品'
                     })
                     return
                 }
 
-                const sql = `update product_type set recommend = ${count[0].count + 1} where id = '${id}'`
+                const sql = `update product_type set recommend = ${count[0].max + 1} where id = '${id}'`
                 await new Promise((res, rej) => {
                     threadpool.query(sql, function (error, results, fields) {
                         if (error) {

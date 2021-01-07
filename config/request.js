@@ -128,6 +128,32 @@ var apis = {
             params
         })
     },
+    
+    //  底部栏产品管理相关
+    //商品分类推荐列表
+    getAllRecommendProductTypeList: function (params) {
+        return request({
+            url: '/houtai/recommendmanage/get_recommend_product_type_list',
+            method: 'get',
+            params
+        })
+    },
+    //修改底部商品分类接口
+    changeProductTypeStatus: function (data) {
+        return request({
+            url: '/houtai/recommendmanage/change_product_type_recommend_status',
+            method: 'post',
+            data
+        })
+    },
+    //获取商品分类可选择的列表
+    getAllProductTypeList: function (params) {
+        return request({
+            url: '/houtai/productmanage/get_type_list',
+            method: 'get',
+            params
+        })
+    },
 
     // 新闻相关
     getNewsList: function (params) {

@@ -76,6 +76,13 @@ export default {
               code: "050101",
               showed: false,
             },
+            {
+              label: "底部栏名称管理",
+              icon: "el-icon-c-scale-to-original",
+              path: "/houtai/producttypemanage",
+              code: "050101",
+              showed: false,
+            },
           ],
         },
         {

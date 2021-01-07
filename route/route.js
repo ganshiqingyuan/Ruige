@@ -25,6 +25,9 @@ export default new VueRouter({
                 {
                     path: '/houtai/userRecord',
                     component: () => import('houtai/components/userRecord/user_record.vue')
+                },{
+                    path: '/houtai/producttypemanage',
+                    component: () => import('houtai/components/producttypemanage/product_type_list.vue')
                 }
             ]
         },

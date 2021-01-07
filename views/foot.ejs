@@ -38,11 +38,15 @@
   <div class="navigation2">
     <h3>Veterinary</h3>
     <ul>
-      <li>Imaging Products Solution</li>
+      <% for(var i=0;i<productdata.filter(item=>item.recommend).length;i++){ %> 
+        <li> <a href="sproduct/<%= productdata[i].id %>"><%= productdata[i].name %></a>
+        </li>
+    <% } %>
+      <!-- <li>Imaging Products Solution</li>
       <li>Anesthesia Solution</li>
       <li>Laboratory Product</li>
       <li>Surgical Equipment</li>
-      <li>Veterinary Consumables</li>
+      <li>Veterinary Consumables</li> -->
     </ul>
   </div>
   <div class="navigation3">
