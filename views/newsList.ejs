@@ -57,11 +57,14 @@
             <div class="news_content">
               <p class="news_content_title">
                 <%= newsList[i].title %>
-              </p>
+            </p>
               <p class="news_content_content">
-                <%= newsList[i].content.replace(/<\/?.+?\/?>/g,
-                '').replace(/&nbsp/g, '') %>
-              </p>
+                  <span class="ellipsis">
+                    <%= newsList[i].content.replace(/<\/?.+?\/?>/g,
+                    '').replace(/&nbsp/g, '') %>
+                  </span>
+                </p>
+              
               <p class="news_content_time">
                 <%= newsList[i].creationTimestamp %>
               </p>
