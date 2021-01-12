@@ -358,6 +358,14 @@ router.get("/sproduct/:a", async (ctx) => {
             res(results[0])
         })
     })
+    if (!gs_info) {
+        await ctx.render('delete_product_type', {
+            productdataRecommend: productdata.filter(function (_) {
+                return _.recommend
+            })
+        })
+        return
+    }
     // 找到当前分类信息后三个分类信息
     const gs_sort = gs_info.sort;
 
@@ -419,6 +427,17 @@ router.get("/sproduct/:a/:b", async (ctx) => {
         })
     })
 
+    if (!list_info) {
+        await ctx.render('delete_product', {
+            productdataRecommend: productdata.reduce(function (pre, cur) {
+                return pre.concat(cur.list)
+            }, []).filter(function (_) {
+                return _.recommend
+            })
+        })
+        return
+    }
+
     const other_list = await new Promise((res, rej) => {
         const sql = `SELECT imgSrc, list_name, id
                 FROM product_list
@@ -460,59 +479,59 @@ router.post("/send", async (ctx) => {
 })
 
 
-router.get("/houtai", async (ctx) => {
-    console.log(__dirname)
-    var products = await productdata[parseInt(ctx.params.a)];
-    var index = parseInt(ctx.params.a);
-    await ctx.render('index', {
-        products, index, productdata,
-    })
-})
+// router.get("/houtai", async (ctx) => {
+//     console.log(__dirname)
+//     var products = await productdata[parseInt(ctx.params.a)];
+//     var index = parseInt(ctx.params.a);
+//     await ctx.render('index', {
+//         products, index, productdata,
+//     })
+// })
 
 
-router.post("/deletebig", async (ctx) => {
-    var which = await parsePostData(ctx) - 1
-    productdata.splice(which, 1)
-    fs.writeFileSync('./static/data/product.json', JSON.stringify(productdata));
-    productdata = JSON.parse(fs.readFileSync('static/data/product.json', 'utf8'));
-    ctx.body = 1;
-})
+// router.post("/deletebig", async (ctx) => {
+//     var which = await parsePostData(ctx) - 1
+//     productdata.splice(which, 1)
+//     fs.writeFileSync('./static/data/product.json', JSON.stringify(productdata));
+//     productdata = JSON.parse(fs.readFileSync('static/data/product.json', 'utf8'));
+//     ctx.body = 1;
+// })
 
 
-router.post("/deletesmall", async (ctx) => {
-    var which1 = await parsePostData(ctx)
-    which1 = parseQueryStr(which1)
-    console.log(which1.out, which1.in)
-    productdata[which1.out - 1].splice(which1.in - 1, 1)
-    fs.writeFileSync('./static/data/product.json', JSON.stringify(productdata));
-    productdata = JSON.parse(fs.readFileSync('static/data/product.json', 'utf8'));
-    ctx.body = 1;
-})
+// router.post("/deletesmall", async (ctx) => {
+//     var which1 = await parsePostData(ctx)
+//     which1 = parseQueryStr(which1)
+//     console.log(which1.out, which1.in)
+//     productdata[which1.out - 1].splice(which1.in - 1, 1)
+//     fs.writeFileSync('./static/data/product.json', JSON.stringify(productdata));
+//     productdata = JSON.parse(fs.readFileSync('static/data/product.json', 'utf8'));
+//     ctx.body = 1;
+// })
 
-router.post("/upload", async (ctx) => {
-    let result = { success: false }
-    let serverFilePath = path.join(__dirname, './static')
-    console.log(serverFilePath)
-    // 上传文件事件
-    result = await uploadFile(ctx, {
-        path: serverFilePath
-    })
-    productdata = JSON.parse(fs.readFileSync('static/data/product.json', 'utf8'));
-    await ctx.render('changesuccess', {
-    })
-})
+// router.post("/upload", async (ctx) => {
+//     let result = { success: false }
+//     let serverFilePath = path.join(__dirname, './static')
+//     console.log(serverFilePath)
+//     // 上传文件事件
+//     result = await uploadFile(ctx, {
+//         path: serverFilePath
+//     })
+//     productdata = JSON.parse(fs.readFileSync('static/data/product.json', 'utf8'));
+//     await ctx.render('changesuccess', {
+//     })
+// })
 
-router.post("/upload1", async (ctx) => {
-    let result = { success: false }
-    let serverFilePath = path.join(__dirname, './static')
-    // 上传文件事件
-    result = await uploadFile1(ctx, {
-        path: serverFilePath
-    })
-    productdata = JSON.parse(fs.readFileSync('static/data/product.json', 'utf8'));
-    await ctx.render('changesuccess', {
-    })
-})
+// router.post("/upload1", async (ctx) => {
+//     let result = { success: false }
+//     let serverFilePath = path.join(__dirname, './static')
+//     // 上传文件事件
+//     result = await uploadFile1(ctx, {
+//         path: serverFilePath
+//     })
+//     productdata = JSON.parse(fs.readFileSync('static/data/product.json', 'utf8'));
+//     await ctx.render('changesuccess', {
+//     })
+// })
 
 router.get('/sitemap.xml', async (ctx) => {
     ctx.set('Content-Type', 'application/xml');

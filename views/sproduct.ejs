@@ -11,17 +11,15 @@
 		<link rel="stylesheet" href="/css/sproduct.css" />
 		<link rel='shortcut icon' type="image/x-icon" sizes="any" href="/img/r.svg"/>
 		<link rel='icon' sizes="any" href="/img/r.svg"/>
-		<script src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/jq.js"></script>
-		<script type="text/javascript" src="/js/public.js"></script>
 	</head>
 	<body>
 		<div class="warp">
 			<%- include('head') %>
 			<div class="spro-top"></div>
 			<div class="spro-top1"></div>
-			<% if (gs_list.length) { %> 
+			<% if (gs_list.length) { %>
 			<ul class="pro-list">
-				 <% for(var i=0;i<gs_list.length;i++){ %>  
+				 <% for(var i=0;i<gs_list.length;i++){ %>
                     <li>
                     	<span style="background:url(<%= gs_list[i].imgSrc %>) ; background-size:100% 100% ;"></span>
                     	<span>
@@ -29,14 +27,19 @@
                     		<p><%= gs_list[i].descript %></p>
                     		<span><a href="<%= gs_list[i].typeID %>/<%= gs_list[i].id %>">MORE DETAIL</a></span>
                     		</span>
-                    	</li>  
+                    	</li>
                  <% } %>
 			</ul>
+<<<<<<< HEAD
 			
 			<div class="other" style="margin-bottom: 100px;">
+=======
+
+			<div class="other">
+>>>>>>> 067dc934ee4005ba65b3d94d629bcf419d9b1422
 				<h1>OTHER RODUCTS</h1>
 				<ul>
-					 <% for(var j = 0; j < related_arry_set.length; j++){ %> 
+					 <% for(var j = 0; j < related_arry_set.length; j++){ %>
 						<a href="<%= related_arry_set[j].id %>">
 							<li>
 								<div class="bac"  style="background:url(<%= related_arry_set[j].imgSrc %>) ; background-size:100% 100% ;"></div>
@@ -49,11 +52,11 @@
 			<% } %>
 			<%- include('foot') %>
 		</div>
-		
-	</body>
+
+    </body>
 	<script type="text/javascript">
 		//控制左右单双分开
 		$('.pro-list li:even>span').css("float","right")
 	</script>
-	
+
 </html>

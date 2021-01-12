@@ -11,8 +11,6 @@
 		<link rel="stylesheet" href="/css/deproduct.css" />
 		<link rel='shortcut icon' type="image/x-icon" sizes="any" href="/img/r.svg"/>
 		<link rel='icon' sizes="any" href="/img/r.svg"/>
-		<script src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/jq.js"></script>
-		<script type="text/javascript" src="/js/public.js"></script>
 	</head>
 	<body>
 	<%- include('head') %>
@@ -24,16 +22,16 @@
 			<h1><%= list_info.list_name %></h1>
 			<p><%= list_info.descript %></p>
 			<ul>
-				<% for(var j=0;j<list_info.detail.split(',').length;j++){ %> 
+				<% for(var j=0;j<list_info.detail.split(',').length;j++){ %>
 				<li><%=  list_info.detail.split(',')[j] %></li>
 				<% } %>
 			</ul>
 		</div>
 	</div>
-	<% if (other_list.length>1) { %> 
+	<% if (other_list.length>1) { %>
 		<div class="de-bottom">
 			<ul>
-				<% for(var i=0;i<other_list.length;i++){ %> 
+				<% for(var i=0;i<other_list.length;i++){ %>
 					<a href="<%= other_list[i].id %>">
 				<li>
 					<div class="bacg" style="background:url(<%= other_list[i].imgSrc %>);background-size:100% 100% ;"></div>

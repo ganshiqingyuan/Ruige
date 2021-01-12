@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <!-- 分类已经被后台删除展示的页面 -->
+	<head>
+		<title>The product has been taken off</title>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="The product has been taken off. try others" />
+		<meta name="description" content="The product has been taken off. try others" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/css/resect.css" />
+        <link rel="stylesheet" href="/css/public.css" />
+        <link rel="stylesheet" href="/css/deproduct.css" />
+		<link rel='shortcut icon' type="image/x-icon" sizes="any" href="/img/r.svg"/>
+		<link rel='icon' sizes="any" href="/img/r.svg"/>
+	</head>
+	<body>
+	<%- include('head') %>
+	<div class="de-top"></div>
+	<div class="de-top1"></div>
+	<div class="decontent">
+		This productType has been taken off. see others～
+	</div>
+	<% if (productdataRecommend.length>1) { %>
+		<div class="de-bottom">
+			<ul>
+				<% for(var i=0;i<productdataRecommend.length;i++){ %>
+					<a href="<%= productdataRecommend[i].id %>">
+				<li>
+					<div class="bacg" style="background:url(<%= productdataRecommend[i].src %>);background-size:100% 100% ;"></div>
+					<p><%= productdataRecommend[i].name %> </p>
+				</li>
+				</a>
+				 <% } %>
+			</ul>
+		</div>
+		<% } %>
+	<%- include('foot') %>
+	</body>
+</html>
