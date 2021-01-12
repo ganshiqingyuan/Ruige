@@ -11,9 +11,6 @@
 		<link rel="stylesheet" href="css/product.css" />
 		<link rel='shortcut icon' type="image/x-icon" sizes="any" href="/img/r.svg"/>
 		<link rel='icon' sizes="any" href="/img/r.svg"/>
-		<script src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/jq.js"></script>
-		<script type="text/javascript" src="/js/public.js"></script>
-		<script type="text/javascript" src="/js/product.js" ></script>
 	</head>
 	<body>
 		<%- include('head') %>
@@ -53,7 +50,7 @@
 			    					</div>
 			    					<img src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/fourleft.jpg" alt="products third show" />
 			    				</div>
-			    				<div class="imgfour">   
+			    				<div class="imgfour">
 			    					<div>
 			    						<h3>RUIGE - COMPREHENSIVE SUPPLIER OF IMAGING PRODUCTS:</h3>
 			    						<span class="in-content">
@@ -65,7 +62,7 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
 			    				</div>
 			    				</span>
 			    			</div>
-			    		<p>></p>	
+			    		<p>></p>
 			    		<ul class="four">
 			    					<li class="fir"></li>
 			    					<li></li>
@@ -94,7 +91,7 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
 			    		</div>
 			    	<div class="chose">
 			    		<ul>
-								<% for(var i=0;i<productdata.length;i++){ %> 
+								<% for(var i=0;i<productdata.length;i++){ %>
 										<li style="background:url(<%= productdata[i].src %>) ; background-size:100% 100% ;">
 											<span class="firs"><p><a href="sproduct/<%= productdata[i].id %>">View more</a></p></span>
 											<span><p><%= productdata[i].name %></p></span>
@@ -143,7 +140,7 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
 			    	</div>
 			    </div>
 			</div>
-			
+
 			<div class="advantage" style="margin-top: 100px;">
    	<!--<div style="font-size: 32px;">Come to see us!</div> -->
    </div>
@@ -169,6 +166,7 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
    		</li>
    	</ul>
    </div> -->
-		<%- include('foot') %>
+        <%- include('foot') %>
+        <script type="text/javascript" src="/js/product.js" ></script>
 	</body>
 </html>

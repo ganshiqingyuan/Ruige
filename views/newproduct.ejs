@@ -11,8 +11,6 @@
         <link rel="stylesheet" href="css/newproduct.css" />
         <link rel='shortcut icon' type="image/x-icon" sizes="any" href="/img/r.svg"/>
 		<link rel='icon' sizes="any" href="/img/r.svg"/>
-		<script src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/jq.js"></script>
-		<script type="text/javascript" src="/js/public.js"></script>
 		<script type="text/javascript" src="/js/product.js" ></script>
     </head>
     <style>
@@ -43,7 +41,7 @@
         overflow: visable;
         position: relative;
         line-height: 2rem;
-        border-bottom:1px solid #ddd; 
+        border-bottom:1px solid #ddd;
         text-align: center;
         cursor: pointer;
     }
@@ -84,7 +82,7 @@
                     <div class="new_lefttab">
                         <h1>Product Categories</h1>
                         <ul>
-                            <% for(var i=0;i<productdata.length;i++){ %> 
+                            <% for(var i=0;i<productdata.length;i++){ %>
                                     <% if(productdata[i].children.length==0){ %>
                                         <li><%=productdata[i].name%></li>
                                     <%}%>
@@ -111,7 +109,7 @@
                     </div>
 			    </div>
 			</div>
-			
+
 		<%- include('foot') %>
     </body>
     <script>
