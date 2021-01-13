@@ -43,7 +43,7 @@
   overflow: auto;
   margin-top: 0px;
   width: 100%;
-  padding: 40px 0;
+  /* padding: 40px 0; */
 }
 .aboutus > h1,
 .product > h1,
@@ -61,7 +61,7 @@
 .aboutus > span,
 .product > span {
   font-size: 24px; 
-  line-height: 32px; 
+  line-height: 27px; 
   letter-spacing: -0.8px; 
   display:block;
   word-break: break-word;
@@ -70,7 +70,7 @@
   margin:  auto;
   margin-top: 16px;
   margin-bottom: 80px;
-  width: 755px;
+  width: 50%;
   font-weight: 500;
   text-align: center;
 
@@ -109,7 +109,7 @@
 }
 .aboutus li h1 p {
   font-size: 24px;
-  line-height: 32px;
+  line-height: 27px;
   letter-spacing: -0.8px;
   position: absolute;
   left: 0;
@@ -134,6 +134,10 @@
   /* font-size: 20px; */
   /* line-height: 30px; */
   width: 100%;
+}
+.aboutus img{
+  height: auto;
+  width:100%;
 }
 .product > ul li {
   font-size: 20px;
@@ -502,11 +506,11 @@
     margin: 20px 80px 0 20px;
   }
   .aboutus li {
-    padding: 10px 30px;
+    padding: 30px 50px;
     box-sizing: border-box;
     float: left;
-    width: 100%;
-    height: auto;
+    width: 47%;
+    height: 380px;
     overflow: auto;
   }
   .aboutus li:first-child {
@@ -525,13 +529,15 @@
     text-align: center;
   }
   .aboutus li span {
-    color: rgba(150, 150, 150, 1);
     margin-top: 10px;
     display: block;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 16px;
     width: 100%;
     text-align: center;
+    line-height: 27px;
+    letter-spacing: -0.2px;
+    color: rgb(118, 119, 122);
+    font-family: Inter,sans-serif;
   }
   .in-warp span {
     font-size: 15px;
@@ -623,12 +629,12 @@
     .mainproduct h1 {
       width: 100%;
       height: 20%;
-      font-size: 15px;
+      font-size: 18px;
       text-align: center;
     }
     .mainproduct p {
-      line-height: 14px;
-      font-size: 12px;
+      line-height: 20px;
+      font-size: 14px;
       width: 100%;
       height: 80%;
       text-align: center;
@@ -661,7 +667,13 @@
       width: 100%;
       text-align: center;
     }
-    .aboutus > span,
+    .aboutus > span{
+      text-align: center;
+      display: block;
+      width: 300px;
+      margin: 10px auto;
+      font-size: 16px;
+    }
     .product > span,
     .recommend > span {
       text-align: center;
@@ -670,6 +682,15 @@
       margin: 10px auto;
       font-size: 10px;
     }
+    .aboutus li{
+      width: 47%;
+      height: auto;
+      margin: 0 auto;
+    }
+    /* .aboutus img{
+      height: 150px;
+      width:100%;
+    } */
     .product > ul {
       padding: 50px 0;
       overflow: auto;
@@ -835,6 +856,29 @@
       height: auto;
       float: left;
     }
+    .middle-left h1 {
+      font-weight: 700;
+      color: white;
+      margin-top: 61px;
+      text-align: left;
+      text-indent: 20px;
+      width: 100%;
+      font-size: 40px;
+    }
+    .middle-left span i {
+      color: black;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .middle-left span {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      line-height: 35px;
+      padding: 20px 20px;
+      color: white;
+      font-size: 20px;
+    }
     .content {
       margin-top: 50%;
     }
@@ -852,11 +896,13 @@
     }
     .in-warp h1 {
       text-align: center;
-      font-size: 20px;
+      font-size: 30px;
+      height: 40px;
+      line-height: 40px;
     }
     .in-warp span {
       color: black;
-      font-size: 10px;
+      font-size: 14px;
     }
     .aboutus > h1,
     .product > h1 {
@@ -866,6 +912,15 @@
       width: 100%;
       text-align: center;
     }
+    .aboutus li{
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+    /* .aboutus img{
+      height: 100px;
+      width:100%;
+    } */
     .c-content {
       position: relative;
       margin-top: 50px;
