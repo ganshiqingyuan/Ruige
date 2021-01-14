@@ -17,7 +17,8 @@
   display: block;
   font-size: 22px;
   text-align: center;
-  font-family: "微软雅黑";
+  /* font-family: "微软雅黑"; */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: white;
 }
 .h-content {
@@ -43,7 +44,7 @@
   overflow: auto;
   margin-top: 0px;
   width: 100%;
-  /* padding: 40px 0; */
+  padding: 40px 0;
 }
 .aboutus > h1,
 .product > h1,
@@ -381,7 +382,7 @@
 .middlecontent {
   box-sizing: border-box;
   width: 1040px;
-  margin: 100px auto 0;
+  margin: 100px auto;
   overflow: auto;
 }
 .middle-right {
@@ -420,6 +421,13 @@
   color: black;
   font-size: 23px;
   font-weight: 700;
+}
+
+.news{
+  margin-top: 60px;
+}
+.news h1{
+  margin-bottom: 2rem;
 }
 
 .news ul a {
@@ -497,7 +505,7 @@
   .middlecontent {
     box-sizing: border-box;
     width: 500px;
-    margin: 100px auto 0;
+    margin: 50px auto 0;
     overflow: auto;
   }
   .middle-right {
@@ -510,7 +518,7 @@
     box-sizing: border-box;
     float: left;
     width: 47%;
-    height: 380px;
+    height: 500px;
     overflow: auto;
   }
   .aboutus li:first-child {
@@ -903,6 +911,7 @@
     .in-warp span {
       color: black;
       font-size: 14px;
+      line-height: 23px;
     }
     .aboutus > h1,
     .product > h1 {

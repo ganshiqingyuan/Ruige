@@ -150,6 +150,16 @@
   font-size: 20px;
   text-align: center;
 }
+.svg_icon{
+  width: 25px;
+  height: 25px;
+  margin-right: 20px;
+}
+.svg_icon:hover{
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+}
 /*控制响应按钮样式*/
 .panel {
   z-index: 50;
