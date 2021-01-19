@@ -304,6 +304,9 @@ strong {
   .form-tip {
     padding: 10px;
     border: 1px solid rgb(81, 195, 251);
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 80px;
   }
   .message label {
     text-align: left;
@@ -317,7 +320,7 @@ strong {
   .message input {
     box-sizing: border-box;
     font-size: 15px;
-    margin-top: 30px;
+    margin-top: 3px;
     float: left;
     width: 95%;
     height: 29px;
@@ -327,10 +330,24 @@ strong {
     text-indent: 20px;
     line-height: 25px;
     font-size: 20px;
-    margin-top: 30px;
+    margin-top: 3px;
     width: 100%;
     height: 200px;
     float: left;
+  }
+  .submit {
+    margin: 20px 25%;
+    display: block;
+    width: 50%;
+    line-height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 30px;
+    float: left;
+    text-align: center;
+    color: white;
+    border: 1px solid rgb(81, 195, 251);
+    background: rgb(81, 195, 251);
   }
   .navigation {
     height: 400px;
