@@ -104,15 +104,5 @@ window.onload=function(){
 				}
 			},300);
 		})
-		//控制第一个导航条
-		$(".spread").click(function(){
-			console.log("123");
-			if($('.h-header ul').css("display")=="none")
-			{$(".h-header ul").css("display","block")}
-			else
-			{
-			$(".h-header ul").css("display","none")
-			}
-		})
-		//控制面板高度
+	
 }

@@ -24,10 +24,33 @@ $(".h-header li.prod").hover(function () {
 })
 //控制第一个导航条
 $(".spread").click(function () {
-    console.log("123");
-    if ($('.h-header ul').css("display") == "none") { $(".h-header ul").css("display", "block") }
+    if ($('.ul').css("display") == "none") { 
+        $(".ul").css("display", "block") 
+        $(".drawer_container").css("background", "#cccccc")
+        $(".drawer_container").css("opacity", "0.5")
+    }
     else {
-        $(".h-header ul").css("display", "none")
+        $(".ul").css("display", "none")
+        $(".drawer_container").css("background", "none")
+        $(".drawer_container").css("opacity", "0.5")
     }
 })
-		//控制面板高度
+$(".closeBtn").click(function () {
+    if ($('.ul').css("display") == "none") { 
+        $(".ul").css("display", "block") 
+        $(".drawer_container").css("background", "#cccccc")
+        $(".drawer_container").css("opacity", "0.5")
+    } else {
+        $(".ul").css("display", "none")
+        $(".drawer_container").css("background", "none")
+        $(".drawer_container").css("opacity", "0.5")
+    }
+})
+
+$(".drawer_container").click(function () {
+    if ($('.ul').css("display") == "block") { 
+        $(".ul").css("display", "none")
+        $(".drawer_container").css("background", "none")
+        $(".drawer_container").css("opacity", "0.5")
+    }
+})
