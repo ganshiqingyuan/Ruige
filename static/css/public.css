@@ -451,11 +451,11 @@ strong {
   overflow: auto;
   box-sizing: border-box;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 100;
+  /* z-index: 100; */
 }
 .h-header .imglogo {
   display: block;
