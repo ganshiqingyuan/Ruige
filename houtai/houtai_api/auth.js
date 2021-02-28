@@ -102,6 +102,7 @@ module.exports = function (threadpool, db) {
             return
         }
         if (!ctx.url.match(/houtai/)) {
+            console.log(ctx.headers)
             var cookie
             if (cookie = ctx.cookies.get('ruige_auth')) {
                 const user = (await db.query(`select * from user where cookie = '${cookie}'`))[0];
