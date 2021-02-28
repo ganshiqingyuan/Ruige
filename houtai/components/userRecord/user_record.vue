@@ -109,7 +109,7 @@
       <el-table-column label="生成时间" prop="creationTime">
         <template slot-scope="scope">
           <p>
-            {{ formatDate(scope.row.creationTime, "yyyy-MM-dd HH:mm:ss") }}
+            {{ formatDate(scope.row.creationTime) }}
           </p>
         </template>
       </el-table-column>
@@ -165,25 +165,20 @@ export default {
         this.tableLoading = false;
       });
     },
-    formatDate: function(date, format) {
-      date = new Date(date);
-      if (!format) format = "yyyy-MM-dd";
-      var dict = {
-        yyyy: date.getFullYear(),
-        M: date.getMonth() + 1,
-        d: date.getDate(),
-        H: date.getHours(),
-        m: date.getMinutes(),
-        s: date.getSeconds(),
-        MM: ("" + (date.getMonth() + 101)).substr(1),
-        dd: ("" + (date.getDate() + 100)).substr(1),
-        HH: ("" + (date.getHours() + 100)).substr(1),
-        mm: ("" + (date.getMinutes() + 100)).substr(1),
-        ss: ("" + (date.getSeconds() + 100)).substr(1),
-      };
-      return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function() {
-        return dict[arguments[0]];
-      });
+    formatDate: function(date) {
+      var date = new Date(date);
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;
+      m = m < 10 ? "0" + m : m;
+      var d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      var h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      var minute = date.getMinutes();
+      minute = minute < 10 ? "0" + minute : minute;
+      var second = date.getSeconds();
+      second = second < 10 ? "0" + second : second;
+      return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
     },
   },
   mounted: function() {
