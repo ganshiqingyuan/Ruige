@@ -123,7 +123,7 @@ module.exports = function (threadpool, db) {
             }
 
             cookie = uuid.v4();
-            var ip = ctx.ip
+            var ip = ctx.headers['x-real-ip'] || ctx.ip
             ctx.cookies.set('ruige_auth', cookie);
             createIpInfo(cookie, ip, db, ctx.url)
             await next()
