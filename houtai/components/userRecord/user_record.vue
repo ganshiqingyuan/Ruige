@@ -106,7 +106,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="生成时间" prop="creationTime">
+      <el-table-column label="生成时间（北京）" prop="creationTime">
         <template slot-scope="scope">
           <p>
             {{ formatDate(scope.row.creationTime) }}
