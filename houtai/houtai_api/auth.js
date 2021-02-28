@@ -102,13 +102,11 @@ module.exports = function (threadpool, db) {
             return
         }
         if (!ctx.url.match(/houtai/)) {
-            console.log(ctx.headers)
-            console.log(ctx.ip)
-            console.log(ctx.ips)
             var cookie
             if (cookie = ctx.cookies.get('ruige_auth')) {
                 const user = (await db.query(`select * from user where cookie = '${cookie}'`))[0];
                 if (user) {
+                    await next()
                     if (user.history.length < 10000) {
                         user.history = user.history + ',' + getUrlName(ctx.url)
                     }
@@ -117,7 +115,6 @@ module.exports = function (threadpool, db) {
                         user.history = user.history.substr(200).substr(user.history.substr(200).indexOf(',') + 1) || '' + ctx.url
                     }
                     db.query(`update user set count = ${user.count + 1}, history = '${user.history}' where user.id = ${user.id}`);
-                    await next()
                     return
                 }
             }
