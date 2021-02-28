@@ -39,7 +39,7 @@
     "@alicloud/pop-core": "^1.7.9",
     "@alicloud/sms-sdk": "^1.0.2",
     "ali-oss": "^6.5.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-plugin-component": "^1.1.1",
     "busboy": "^0.2.14",
     "ejs": "^2.5.6",

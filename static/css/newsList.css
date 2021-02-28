@@ -7,7 +7,7 @@
 .news_list_content {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
-  background: #eeeeee;
+  background: #f4f8fb;
   padding-bottom: 100px;
 }
 
@@ -84,7 +84,7 @@
   max-width: 1000px;
   width: 90%;
   overflow: auto;
-  background: #eeeeee;
+  background: #f4f8fb;
   margin: auto;
   margin-top: 30px;
 }
@@ -221,8 +221,13 @@
   .news_list_content ul a:nth-child(2n + 1) {
     margin-left: 0;
   }
-  .news_list_content .top_news .left_img {
+  /* .news_list_content .top_news .left_img {
     height: 250px;
+    margin-top: -1rem;
+  } */
+  .news_list_content ul li {
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   .news_list_content .top_news .right_content {
@@ -249,7 +254,7 @@
   }
 
   .news_list_content .top_news {
-    width: 80%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     background: #ffffff;
@@ -260,8 +265,11 @@
   }
 
   .news_list_content .top_news .left_img {
+    height: 250px;
+    margin-top: -1rem;
     width: 100%;
     height: 10rem;
+    border-radius: 8px;
   }
 
   .news_list_content .top_news .right_content {
