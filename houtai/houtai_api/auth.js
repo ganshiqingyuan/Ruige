@@ -122,7 +122,7 @@ module.exports = function (threadpool, db) {
             cookie = uuid.v4();
             console.log(ctx.headers['x-real-ip']);
             console.log(ctx.ip);
-            console.log(ctx.headers['X-Forwarded-For']);
+            console.log(ctx.headers['x-forwarded-for']);
             var ip = ctx.headers['x-real-ip'] || ctx.ip
             ctx.cookies.set('ruige_auth', cookie);
             createIpInfo(cookie, ip, db, ctx.url)
