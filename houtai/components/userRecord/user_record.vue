@@ -70,11 +70,11 @@
             <p style="cursor: pointer;" slot="reference">
               {{
                 scope.row.location
-                  ? JSON.parse(scope.row.location).Country +
+                  ? JSON.parse(scope.row.location).country +
                     "," +
-                    JSON.parse(scope.row.location).Province +
+                    JSON.parse(scope.row.location).area +
                     "," +
-                    JSON.parse(scope.row.location).City
+                    JSON.parse(scope.row.location).int
                   : ""
               }}
             </p>
