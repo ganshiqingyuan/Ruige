@@ -1,7 +1,9 @@
 const uuid = require("uuid")
 const tencentcloud = require("tencentcloud-sdk-nodejs");
 const sqlconfig = require("../../config/sqlconfig.js");
-const auth = require("../../config/admin.js")
+const auth = require("../../config/admin.js");
+const ipaddr = require("ipaddr.js");
+const libqqwry = require("lib-qqwry");
 
 const VpcClient = tencentcloud.vpc.v20170312.Client;
 
@@ -41,6 +43,56 @@ async function createIpInfo(cookie, ip, db, url) {
     const data = await client.DescribeIpGeolocationInfos(params);
 
     db.query(`insert into user(cookie, count, ip, location, history) values('${cookie}', 1, '${ip || ''}' , '${data && data.AddressInfo && JSON.stringify(data.AddressInfo[0]) || ''}', '${url}')`)
+}
+
+function searchIp(ip) {
+    const ret = {
+        country: "",
+        area: ""
+    };
+    let kind
+
+    try {
+        kind = ipaddr.parse(ip).kind();
+
+        if ("ipv4" === kind) {
+            const result = this.qqwry.searchIP(ip);
+
+            for (const key in result) {
+                const lowerKey = key.toLowerCase();
+
+                if ("string" === typeof result[key]) {
+                    const v = result[key].trim();
+
+                    if ("CZ88.NET" === v) {
+                        ret[lowerKey] = "";
+                    } else {
+                        ret[lowerKey] = v;
+                    }
+                } else {
+                    ret[lowerKey] = result[key];
+                }
+            }
+        }
+    } catch (err) {
+        this.logger.error(err);
+    }
+
+    if (!ret.ip) {
+        ret.ip = ip;
+    }
+
+    if (!ret.country && !ret.area) {
+        if ("ipv6" === kind) {
+            ret.country = "未知 IPv6";
+        } else if ("ipv4" === kind) {
+            ret.country = "未知 IPv4";
+        } else {
+            ret.country = "未知";
+        }
+    }
+
+    return ret;
 }
 
 function getUrlName(url) {
@@ -124,6 +176,7 @@ module.exports = function (threadpool, db) {
             console.log(ctx.ip);
             console.log(ctx.headers['x-forwarded-for']);
             var ip = ctx.headers['x-real-ip'] || ctx.ip
+            console.log(searchIp(ip))
             ctx.cookies.set('ruige_auth', cookie);
             createIpInfo(cookie, ip, db, ctx.url)
             await next()
