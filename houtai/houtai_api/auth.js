@@ -26,24 +26,26 @@ const client = new VpcClient(clientConfig);
 async function createIpInfo(cookie, ip, db, url) {
     url = getUrlName(url)
     // 调用腾讯云接口获取地址
-    const params = {
-        "AddressIps": [
-            ip.substr(ip.lastIndexOf(':') + 1)
-        ],
-        "Fields": {
-            "Country": true,
-            "Province": true,
-            "City": true,
-            "Region": true,
-            "Isp": true,
-            "AsName": true,
-            "AsId": true,
-            "Comment": true
-        }
-    };
-    const data = await client.DescribeIpGeolocationInfos(params);
+    // const params = {
+    //     "AddressIps": [
+    //         ip.substr(ip.lastIndexOf(':') + 1)
+    //     ],
+    //     "Fields": {
+    //         "Country": true,
+    //         "Province": true,
+    //         "City": true,
+    //         "Region": true,
+    //         "Isp": true,
+    //         "AsName": true,
+    //         "AsId": true,
+    //         "Comment": true
+    //     }
+    // };
+    // const data = await client.DescribeIpGeolocationInfos(params);
+    searchIp(ip)
 
-    db.query(`insert into user(cookie, count, ip, location, history) values('${cookie}', 1, '${ip || ''}' , '${data && data.AddressInfo && JSON.stringify(data.AddressInfo[0]) || ''}', '${url}')`)
+    // db.query(`insert into user(cookie, count, ip, location, history) values('${cookie}', 1, '${ip || ''}' , '${data && data.AddressInfo && JSON.stringify(data.AddressInfo[0]) || ''}', '${url}')`)
+    db.query(`insert into user(cookie, count, ip, location, history) values('${cookie}', 1, '${ip || ''}' , '${searchIp(ip)}', '${url}')`)
 }
 
 function searchIp(ip) {
