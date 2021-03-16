@@ -4,6 +4,7 @@ const sqlconfig = require("../../config/sqlconfig.js");
 const auth = require("../../config/admin.js");
 const ipaddr = require("ipaddr.js");
 const libqqwry = require("lib-qqwry");
+var qqwry = libqqwry()
 
 const VpcClient = tencentcloud.vpc.v20170312.Client;
 
