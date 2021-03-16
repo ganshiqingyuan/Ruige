@@ -56,7 +56,7 @@ function searchIp(ip) {
         kind = ipaddr.parse(ip).kind();
 
         if ("ipv4" === kind) {
-            const result = this.qqwry.searchIP(ip);
+            const result = qqwry.searchIP(ip);
 
             for (const key in result) {
                 const lowerKey = key.toLowerCase();
