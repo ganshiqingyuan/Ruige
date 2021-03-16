@@ -75,7 +75,7 @@ function searchIp(ip) {
             }
         }
     } catch (err) {
-        this.logger.error(err);
+        console.log(err);
     }
 
     if (!ret.ip) {
