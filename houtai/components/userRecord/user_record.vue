@@ -158,12 +158,19 @@ export default {
         page: page,
         perpage: 10,
       };
+      this.tableLoading = true;
 
-      this.$rq.getUserRecordList(requestData).then((res) => {
-        this.userRecordList = res.data;
-        this.total = res.total;
-        this.tableLoading = false;
-      });
+      this.$rq
+        .getUserRecordList(requestData)
+        .then((res) => {
+          this.userRecordList = res.data;
+          this.total = res.total;
+          this.tableLoading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.tableLoading = false;
+        });
     },
     formatDate: function(date) {
       var date = new Date(date);
