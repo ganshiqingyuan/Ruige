@@ -88,6 +88,9 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 })
             })
             if (hasProductType && hasProductType[0]) {
+                if (file) {
+                    fs.unlinkSync(file.path) //删除临时存储文件
+                }
                 ctx.body = JSON.stringify({
                     code: 400,
                     data: 1,
@@ -288,6 +291,9 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 })
             })
             if (hasProduct && hasProduct[0]) {
+                if (file) {
+                    fs.unlinkSync(file.path) //删除临时存储文件
+                }
                 ctx.body = JSON.stringify({
                     code: 400,
                     data: 1,
