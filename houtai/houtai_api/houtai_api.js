@@ -72,9 +72,30 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
     })
     router.post('/houtai/productmanage/change_type_info', async (ctx) => {
         try {
+
             const file = ctx.request.files && ctx.request.files.file
             const { name, descript, sort, id } = ctx.request.body
             let src = ctx.request.body.file
+
+            // 去重判断
+            const judge_sql = `select id from product_type where name = '${name}'`;
+            const hasProductType = await new Promise((res, rej) => {
+                threadpool.query(judge_sql, function (error, results, fields) {
+                    if (error) {
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+            if (hasProductType && hasProductType[0]) {
+                ctx.body = JSON.stringify({
+                    code: 400,
+                    data: 1,
+                    msg: `${name}产品分类名称已存在`
+                })
+                return
+            }
+
             if (file) {
                 var path = file.path.replace(/\\/g, '/');
                 var fname = file.name;
@@ -255,6 +276,26 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
             const file = ctx.request.files && ctx.request.files.file
             const { list_name = '', descript = '', detail = '', id = '', typeId = '' } = ctx.request.body
             let src = ctx.request.body.file
+
+            // 去重判断
+            const judge_sql = `select id from product_list where list_name = '${list_name}'`;
+            const hasProduct = await new Promise((res, rej) => {
+                threadpool.query(judge_sql, function (error, results, fields) {
+                    if (error) {
+                        throw error
+                    }
+                    res(results)
+                })
+            })
+            if (hasProduct && hasProduct[0]) {
+                ctx.body = JSON.stringify({
+                    code: 400,
+                    data: 1,
+                    msg: `${list_name}产品名称已存在`
+                })
+                return
+            }
+
             if (file) {
                 var path = file.path.replace(/\\/g, '/');
                 var fname = file.name;

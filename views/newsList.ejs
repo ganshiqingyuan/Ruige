@@ -24,7 +24,7 @@
     <%- include('head') %>
     <div class="new-list-top"></div>
     <div class="news_list_content">
-      <a href="newsList/<%= newsList[0].id %>">
+      <a href="newsList/<%= newsList[0].title %>">
         <div class="top_news">
           <div
             class="left_img"
@@ -46,7 +46,7 @@
       </a>
       <ul>
         <% for(var i = 1; i < newsList.length ; i++){ %>
-        <a href="newsList/<%= newsList[i].id %>">
+        <a href="newsList/<%= newsList[i].title %>">
           <li>
             <div
               class="news_img"
@@ -55,14 +55,14 @@
             <div class="news_content">
               <p class="news_content_title">
                 <%= newsList[i].title %>
-            </p>
+              </p>
               <p class="news_content_content">
-                  <span class="ellipsis">
-                    <%= newsList[i].content.replace(/<\/?.+?\/?>/g,
-                    '').replace(/&nbsp/g, '') %>
-                  </span>
-                </p>
-              
+                <span class="ellipsis">
+                  <%= newsList[i].content.replace(/<\/?.+?\/?>/g,
+                  '').replace(/&nbsp/g, '') %>
+                </span>
+              </p>
+
               <p class="news_content_time">
                 <%= newsList[i].creationTimestamp %>
               </p>

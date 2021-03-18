@@ -98,7 +98,7 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
 								<!-- <p class="first"><%= recommendData[i].descript %></p> -->
 								<p class="second"><%= recommendData[i].list_name %></p>
 							</span>
-							<a href="/sproduct/<%= recommendData[i].typeID %>/<%= recommendData[i].id %>"><button>View</button></a>
+							<a href="/sproduct/<%= productdata.find(_=>_.id == recommendData[i].typeID).name %>/<%= recommendData[i].list_name %>"><button>View</button></a>
 						</li>
 						<% } %>
 					</ul>
@@ -109,7 +109,7 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
                               <h1>News</h1>
                               <ul>
                                 <% for(var i = 0; i < newsList.length; i++){ %>
-                                <a href="newsList/<%= newsList[i].id %>">
+                                <a href="newsList/<%= newsList[i].title %>">
                                 <li>
                                     <div class="news_left">
                                     <img src="<%= newsList[i].titleImg %>" alt="" />

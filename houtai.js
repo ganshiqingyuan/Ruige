@@ -188,14 +188,14 @@ function rebuildSitemap() {
 
         productdata.forEach(_ => {
             siteArry.push({
-                url: '/sproduct/' + _.id,
+                url: '/sproduct/' + _.name,
                 changefreq: 'monthly',
                 priority: 0.5,
                 img: _.src
             })
             _.list.forEach(__ => {
                 siteArry.push({
-                    url: '/sproduct/' + _.id + '/' + __.id,
+                    url: '/sproduct/' + _.name + '/' + __.list_name,
                     changefreq: 'monthly',
                     priority: 0.5,
                     img: __.imgSrc
@@ -205,7 +205,7 @@ function rebuildSitemap() {
 
         newsList.forEach(_ => {
             siteArry.push({
-                url: '/newsList/' + _.id,
+                url: '/newsList/' + _.title,
                 changefreq: 'daily',
                 priority: 0.5,
                 img: _.titleImg
@@ -271,9 +271,9 @@ router.get("/newsList", async (ctx) => {
     })
 })
 
-router.get("/newsList/:id", async (ctx) => {
+router.get("/newsList/:title", async (ctx) => {
     await ctx.render("newsWatch", {
-        productdata, news: newsList.find(_ => _.id == ctx.params.id)
+        productdata, news: newsList.find(_ => _.title == ctx.params.title)
     })
 })
 
@@ -334,20 +334,11 @@ router.get("/partener", async (ctx) => {
 
 
 // 获取大类商品信息
-router.get("/sproduct/:a", async (ctx) => {
-    const type_id = ctx.params.a;
-    // 获取当前分类下产品列表
-    const gs_list = await new Promise((res, rej) => {
-        threadpool.query(`SELECT * FROM product_list WHERE typeID = '${type_id}'`, (err, results, fields) => {
-            if (err) {
-                rej(err)
-            }
-            res(results)
-        })
-    })
+router.get("/sproduct/:type_name", async (ctx) => {
+    const type_name = ctx.params.type_name;
     // 获取当前分类信息
     const gs_info = await new Promise((res, rej) => {
-        threadpool.query(`SELECT * FROM product_type WHERE id = '${type_id}'`, (err, results, fields) => {
+        threadpool.query(`SELECT * FROM product_type WHERE name = '${type_name}'`, (err, results, fields) => {
             if (err) {
                 rej(err)
             }
@@ -362,6 +353,15 @@ router.get("/sproduct/:a", async (ctx) => {
         })
         return
     }
+    // 获取当前分类下产品列表
+    const gs_list = await new Promise((res, rej) => {
+        threadpool.query(`SELECT * FROM product_list WHERE typeID = '${gs_info.id}'`, (err, results, fields) => {
+            if (err) {
+                rej(err)
+            }
+            res(results)
+        })
+    })
     // 找到当前分类信息后三个分类信息
     const gs_sort = gs_info.sort;
 
@@ -407,13 +407,13 @@ router.get("/sproduct/:a", async (ctx) => {
 
 // 获取小类商品信息
 router.get("/sproduct/:a/:b", async (ctx) => {
-    const typeID = ctx.params.a;
-    const listID = ctx.params.b;
+    const typeName = ctx.params.a;
+    const listName = ctx.params.b;
 
     // 获取商品信息
     const list_info = await new Promise((res, rej) => {
         const sql = `SELECT * FROM product_list
-                WHERE id = '${listID}'`
+                WHERE list_name = '${listName}'`
 
         threadpool.query(sql, (err, result, fields) => {
             if (err) {
@@ -437,7 +437,7 @@ router.get("/sproduct/:a/:b", async (ctx) => {
     const other_list = await new Promise((res, rej) => {
         const sql = `SELECT imgSrc, list_name, id
                 FROM product_list
-                WHERE typeID = '${typeID}' AND id <> '${listID}'`
+                WHERE typeID = '${list_info.typeID}' AND id <> '${list_info.id}'`
 
         threadpool.query(sql, (err, results, fields) => {
             if (err) {
