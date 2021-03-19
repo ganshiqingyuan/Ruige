@@ -25,7 +25,7 @@
                     	<span>
                     		<h1><%= gs_list[i].list_name %></h1>
                     		<p><%= gs_list[i].descript %></p>
-                    		<span><a href="<%= gs_list[i].typeID %>/<%= gs_list[i].id %>">MORE DETAIL</a></span>
+                    		<span><a href="<%= gs_list[i].typeID %>/<%= gs_list[i].list_name %>">MORE DETAIL</a></span>
                     		</span>
                     	</li>
                  <% } %>
@@ -35,7 +35,7 @@
 				<h1>OTHER RODUCTS</h1>
 				<ul>
 					 <% for(var j = 0; j < related_arry_set.length; j++){ %>
-						<a href="<%= related_arry_set[j].id %>">
+						<a href="<%= related_arry_set[j].name %>">
 							<li>
 								<div class="bac"  style="background:url(<%= related_arry_set[j].imgSrc %>) ; background-size:100% 100% ;"></div>
 								<p><%= related_arry_set[j].name %></p>
