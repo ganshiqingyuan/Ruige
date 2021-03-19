@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Ruige products X-RAY MACHINE FLUOROSCOPY ULTRASOUND INSPECTION MACHINE ANESTHESIA MACHINE ICU </title>
+		<title><%= gs_info.name %> </title>
 		<meta charset="UTF-8"/>
 		<meta name="keywords" content=" X-RAY machine fluoroscopy Ultrasound Inspection machine Anesthesia machine ICU" />
 		<meta name="description" content="veterinary medical products including veterinary x ray machine, DR, ultrasound, Anesthesia machine, inspection machine, veterinary ICU" />
@@ -25,7 +25,7 @@
                     	<span>
                     		<h1><%= gs_list[i].list_name %></h1>
                     		<p><%= gs_list[i].descript %></p>
-                    		<span><a href="<%= gs_list[i].typeID %>/<%= gs_list[i].list_name %>">MORE DETAIL</a></span>
+                    		<span><a href="<%= gs_info.name %>/<%= gs_list[i].list_name %>">MORE DETAIL</a></span>
                     		</span>
                     	</li>
                  <% } %>
