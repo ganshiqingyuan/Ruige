@@ -401,7 +401,7 @@ router.get("/sproduct/:type_name", async (ctx) => {
                 ..._,
                 imgSrc: _.imgSrc
             }
-        }), productdata, related_arry_set
+        }), productdata, related_arry_set, gs_info
     })
 })
 
