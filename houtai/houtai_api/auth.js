@@ -129,17 +129,17 @@ function getUrlName(url) {
     }
 
     for (var i = 0; i < global.newsList.length; i++) {
-        if (str == global.newsList[i].id) {
+        if (str == global.newsList[i].title) {
             return '访问：' + global.newsList[i].title
         }
     }
 
     for (var i = 0; i < global.productdata.length; i++) {
-        if (str == global.productdata[i].id) {
+        if (str == global.productdata[i].name) {
             return '访问：' + global.productdata[i].name
         }
         for (var j = 0; j < global.productdata[i].list.length; j++) {
-            if (global.productdata[i].list[j].id == str) {
+            if (global.productdata[i].list[j].list_name == str) {
                 return '访问：' + global.productdata[i].list[j].list_name
             }
         }
