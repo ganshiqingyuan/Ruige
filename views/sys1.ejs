@@ -98,7 +98,7 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
 								<!-- <p class="first"><%= recommendData[i].descript %></p> -->
 								<p class="second"><%= recommendData[i].list_name %></p>
 							</span>
-							<a href="/sproduct/<%= productdata.find(_=>_.id == recommendData[i].typeID).name %>/<%= recommendData[i].list_name %>"><button>View</button></a>
+							<a href="/product/<%= productdata.find(_=>_.id == recommendData[i].typeID).name.replace(/\s/g, '-') %>/<%= recommendData[i].list_name.replace(/\s/g, '-') %>"><button>View</button></a>
 						</li>
 						<% } %>
 					</ul>

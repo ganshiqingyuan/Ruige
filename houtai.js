@@ -334,17 +334,12 @@ router.get("/partener", async (ctx) => {
 
 
 // 获取大类商品信息
-router.get("/sproduct/:type_name", async (ctx) => {
+router.get("/product/:type_name", async (ctx) => {
     const type_name = ctx.params.type_name;
     // 获取当前分类信息
-    const gs_info = await new Promise((res, rej) => {
-        threadpool.query(`SELECT * FROM product_type WHERE name = '${type_name}'`, (err, results, fields) => {
-            if (err) {
-                rej(err)
-            }
-            res(results[0])
-        })
-    })
+    const gs_info = productdata.filter(type => {
+        return type.name.replace(/\s/g, '-') === type_name
+    })[0]
     if (!gs_info) {
         await ctx.render('delete_product_type', {
             productdataRecommend: productdata.filter(function (_) {
@@ -354,39 +349,15 @@ router.get("/sproduct/:type_name", async (ctx) => {
         return
     }
     // 获取当前分类下产品列表
-    const gs_list = await new Promise((res, rej) => {
-        threadpool.query(`SELECT * FROM product_list WHERE typeID = '${gs_info.id}'`, (err, results, fields) => {
-            if (err) {
-                rej(err)
-            }
-            res(results)
-        })
-    })
+    const gs_list = gs_info.list;
     // 找到当前分类信息后三个分类信息
     const gs_sort = gs_info.sort;
 
-    const gs_type_length = await new Promise((res, rej) => {
-        threadpool.query(`SELECT COUNT(*) as length FROM product_type`, (err, results, fields) => {
-            if (err) {
-                rej(err)
-            }
-            res(results[0])
-        })
-    })
+    const gs_type_length = productdata.length;
 
-    const related_sort = [(gs_sort + 1) % gs_type_length.length, (gs_sort + 2) % gs_type_length.length, (gs_sort + 3) % gs_type_length.length]
+    const related_sort = [(gs_sort + 1) % gs_type_length, (gs_sort + 2) % gs_type_length, (gs_sort + 3) % gs_type_length]
 
-    const related_arry = await new Promise((res, rej) => {
-        threadpool.query(`SELECT type.id, type.name, list.imgSrc
-                      FROM product_type type JOIN product_list list
-                      ON type.id = list.typeID
-                      WHERE type.sort IN (${related_sort.map(_ => `'${_}'`).join(',')})`, (err, results, fields) => {
-            if (err) {
-                rej(err)
-            }
-            res(results)
-        })
-    })
+    const related_arry = productdata.filter(type => related_sort.includes(type.sort));
     const related_arry_set = [];
 
     related_arry.forEach(_ => {
@@ -406,24 +377,14 @@ router.get("/sproduct/:type_name", async (ctx) => {
 })
 
 // 获取小类商品信息
-router.get("/sproduct/:a/:b", async (ctx) => {
+router.get("/product/:a/:b", async (ctx) => {
     const typeName = ctx.params.a;
     const listName = ctx.params.b;
 
-    // 获取商品信息
-    const list_info = await new Promise((res, rej) => {
-        const sql = `SELECT * FROM product_list
-                WHERE list_name = '${listName}'`
+    const type_info = productdata.filter(type => type.name.replace(/\s/g, '-') === typeName)[0];
+    const list_info = type_info.list.filter(list => list.list_name.replace(/\s/g, '-') === listName)[0];
 
-        threadpool.query(sql, (err, result, fields) => {
-            if (err) {
-                rej(err)
-            }
-            res(result[0])
-        })
-    })
-
-    if (!list_info) {
+    if (!list_info || !type_info) {
         await ctx.render('delete_product', {
             productdataRecommend: productdata.reduce(function (pre, cur) {
                 return pre.concat(cur.list)
@@ -434,21 +395,10 @@ router.get("/sproduct/:a/:b", async (ctx) => {
         return
     }
 
-    const other_list = await new Promise((res, rej) => {
-        const sql = `SELECT imgSrc, list_name, id
-                FROM product_list
-                WHERE typeID = '${list_info.typeID}' AND id <> '${list_info.id}'`
-
-        threadpool.query(sql, (err, results, fields) => {
-            if (err) {
-                rej(err)
-            }
-            res(results)
-        })
-    })
+    const other_list = type_info.list.filter(list => list.id !== list_info.id)
 
     await ctx.render('deproduct', {
-        list_info, other_list, productdata,
+        list_info, type_info, other_list, productdata,
     })
 })
 

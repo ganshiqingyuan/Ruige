@@ -25,17 +25,17 @@
                     	<span>
                     		<h1><%= gs_list[i].list_name %></h1>
                     		<p><%= gs_list[i].descript %></p>
-                    		<span><a href="<%= gs_info.name %>/<%= gs_list[i].list_name %>">MORE DETAIL</a></span>
+                    		<span><a href="<%= gs_info.name.replace(/\s/g, '-') %>/<%= gs_list[i].list_name.replace(/\s/g, '-') %>">MORE DETAIL</a></span>
                     		</span>
                     	</li>
                  <% } %>
 			</ul>
-			
+
 			<div class="other" style="margin-bottom: 100px;">
 				<h1>OTHER RODUCTS</h1>
 				<ul>
 					 <% for(var j = 0; j < related_arry_set.length; j++){ %>
-						<a href="<%= related_arry_set[j].name %>">
+						<a href="<%= related_arry_set[j].name.replace(/\s/g, '-') %>">
 							<li>
 								<div class="bac"  style="background:url(<%= related_arry_set[j].imgSrc %>) ; background-size:100% 100% ;"></div>
 								<p><%= related_arry_set[j].name %></p>

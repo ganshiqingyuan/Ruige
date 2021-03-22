@@ -19,16 +19,16 @@
 			}
 			.decontent h1{
 				color:#333333;
-				font-size: 2rem; 
-				margin: 1rem 0; 
+				font-size: 2rem;
+				margin: 1rem 0;
 				margin-top: 80px;
 				line-height: 1;
 			}
 			.decontent p{
-				max-width: 26em; 
+				max-width: 26em;
 				margin: 1rem auto;
 				font-family: Helvetica, Arial, sans-serif;
-				font-size: 16px; 
+				font-size: 16px;
 				color: rgba(0,0,0,0.4);
 			}
 			.decontent span{
@@ -57,7 +57,7 @@
 		<div class="de-bottom">
 			<ul>
 				<% for(var i=0;i<productdataRecommend.length;i++){ %>
-					<a href="<%= productdataRecommend[i].id %>">
+					<a href="<%= productdataRecommend[i].name.replace(/\s/g, '-') %>">
 				<li>
 					<div class="bacg" style="background:url(<%= productdataRecommend[i].src %>);background-size:100% 100% ;"></div>
 					<p><%= productdataRecommend[i].name %> </p>

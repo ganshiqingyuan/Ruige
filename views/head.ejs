@@ -55,9 +55,9 @@
 					  	 	 <% for(var i=0;i<productdata.length;i++){ %>
 					  	 	<li>
 					  	 		<dl>
-					  	 			<dt><a href="/sproduct/<%= productdata[i].name %>"><%= productdata[i].name %> </a></dt>
+					  	 			<dt><a href="/product/<%= productdata[i].name.replace(/\s/g, '-') %>"><%= productdata[i].name %> </a></dt>
 					  	 			<% for(var j=0;j<productdata[i].list.length;j++){ %>
-					  	 			<dd><a href="/sproduct/<%= productdata[i].name %>/<%= productdata[i].list[j].list_name %>"><%= productdata[i].list[j].list_name %> </a></dd>
+					  	 			<dd><a href="/product/<%= productdata[i].name.replace(/\s/g, '-') %>/<%= productdata[i].list[j].list_name.replace(/\s/g, '-') %>"><%= productdata[i].list[j].list_name %> </a></dd>
 					  	 			<% } %>
 					  	 		</dl>
 					  	 	</li>

@@ -98,7 +98,7 @@
     <ul>
       <% for(var i=0;i<productdata.filter(item=>item.recommend).length;i++){ %>
       <li>
-        <a href="sproduct/<%= productdata[i].name %>"
+        <a href="product/<%= productdata[i].name.replace(/\s/g, '-') %>"
           ><%= productdata[i].name %></a
         >
       </li>

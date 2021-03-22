@@ -28,7 +28,7 @@
 			    						<span class="in-foot1">manufacture x ray table as required.</span>
 			    						<span class="in-foot2">High frequency high voltage generator, excellent image.</span>
 			    						<span class="in-foot3">TOP SALE IN CHINESE VETERINARY MARKET </span>
-			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/<%= productdata[2].name %>">VIEW MORE</a></span>
+			    						<span class="href"><a style="color: white; font-weight: 800;" href="product/<%= productdata[2].name.replace(/\s/g, '-') %>">VIEW MORE</a></span>
 			    					</div>
 			    					<img src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/rayright.jpg"  alt="products first show"/>
 			    				</div>
@@ -37,7 +37,7 @@
 			    						<h3>VERERINARY ANESTHESIA</h3>
 			    						<span class="in-content">Looking reliable and compatible business partnership all around the world</span>
 			    						<span class="in-foot">DIFFERENT MODELS</span>
-			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/<%= productdata[3].name %>">VIEW MORE</a></span>
+			    						<span class="href"><a style="color: white; font-weight: 800;" href="product/<%= productdata[3].name.replace(/\s/g, '-') %>">VIEW MORE</a></span>
 			    					</div>
 			    					<img src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/secright.jpg" alt="products second show" />
 			    				</div>
@@ -46,7 +46,7 @@
 			    						<h3>LABORATORY EQUIPMENT</h3>
 			    						<span class="in-content">Rapid -Reliable-Quantitative-Convenient </span>
 			    						<span class="in-foot">INNOVATION FOR CLINICAL DIAGNOSIS</span>
-			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/<%= productdata[5].name %>">VIEW MORE</a></span>
+			    						<span class="href"><a style="color: white; font-weight: 800;" href="product/<%= productdata[5].name.replace(/\s/g, '-') %>">VIEW MORE</a></span>
 			    					</div>
 			    					<img src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/fourleft.jpg" alt="products third show" />
 			    				</div>
@@ -56,7 +56,7 @@
 			    						<span class="in-content">
 MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-Endoscopy</span>
 			    						<span class="in-foot">DESIGNED SPECIFICALLY FOR ANIMALS</span>
-			    						<span class="href"><a style="color: white; font-weight: 800;" href="sproduct/<%= productdata[7].name %>">VIEW MORE</a></span>
+			    						<span class="href"><a style="color: white; font-weight: 800;" href="product/<%= productdata[7].name.replace(/\s/g, '-') %>">VIEW MORE</a></span>
 			    					</div>
 			    					<img src="https://ruigedist.oss-cn-hongkong.aliyuncs.com/thirdright.jpg" alt="product fourth show" />
 			    				</div>
@@ -93,49 +93,11 @@ MRI - CT- X ray machine- Computed radiography- Digital radiography- Ultrasound-E
 			    		<ul>
 								<% for(var i=0;i<productdata.length;i++){ %>
 										<li style="background:url(<%= productdata[i].src %>) ; background-size:100% 100% ;">
-											<span class="firs"><p><a href="sproduct/<%= productdata[i].name %>">View more</a></p></span>
+											<span class="firs"><p><a href="product/<%= productdata[i].name.replace(/\s/g, '-') %>">View more</a></p></span>
 											<span><p><%= productdata[i].name %></p></span>
 										</li>
 								<% } %>
 
-
-			    			<!--<li style="background: url(../img/SIXone.jpg); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/0pro">View more</a></p></span>
-			    				<span><p>X-RAY MACHINE</p></span>
-			    			</li>
-			    			<li style="background:url(../img/SIXfour.jpg); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/1pro">View more</a></p></span>
-			    				<span><p>FLUOROSCOPY MACHINE</p></span>
-			    			</li>
-			    			<li style="background: url(../img/SIXtwo.jpg); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/2pro">View more</a></p></span>
-			    				<span><p>ULTRASOUND</p></span>
-			    			</li>
-			    			<li style="background: url(../img/fourth.png); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/3pro">View more</a></p></span>
-			    				<span><p> Laboratory Instruments</p></span>
-			    			</li>
-			    			<li style="background: url(../img/fif.png); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/4pro">View more</a></p></span>
-			    				<span><p>ANESTHESIA MACHINE</p></span>
-			    			</li>
-			    			<li style="background: url(../img/buxiugang.png); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/5pro">View more</a></p></span>
-			    				<span><p>Stainless Steel Instruments</p></span>
-			    			</li>
-			    			<li style="background: url(../img/eghith.png); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/6pro">View more</a></p></span>
-			    				<span><p>Monitoring</p></span>
-			    			</li>
-			    			<li style="background: url(../img/seventh.png); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/7pro">View more</a></p></span>
-			    				<span><p>Breeding Series</p></span>
-			    			</li>
-			    			<li style="background: url(../img/ninth.png); background-size:100% 100% ;">
-			    				<span class="firs"><p><a href="sproduct/8pro">View more</a></p></span>
-			    				<span><p>Patient care and wound</p></span>
-							</li>
-						-->
 			    		</ul>
 			    	</div>
 			    </div>
