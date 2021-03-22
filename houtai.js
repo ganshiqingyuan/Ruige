@@ -273,7 +273,7 @@ router.get("/newsList", async (ctx) => {
 
 router.get("/newsList/:title", async (ctx) => {
     await ctx.render("newsWatch", {
-        productdata, news: newsList.find(_ => _.title == ctx.params.title)
+        productdata, news: newsList.find(_ => _.title.replace(/\s/g, '-') == ctx.params.title)
     })
 })
 

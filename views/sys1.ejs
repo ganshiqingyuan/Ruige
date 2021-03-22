@@ -109,7 +109,7 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
                               <h1>News</h1>
                               <ul>
                                 <% for(var i = 0; i < newsList.length; i++){ %>
-                                <a href="newsList/<%= newsList[i].title %>">
+                                <a href="newsList/<%= newsList[i].title.replace(/\s/g, '-') %>">
                                 <li>
                                     <div class="news_left">
                                     <img src="<%= newsList[i].titleImg %>" alt="" />
