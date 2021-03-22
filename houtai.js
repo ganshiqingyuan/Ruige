@@ -188,14 +188,14 @@ function rebuildSitemap() {
 
         productdata.forEach(_ => {
             siteArry.push({
-                url: '/sproduct/' + _.name,
+                url: '/product/' + _.name.replace(/\s/g, '-'),
                 changefreq: 'monthly',
                 priority: 0.5,
                 img: _.src
             })
             _.list.forEach(__ => {
                 siteArry.push({
-                    url: '/sproduct/' + _.name + '/' + __.list_name,
+                    url: '/product/' + _.name.replace(/\s/g, '-') + '/' + __.list_name.replace(/\s/g, '-'),
                     changefreq: 'monthly',
                     priority: 0.5,
                     img: __.imgSrc
@@ -205,7 +205,7 @@ function rebuildSitemap() {
 
         newsList.forEach(_ => {
             siteArry.push({
-                url: '/newsList/' + _.title,
+                url: '/newsList/' + _.title.replace(/\s/g, '-'),
                 changefreq: 'daily',
                 priority: 0.5,
                 img: _.titleImg
