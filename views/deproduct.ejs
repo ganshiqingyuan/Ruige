@@ -12,23 +12,30 @@
 		<link rel='shortcut icon' type="image/x-icon" sizes="any" href="/img/r.svg"/>
 		<link rel='icon' sizes="any" href="/img/r.svg"/>
         <script type="application/ld+json">
-            {
+           {
             "@context": "https://schema.org/",
             "@type": "Product",
             "name": "<%= list_info.list_name %>",
             "image": [
-                "<%= list_info.imgSrc %>",
+                "<%= list_info.imgSrc %>"
             ],
             "description": "<%= list_info.descript %>",
             "brand": {
                 "@type": "Brand",
                 "name": "Ruige"
-            }
-            "offers": {
-                "@type": "Offer",
-                "url": "https://rayvet.cn/product/<%= type_info.name.replace(/\s/g, '-') %>/<%= list_info.list_name.replace(/\s/g, '-') %>",
-                "itemCondition": "https://schema.org/UsedCondition",
-                "availability": "https://schema.org/InStock"
+            },
+            "review": {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "4",
+                  "bestRating": "5"
+                },
+                "author": {
+                  "@type": "Person",
+                  "name": "ben"
+                }
+              }
             }
             }
         </script>
