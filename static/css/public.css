@@ -532,6 +532,7 @@ strong {
     width: 40%;
     float: right;
     background: #ffffff;
+    display: none;
   }
   .h-header li {
     float: right;
@@ -575,6 +576,7 @@ strong {
     width: 40%;
     float: right;
     background: #ffffff;
+    display: none;
   }
   .h-header li {
     float: right;
@@ -609,7 +611,7 @@ strong {
   .drawer_container {
     display: block;
   }
-  .ul {
+  /* .ul {
     width: 300px;
     height: 100%;
     position: relative;
@@ -621,86 +623,15 @@ strong {
     animation-direction: alternate;
     animation-play-state: running;
     /* Safari and Chrome: */
-    -webkit-animation-name: myfirst;
+  /* -webkit-animation-name: myfirst;
     -webkit-animation-duration: 0.2s;
     -webkit-animation-timing-function: ease-in-out;
     -webkit-animation-delay: -0.1s;
     -webkit-animation-iteration-count: 1;
     -webkit-animation-direction: alternate;
     -webkit-animation-play-state: running;
-  }
+  } */
 
-  @keyframes myfirst {
-    0% {
-      right: -300px;
-    }
-    10% {
-      right: -270px;
-    }
-    20% {
-      right: -240px;
-    }
-    30% {
-      right: -210px;
-    }
-    40% {
-      right: -180px;
-    }
-    50% {
-      right: -150px;
-    }
-    60% {
-      right: -120px;
-    }
-    70% {
-      right: -90px;
-    }
-    80% {
-      right: -60px;
-    }
-    90% {
-      right: -30px;
-    }
-    100% {
-      right: 0px;
-    }
-  }
-
-  @-webkit-keyframes myfirst /* Safari and Chrome */ {
-    0% {
-      right: -300px;
-    }
-    10% {
-      right: -270px;
-    }
-    20% {
-      right: -240px;
-    }
-    30% {
-      right: -210px;
-    }
-    40% {
-      right: -180px;
-    }
-    50% {
-      right: -150px;
-    }
-    60% {
-      right: -120px;
-    }
-    70% {
-      right: -90px;
-    }
-    80% {
-      right: -60px;
-    }
-    90% {
-      right: -30px;
-    }
-    100% {
-      right: 0px;
-    }
-  }
   .h-header ul {
     position: fixed;
     margin-top: 0;
@@ -708,6 +639,8 @@ strong {
     width: 40%;
     float: right;
     background: #ffffff;
+    display: none;
+    animation: myfirst 0.1s;
   }
   .h-header li {
     float: right;
@@ -738,5 +671,22 @@ strong {
   .navigation {
     padding-bottom: 0px;
     height: 245px;
+  }
+}
+@keyframes myfirst {
+  from {
+    right: -300px;
+  }
+  to {
+    right: 0px;
+  }
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */ {
+  from {
+    right: -300px;
+  }
+  to {
+    right: 0px;
   }
 }
