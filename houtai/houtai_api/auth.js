@@ -23,7 +23,7 @@ const clientConfig = {
 
 const client = new VpcClient(clientConfig);
 
-async function createIpInfo(cookie, ip, db, url) {
+function createIpInfo(cookie, ip, db, url) {
     url = getUrlName(url)
     // 调用腾讯云接口获取地址
     // const params = {
@@ -174,11 +174,7 @@ module.exports = function (threadpool, db) {
             }
 
             cookie = uuid.v4();
-            console.log(ctx.headers['x-real-ip']);
-            console.log(ctx.ip);
-            console.log(ctx.headers['x-forwarded-for']);
             var ip = ctx.headers['x-real-ip'] || ctx.ip
-            console.log(searchIp(ip))
             ctx.cookies.set('ruige_auth', cookie);
             createIpInfo(cookie, ip, db, ctx.url)
             await next()

@@ -124,13 +124,13 @@
 .navigation2 li a {
   color: rgb(150, 150, 150);
 }
-.navigation1 li a:hover{
+.navigation1 li a:hover {
   font-size: 14px;
-  color: rgb(81,195,251);
+  color: rgb(81, 195, 251);
 }
 .navigation2 li a:hover {
   font-size: 14px;
-  color: rgb(81,195,251);
+  color: rgb(81, 195, 251);
 }
 .navigation3 {
   height: 400px;
@@ -150,12 +150,12 @@
   font-size: 20px;
   text-align: center;
 }
-.svg_icon{
+.svg_icon {
   width: 25px;
   height: 25px;
   margin-right: 20px;
 }
-.svg_icon:hover{
+.svg_icon:hover {
   width: 30px;
   height: 30px;
   margin-right: 20px;
@@ -290,10 +290,10 @@ strong {
   color: rgb(81, 195, 251);
   font-size: 20px;
 }
-.svg_ruige{
+.svg_ruige {
   width: 16px;
   height: 16px;
-  padding-right:10px;
+  padding-right: 10px;
 }
 @media only screen and (max-width: 500px) {
   .message div {
@@ -467,7 +467,7 @@ strong {
   float: left;
   margin-left: 50px;
 }
-.drawer_container{
+.drawer_container {
   display: none;
 }
 .h-header li {
@@ -488,10 +488,9 @@ strong {
 .h-header ul {
   overflow: auto;
   display: block;
-  position: fixed;
   right: 0;
 }
-.closeBtn{
+.closeBtn {
   display: none;
 }
 .spread {
@@ -521,20 +520,22 @@ strong {
   .navigation3 {
     width: 100%;
   }
-  .h-header ul {
+  .closeBtn {
+    margin: 5px 10px;
     float: right;
-    overflow: auto;
     display: block;
-    margin-top: 90px;
-    background: rgba(150, 150, 150, 1);
-    width: 100%;
-    z-index: 101;
   }
   .h-header ul {
-    display: none;
+    position: fixed;
+    margin-top: 0;
+    height: 100%;
+    width: 40%;
+    float: right;
+    background: #ffffff;
   }
-  .closeBtn{
-    display: none;
+  .h-header li {
+    float: right;
+    margin: 30px 0;
   }
   .panel > ul {
     display: none;
@@ -553,10 +554,6 @@ strong {
     font-weight: 700;
     width: 100%;
     float: left;
-    margin: 0;
-    margin-top: 10px;
-    /* height: 20px;
-    line-height: 20px; */
   }
   .navigation3 {
     width: 100%;
@@ -566,15 +563,26 @@ strong {
   }
 }
 @media only screen and (max-width: 700px) {
+  .closeBtn {
+    margin: 5px 10px;
+    float: right;
+    display: block;
+  }
   .h-header ul {
-    width: 100%;
+    position: fixed;
+    margin-top: 0;
+    height: 100%;
+    width: 40%;
+    float: right;
+    background: #ffffff;
+  }
+  .h-header li {
+    float: right;
+    margin: 20px 0;
   }
   .navigation,
   .navigation1 {
     width: 50%;
-  }
-  .closeBtn{
-    display: none;
   }
   .h-header .imglogo {
     display: block;
@@ -593,68 +601,108 @@ strong {
   }
 }
 @media only screen and (max-width: 500px) {
-  .closeBtn{
-    display: block;
-  }
-  .drawer_container{
-    display: block;
-  }
-  .ul{
-    width:300px;
-    height:100%;
-    position:relative;
-    animation-name:myfirst;
-    animation-duration:0.2s;
-    animation-timing-function:ease-in-out;
-    animation-delay:0s;
-    animation-iteration-count:1;
-    animation-direction:alternate;
-    animation-play-state:running;
-    /* Safari and Chrome: */
-    -webkit-animation-name:myfirst;
-    -webkit-animation-duration:0.2s;
-    -webkit-animation-timing-function:ease-in-out;
-    -webkit-animation-delay:-0.1s;
-    -webkit-animation-iteration-count:1;
-    -webkit-animation-direction:alternate;
-    -webkit-animation-play-state:running;
-  }
-  .closeBtn{
+  .closeBtn {
     margin: 5px 10px;
     float: right;
+    display: block;
   }
-  
-  @keyframes myfirst
-  {
-    0%   {  right:-300px; }
-    10%  {  right:-270px; }
-    20%  {  right:-240px; }
-    30%  {  right:-210px; }
-    40%  {  right:-180px; }
-    50%  {  right:-150px; }
-    60%  {  right:-120px; }
-    70%  {  right:-90px; }
-    80%  {  right:-60px; }
-    90%  {  right:-30px; }
-    100% {  right:0px; }
+  .drawer_container {
+    display: block;
   }
-  
-  @-webkit-keyframes myfirst /* Safari and Chrome */
-  {
-    0%   {  right:-300px; }
-    10%  {  right:-270px; }
-    20%  {  right:-240px; }
-    30%  {  right:-210px; }
-    40%  {  right:-180px; }
-    50%  {  right:-150px; }
-    60%  {  right:-120px; }
-    70%  {  right:-90px; }
-    80%  {  right:-60px; }
-    90%  {  right:-30px; }
-    100% {  right:0px; }
+  .ul {
+    width: 300px;
+    height: 100%;
+    position: relative;
+    animation-name: myfirst;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-play-state: running;
+    /* Safari and Chrome: */
+    -webkit-animation-name: myfirst;
+    -webkit-animation-duration: 0.2s;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-delay: -0.1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-play-state: running;
+  }
+
+  @keyframes myfirst {
+    0% {
+      right: -300px;
+    }
+    10% {
+      right: -270px;
+    }
+    20% {
+      right: -240px;
+    }
+    30% {
+      right: -210px;
+    }
+    40% {
+      right: -180px;
+    }
+    50% {
+      right: -150px;
+    }
+    60% {
+      right: -120px;
+    }
+    70% {
+      right: -90px;
+    }
+    80% {
+      right: -60px;
+    }
+    90% {
+      right: -30px;
+    }
+    100% {
+      right: 0px;
+    }
+  }
+
+  @-webkit-keyframes myfirst /* Safari and Chrome */ {
+    0% {
+      right: -300px;
+    }
+    10% {
+      right: -270px;
+    }
+    20% {
+      right: -240px;
+    }
+    30% {
+      right: -210px;
+    }
+    40% {
+      right: -180px;
+    }
+    50% {
+      right: -150px;
+    }
+    60% {
+      right: -120px;
+    }
+    70% {
+      right: -90px;
+    }
+    80% {
+      right: -60px;
+    }
+    90% {
+      right: -30px;
+    }
+    100% {
+      right: 0px;
+    }
   }
   .h-header ul {
-    float: right;
+    position: fixed;
     margin-top: 0;
     height: 100%;
     width: 40%;

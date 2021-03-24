@@ -55,6 +55,76 @@
       .de-bottom ul li {
         height: 245px;
       }
+      .news {
+        margin-top: 60px;
+      }
+      .news h1 {
+        margin-bottom: 2rem;
+      }
+
+      .news ul a {
+        display: block;
+      }
+      .news ul li {
+        margin: 10px 10%;
+        overflow: auto;
+        padding: 10px;
+      }
+
+      .news ul a:hover {
+        box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+          1px 3px 8px rgba(39, 44, 49, 0.03);
+      }
+      .news_left {
+        float: left;
+        margin-right: 10px;
+      }
+      .news_left img {
+        width: 160px;
+        height: 100px;
+      }
+      .news_right {
+        padding: 5px 10px;
+        box-sizing: border-box;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: left;
+      }
+      .right_title {
+        font-size: 21px;
+        letter-spacing: -0.5px;
+        /* font-size: 20px; */
+        line-height: 25px;
+        /* color: #222222; */
+        color: #090a0b;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* 2行 */
+        -webkit-box-orient: vertical;
+      }
+      .right_content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* 2行 */
+        -webkit-box-orient: vertical;
+        font-size: 15px;
+        /* color: #888888; */
+        color: #3c484f;
+        margin: 5px;
+      }
+      .right_time {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* 2行 */
+        -webkit-box-orient: vertical;
+        font-size: 12px;
+        color: #888888;
+      }
     </style>
   </head>
   <body>
@@ -67,10 +137,36 @@
     <div class="decontent">
       <h1>This news has been taken off</h1>
       <p>
-        While you’re here, feast your eyes upon these tantalizing popular
-        products
+        While you’re here, feast your eyes upon these tantalizing news
       </p>
       <span>404</span>
+      <div class="news">
+        <ul>
+          <% for(var i = 0; i < news.length; i++){ %>
+          <a href="<%= news[i].title.replace(/\s/g, '-') %>">
+            <li>
+              <div class="news_left">
+                <img src="<%= news[i].titleImg %>" alt="" />
+              </div>
+              <div class="news_right">
+                <div>
+                  <p class="right_title">
+                    <%= news[i].title %>
+                  </p>
+                  <p class="right_content">
+                    <%= news[i].content.replace(/<\/?.+?\/?>/g,
+                    '').replace(/&nbsp/g, '') %>
+                  </p>
+                </div>
+                <p class="right_time">
+                  <%= news[i].creationTimestamp %>
+                </p>
+              </div>
+            </li>
+          </a>
+          <% } %>
+        </ul>
+      </div>
     </div>
   </body>
 </html>
