@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <!-- 分类下产品已经被后台删除展示的页面 -->
+  <head>
+    <title>The product has been taken off</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="keywords"
+      content="The product has been taken off. try others"
+    />
+    <meta
+      name="description"
+      content="The product has been taken off. try others"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="/css/resect.css" />
+    <link rel="stylesheet" href="/css/public.css" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      sizes="any"
+      href="/img/r.svg"
+    />
+    <link rel="icon" sizes="any" href="/img/r.svg" />
+    <style>
+      .decontent {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .decontent h1 {
+        color: #333333;
+        font-size: 2rem;
+        margin: 1rem 0;
+        margin-top: 80px;
+        line-height: 1;
+      }
+      .decontent p {
+        max-width: 26em;
+        margin: 1rem auto;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.4);
+      }
+      .decontent span {
+        font-size: 140px;
+        color: rgb(95, 93, 93);
+        letter-spacing: 13px;
+      }
+      .de-bottom ul {
+        max-width: 1000px !important;
+      }
+      .de-bottom ul li {
+        height: 245px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('head') %>
+    <!-- <div class="de-top"></div>
+	<div class="de-top1"></div> -->
+    <!-- <div class="decontent">
+		This product has been taken off. see others～
+	</div> -->
+    <div class="decontent">
+      <h1>This news has been taken off</h1>
+      <p>
+        While you’re here, feast your eyes upon these tantalizing popular
+        products
+      </p>
+      <span>404</span>
+    </div>
+  </body>
+</html>

@@ -272,6 +272,15 @@ router.get("/newsList", async (ctx) => {
 })
 
 router.get("/newsList/:title", async (ctx) => {
+    const news = newsList.find(_ => _.title.replace(/\s/g, '-') == ctx.params.title);
+    if (!news) {
+        await ctx.render('delete_news', {
+            productdataRecommend: productdata.filter(function (_) {
+                return _.recommend
+            })
+        })
+        return
+    }
     await ctx.render("newsWatch", {
         productdata, news: newsList.find(_ => _.title.replace(/\s/g, '-') == ctx.params.title)
     })
