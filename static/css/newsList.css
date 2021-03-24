@@ -7,7 +7,6 @@
 .news_list_content {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
-  background: #f4f8fb;
   padding-bottom: 100px;
 }
 
@@ -84,7 +83,6 @@
   max-width: 1000px;
   width: 90%;
   overflow: auto;
-  background: #f4f8fb;
   margin: auto;
   margin-top: 30px;
 }
@@ -142,7 +140,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
-  color:#151714
+  color: #151714;
 }
 .news_list_content ul li .news_content .news_content_content {
   width: 100%;
@@ -153,9 +151,9 @@
   font-weight: 300;
   box-sizing: border-box;
   margin: 10px 0;
-  font-family: Georgia,Helvetica, Tahoma, Arial, STXihei ,serif;
+  font-family: Georgia, Helvetica, Tahoma, Arial, STXihei, serif;
 }
-.ellipsis{
+.ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 8;
@@ -182,7 +180,7 @@
   .news_list_content ul a:nth-child(2n + 1) {
     margin-left: 0;
   }
- 
+
   .news_list_content .top_news .left_img {
     height: 250px;
   }
@@ -290,7 +288,7 @@
     font-size: 16px;
     line-height: 20px;
   }
- 
+
   .news_list_content ul li .news_content .news_content_title {
     width: 100%;
     max-height: 120px;
@@ -311,7 +309,7 @@
     font-size: 14px;
     line-height: 16px;
   }
-  .ellipsis{
+  .ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: 4;
