@@ -78,7 +78,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
             let src = ctx.request.body.file
 
             // 去重判断
-            const judge_sql = `select id from product_type where name = '${name}'`;
+            const judge_sql = `select id from product_type where name = '${name}' and id <> '${id}'`;
             const hasProductType = await new Promise((res, rej) => {
                 threadpool.query(judge_sql, function (error, results, fields) {
                     if (error) {
@@ -281,7 +281,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
             let src = ctx.request.body.file
 
             // 去重判断
-            const judge_sql = `select id from product_list where list_name = '${list_name}'`;
+            const judge_sql = `select id from product_list where list_name = '${list_name}' and id <> '${id}'`;
             const hasProduct = await new Promise((res, rej) => {
                 threadpool.query(judge_sql, function (error, results, fields) {
                     if (error) {
