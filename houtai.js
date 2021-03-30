@@ -9,6 +9,7 @@ const { Readable } = require('stream')
 const koaBody = require('koa-body');
 var cors = require('koa2-cors');
 const path = require('path')
+const http = require('http')
 const app = new Koa({
     proxy: true,
     proxyIpHeader: 'X-Real-IP',
@@ -220,7 +221,10 @@ function rebuildSitemap() {
         Readable.from(siteArry).pipe(smStream)
 
         // cache the response
-        streamToPromise(pipeline).then(sm => sitemap = sm)
+        streamToPromise(pipeline).then(sm => {
+            sitemap = sm;
+            http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
+        })
         // make sure to attach a write stream such as streamToPromise before ending
         // stream write the response
         // pipeline.pipe(res).on('error', (e) => { throw e })
