@@ -146,7 +146,11 @@
           <a href="<%= news[i].title.replace(/\s/g, '-') %>">
             <li>
               <div class="news_left">
-                <img src="<%= news[i].titleImg %>" alt="" />
+                <img
+                  alt="<%= news[i].title.replace(/\s/g, '-') %>"
+                  src="<%= news[i].titleImg %>"
+                  alt=""
+                />
               </div>
               <div class="news_right">
                 <div>
