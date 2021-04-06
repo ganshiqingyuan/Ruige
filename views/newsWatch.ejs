@@ -20,6 +20,16 @@
       href="/img/r.svg"
     />
     <link rel="icon" sizes="any" href="/img/r.svg" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": "<%= news.title %>",
+        "image": ["https://img.rayvet.cn/<%= news.titleImg %>"],
+        "datePublished": "<%= newsList[0].creationTimestamp %>",
+        "dateModified": "<%= newsList[0].creationTimestamp %>"
+      }
+    </script>
   </head>
   <body>
     <%- include('head') %>
