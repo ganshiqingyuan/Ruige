@@ -448,11 +448,11 @@ router.get('/sitemap.xml', async (ctx) => {
 })
 
 router.get('/cdn-product/:img', async (ctx) => {
-    ctx.response.redirect(`https://img.rayvet.cn/${img}`);
+    ctx.response.redirect(`https://img.rayvet.cn/${ctx.params.img}`);
 })
 
 router.get('/cdn-news/:title/:img', async (ctx) => {
-    ctx.response.redirect(`https://img.rayvet.cn/${title}_${img}`);
+    ctx.response.redirect(`https://img.rayvet.cn/${ctx.params.title}_${ctx.params.img}`);
 })
 
 houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client, db)
