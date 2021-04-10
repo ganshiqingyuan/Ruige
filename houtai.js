@@ -223,7 +223,7 @@ function rebuildSitemap() {
         // cache the response
         streamToPromise(pipeline).then(sm => {
             sitemap = sm;
-            //http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
+            http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
         })
         // make sure to attach a write stream such as streamToPromise before ending
         // stream write the response
