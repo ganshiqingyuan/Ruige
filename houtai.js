@@ -223,7 +223,7 @@ function rebuildSitemap() {
         // cache the response
         streamToPromise(pipeline).then(sm => {
             sitemap = sm;
-            http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
+            //http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
         })
         // make sure to attach a write stream such as streamToPromise before ending
         // stream write the response
@@ -448,11 +448,15 @@ router.get('/sitemap.xml', async (ctx) => {
 })
 
 router.get('/cdn-product/:img', async (ctx) => {
-    ctx.response.redirect(`https://img.rayvet.cn/${ctx.params.img}`);
+    ctx.status = 301;
+    ctx.redirect(`https://img.rayvet.cn/${ctx.params.img}`);
+    ctx.body = 'Redirecting';
 })
 
 router.get('/cdn-news/:title/:img', async (ctx) => {
-    ctx.response.redirect(`https://img.rayvet.cn/${ctx.params.title}_${ctx.params.img}`);
+    ctx.status = 301;
+    ctx.redirect(`https://img.rayvet.cn/${ctx.params.title}_${ctx.params.img}`);
+    ctx.body = 'Redirecting';
 })
 
 houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client, db)
