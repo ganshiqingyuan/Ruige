@@ -17,7 +17,7 @@
             "@type": "Product",
             "name": "<%= list_info.list_name %>",
             "image": [
-                "<%= list_info.imgSrc %>"
+                "<%= cdn.productUrl + list_info.imgSrc %>"
             ],
             "description": "<%= list_info.descript %>",
             "brand": {
@@ -45,7 +45,7 @@
 	<div class="de-top"></div>
 	<div class="de-top1"></div>
 	<div class="decontent">
-		<div class="de-left" style="background:url(<%= list_info.imgSrc %>); background-size:100% 100% ;"></div>
+		<div class="de-left" style="background:url(<%= cdn.productUrl + list_info.imgSrc %>); background-size:100% 100% ;"></div>
 		<div class="de-right">
 			<h1><%= list_info.list_name %></h1>
 			<p><%= list_info.descript %></p>
@@ -62,7 +62,7 @@
 				<% for(var i=0;i<other_list.length;i++){ %>
 					<a href="<%= other_list[i].list_name.replace(/\s/g, '-') %>">
 				<li>
-					<div class="bacg" style="background:url(<%= other_list[i].imgSrc %>);background-size:100% 100% ;"></div>
+					<div class="bacg" style="background:url(<%= cdn.productUrl + other_list[i].imgSrc %>);background-size:100% 100% ;"></div>
 					<p><%= other_list[i].list_name %> </p>
 				</li>
 				</a>

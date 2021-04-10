@@ -62,7 +62,7 @@
 				<% for(var i=0;i<productdataRecommend.length;i++){ %>
 					<a href="<%= productdataRecommend[i].list_name.replace(/\s/g, '-') %>">
 				<li>
-					<div class="bacg" style="background:url(<%= productdataRecommend[i].imgSrc %>);background-size:100% 100% ;"></div>
+					<div class="bacg" style="background:url(<%= cdn.productUrl + productdataRecommend[i].imgSrc %>);background-size:100% 100% ;"></div>
 					<p><%= productdataRecommend[i].list_name %> </p>
 				</li>
 				</a>

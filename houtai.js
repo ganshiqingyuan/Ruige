@@ -223,7 +223,7 @@ function rebuildSitemap() {
         // cache the response
         streamToPromise(pipeline).then(sm => {
             sitemap = sm;
-            http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
+            //http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
         })
         // make sure to attach a write stream such as streamToPromise before ending
         // stream write the response
@@ -265,13 +265,14 @@ router.get("/", async (ctx) => {
         }, []).filter(function (_) {
             return _.recommend
         }).sort((pre, cur) => pre.sort - cur.sort),
-        newsList
+        newsList,
+        cdn: sqlconfig.cdn
     })
 })
 
 router.get("/newsList", async (ctx) => {
     await ctx.render('newsList', {
-        newsList, productdata
+        newsList, productdata, cdn: sqlconfig.cdn
     })
 })
 
@@ -279,7 +280,7 @@ router.get("/newsList/:title", async (ctx) => {
     const news = newsList.find(_ => _.title.replace(/\s/g, '-') == ctx.params.title);
     if (!news) {
         await ctx.render('delete_news', {
-            news: newsList.slice(0, 3)
+            news: newsList.slice(0, 3), cdn: sqlconfig.cdn
         })
         return
     }
@@ -290,7 +291,7 @@ router.get("/newsList/:title", async (ctx) => {
 
 router.get("/product", async (ctx) => {
     await ctx.render('product', {
-        productdata,
+        productdata, cdn: sqlconfig.cdn
     })
 })
 
@@ -383,7 +384,7 @@ router.get("/product/:type_name", async (ctx) => {
                 ..._,
                 imgSrc: _.imgSrc
             }
-        }), productdata, related_arry_set, gs_info
+        }), productdata, related_arry_set, gs_info, cdn: sqlconfig.cdn
     })
 })
 
@@ -409,7 +410,7 @@ router.get("/product/:a/:b", async (ctx) => {
     const other_list = type_info.list.filter(list => list.id !== list_info.id)
 
     await ctx.render('deproduct', {
-        list_info, type_info, other_list, productdata,
+        list_info, type_info, other_list, productdata, cdn: sqlconfig.cdn
     })
 })
 
@@ -444,6 +445,14 @@ router.get('/sitemap.xml', async (ctx) => {
         ctx.body = sitemap
         return
     }
+})
+
+router.get('/cdn-product/:img', async (ctx) => {
+    ctx.response.redirect(`https://img.rayvet.cn/${img}`);
+})
+
+router.get('/cdn-news/:title/:img', async (ctx) => {
+    ctx.response.redirect(`https://img.rayvet.cn/${title}_${img}`);
 })
 
 router.get('/')

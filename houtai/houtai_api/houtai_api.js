@@ -107,8 +107,10 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                     var extArr = fname.split('.');
                     var ext = extArr[extArr.length - 1]
                     nextPath = path + '.' + ext;
-                    await al_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
-                    src = await al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
+                    // await al_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
+                    // src = await al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
+                    src = name.replace(/\s/g, '-')
+                    await al_client.put(src, file.path)
                     await fs.unlinkSync(file.path) //删除临时存储文件
 
                     const old_src = await new Promise((res, rej) => {
@@ -121,7 +123,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                         })
                     })
                     if (old_src && old_src[0]) {
-                        await al_client.delete(old_src[0].src.slice(old_src[0].src.lastIndexOf('/') + 1))
+                        await al_client.delete(old_src[0].src)
                     }
                 }
             }
@@ -164,7 +166,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                         res(results)
                     })
                 })
-                await al_client.delete(src.slice(src.lastIndexOf('/') + 1))
+                await al_client.delete(src)
 
 
                 const products = await new Promise((res, rej) => {
@@ -179,7 +181,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
 
 
                 products.forEach(async _ => {
-                    await al_client.delete(_.imgSrc.slice(src.lastIndexOf('/') + 1))
+                    await al_client.delete(_.imgSrc)
                 })
 
                 await new Promise((res, rej) => {
@@ -310,8 +312,10 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                     var extArr = fname.split('.');
                     var ext = extArr[extArr.length - 1]
                     nextPath = path + '.' + ext;
-                    await al_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
-                    src = al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
+                    // await al_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
+                    // src = al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
+                    src = list_name
+                    await al_client.put(src, file.path)
                     await fs.unlinkSync(file.path) //删除临时存储文件
 
                     const old_src = await new Promise((res, rej) => {
@@ -324,7 +328,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                         })
                     })
                     if (old_src && old_src[0]) {
-                        await al_client.delete(old_src[0].imgSrc.slice(old_src[0].imgSrc.lastIndexOf('/') + 1))
+                        await al_client.delete(old_src[0].imgSrc)
                     }
                 }
             }
@@ -370,7 +374,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 })
             })
 
-            await al_client.delete(imgSrc.slice(imgSrc.lastIndexOf('/') + 1))
+            await al_client.delete(imgSrc)
             ctx.body = JSON.stringify({
                 code: 200,
                 data: 1
@@ -660,7 +664,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
 
             // 删除封面图
             if (entity.titleImg) {
-                news_client.delete(entity.titleImg.slice(entity.titleImg.lastIndexOf('/') + 1))
+                al_client.delete(entity.titleImg)
             }
 
             // 删除内容中的oss
@@ -671,7 +675,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 for (var i = 0; i < oldImgLength; i++) {
                     const str = old_content.match(regex)[0]
                     const src = str.substring(str.indexOf(`"`) + 1, str.lastIndexOf(`"`))
-                    news_client.delete(src.slice(src.lastIndexOf('/') + 1))
+                    al_client.delete(src.slice(src.lastIndexOf('/') + 1))
                     old_content = old_content.replace(str, 123)
                 }
             }
@@ -694,7 +698,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
     router.post('/houtai/newsmanage/change_news', async (ctx) => {
         try {
             const file = ctx.request.files && ctx.request.files.file
-            var { id, title, content } = ctx.request.body
+            var { id, title, content, imgName } = ctx.request.body
             let src = ctx.request.body.file
             if (file) {
                 var path = file.path.replace(/\\/g, '/');
@@ -704,8 +708,8 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                     var extArr = fname.split('.');
                     var ext = extArr[extArr.length - 1]
                     nextPath = path + '.' + ext;
-                    await news_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
-                    src = await news_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
+                    src = imgName
+                    await al_client.put(imgName, file.path)
                     fs.unlinkSync(file.path) //删除临时存储文件
 
                     const old_src = await new Promise((res, rej) => {
@@ -718,7 +722,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                         })
                     })
                     if (old_src && old_src[0]) {
-                        news_client.delete(old_src[0].titleImg.slice(old_src[0].titleImg.lastIndexOf('/') + 1))
+                        al_client.delete(old_src[0].titleImg)
                     }
                 }
             }
@@ -734,7 +738,7 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
 
                         var uuName = uuid.v4() + '.' + imgType
 
-                        await news_client.put(uuName, buffer)
+                        await al_client.put(uuName, buffer)
                         var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
                         content = content.replace(regex, `<img src="${newstr}"/>`)
                     }
