@@ -455,8 +455,6 @@ router.get('/cdn-news/:title/:img', async (ctx) => {
     ctx.response.redirect(`https://img.rayvet.cn/${title}_${img}`);
 })
 
-router.get('/')
-
 houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client, db)
 
 app.use(auth(threadpool, db))
