@@ -448,13 +448,11 @@ router.get('/sitemap.xml', async (ctx) => {
 })
 
 router.get('/cdn-product/:img', async (ctx) => {
-    ctx.status = 301;
     ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.img}`);
     ctx.body = 'Redirecting';
 })
 
 router.get('/cdn-news/:title/:img', async (ctx) => {
-    ctx.status = 301;
     ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.title}_${ctx.params.img}`);
     ctx.body = 'Redirecting';
 })
