@@ -151,7 +151,7 @@ function getUrlName(url) {
 
 module.exports = function (threadpool, db) {
     return async function (ctx, next) {
-        if (ctx.url.match(/login/) || ctx.url.match(/getCaptcha/)) {
+        if (ctx.url.match(/login/) || ctx.url.match(/getCaptcha/) || ctx.url.match(/cdn-product/) || ctx.url.match(/cdn-news/)) {
             await next()
             return
         }
