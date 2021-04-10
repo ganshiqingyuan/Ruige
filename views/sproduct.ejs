@@ -37,7 +37,7 @@
 					 <% for(var j = 0; j < related_arry_set.length; j++){ %>
 						<a href="<%= related_arry_set[j].name.replace(/\s/g, '-') %>">
 							<li>
-								<div class="bac"  style="background:url(<%= related_arry_set[j].src %>) ; background-size:100% 100% ;"></div>
+								<div class="bac"  style="background:url(<%=   cdn.newsUrl + related_arry_set[j].src %>) ; background-size:100% 100% ;"></div>
 								<p><%= related_arry_set[j].name %></p>
 							</li>
 						</a>

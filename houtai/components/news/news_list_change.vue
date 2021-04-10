@@ -7,10 +7,13 @@
     width="1000px"
   >
     <el-form label-width="150px">
-      <el-form-item label="新闻标题：" size="small">
+      <el-form-item
+        label="新闻标题："
+        size="small"
+      >
         <el-input v-model="newsEntity.title"></el-input>
       </el-form-item>
-      <el-form-item size="small" label="图片：">
+      <!-- <el-form-item size="small" label="图片：">
         <el-upload
           ref="upload"
           style="text-align:center;"
@@ -39,8 +42,12 @@
             </div>
           </div>
         </el-upload>
-      </el-form-item>
-      <el-form-item label="内容：" size="small">
+      </el-form-item> -->
+
+      <el-form-item
+        label="内容："
+        size="small"
+      >
         <quill-editor
           ref="myQuillEditor"
           v-model="newsEntity.content"
@@ -50,19 +57,68 @@
           @ready="onEditorReady($event)"
         />
       </el-form-item>
-    </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="changeNewsListChangeShowFlag(false)"
-        >取 消</el-button
+      <el-form-item
+        label="自定义图片名称："
+        size="small"
+        prop="imgName"
       >
+        <el-input
+          placeholder="依次输入内容中上传图片的名称用逗号隔开(例name1,name2,name3)"
+          v-model="newsEntity.imgName"
+        ></el-input>
+      </el-form-item>
+      <el-form-item
+        label="选择封面图片："
+        size="small"
+        prop="imgFace"
+      >
+        <el-button
+          type="primary"
+          plain
+          @click="selectImgFaceBtn(true)"
+        >选择封面图</el-button>
+      </el-form-item>
+    </el-form>
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        size="small"
+        @click="changeNewsListChangeShowFlag(false)"
+      >取 消</el-button>
       <el-button
         size="small"
         :loading="uploadLoading"
         type="primary"
         @click="submitNews"
-        >提 交</el-button
-      >
+      >提 交</el-button>
     </span>
+    <el-dialog
+      width="30%"
+      title="内层 Dialog"
+      :visible.sync="innerVisible"
+      append-to-body
+    >
+      <el-radio-group v-model="radio">
+        <el-radio :label="0"><img src=""></el-radio>
+        <el-radio :label="1">备选项</el-radio>
+        <el-radio :label="2">备选项</el-radio>
+      </el-radio-group>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      ></span>
+      <el-button
+        size="small"
+        type="primary"
+        @click="add"
+      >添加</el-button>
+      <el-button
+        size="small"
+        @click="submitNews"
+      >取消</el-button>
+    </el-dialog>
   </el-dialog>
 </template>
 
@@ -72,13 +128,17 @@ export default {
   name: "newListChange",
   data() {
     return {
+      radio: "0",
+      innerVisible: false,
       newsListChangeShowFlag: true,
       URL: URL,
       editorOption: {},
       newsEntity: this.$props.news || {
         id: "",
         title: "",
-        titleImg: "",
+        // titleImg: "",
+        imgName: "",
+        imgFace: "",
         content: "",
       },
       uploadLoading: false,
@@ -86,7 +146,12 @@ export default {
   },
   props: ["news"],
   methods: {
-    changeNewsListChangeShowFlag: function(flag) {
+    add() {},
+    //选择封面图
+    selectImgFaceBtn(flag) {
+      this.innerVisible = flag;
+    },
+    changeNewsListChangeShowFlag: function (flag) {
       this.$parent.changeNewsListChangeShowFlag(flag);
     },
     onEditorBlur(quill) {
@@ -98,25 +163,25 @@ export default {
     onEditorReady(quill) {
       console.log("editor ready!", quill);
     },
-    listChange: function(file) {
-      if (file.size > 100000) {
-        this.$notify({
-          message: "封面图片过大",
-          type: "warning",
-        });
-        this.$refs.upload.uploadFiles.pop();
-        return;
-      }
-      this.newsEntity.titleImg = file;
-    },
-    submitNews: function() {
-      if (!this.newsEntity.titleImg) {
-        this.$notify({
-          message: "请上传封面图片图片",
-          type: "warning",
-        });
-        return;
-      }
+    // listChange: function (file) {
+    //   if (file.size > 100000) {
+    //     this.$notify({
+    //       message: "封面图片过大",
+    //       type: "warning",
+    //     });
+    //     this.$refs.upload.uploadFiles.pop();
+    //     return;
+    //   }
+    //   //   this.newsEntity.titleImg = file;
+    // },
+    submitNews: function () {
+      //   if (!this.newsEntity.titleImg) {
+      //     this.$notify({
+      //       message: "请上传封面图片图片",
+      //       type: "warning",
+      //     });
+      //     return;
+      //   }
       if (!this.newsEntity.title) {
         this.$notify({
           message: "请输入新闻标题",
@@ -135,12 +200,14 @@ export default {
       requestData.append("title", this.newsEntity.title);
       requestData.append("content", this.newsEntity.content);
       requestData.append("id", this.newsEntity.id);
-      requestData.append(
-        "file",
-        typeof this.newsEntity.titleImg != "string"
-          ? this.newsEntity.titleImg.raw
-          : this.newsEntity.titleImg
-      );
+      //   requestData.append(
+      //     "file",
+      //     typeof this.newsEntity.titleImg != "string"
+      //       ? this.newsEntity.titleImg.raw
+      //       : this.newsEntity.titleImg
+      //   );
+      requestData.append("imgName", this.newsEntity.imgName);
+      requestData.append("imgFace", this.newsEntity.imgFace);
       this.uploadLoading = true;
       this.$rq
         .changeNews(requestData)

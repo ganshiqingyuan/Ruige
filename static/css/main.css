@@ -26,7 +26,7 @@
   width: 50%;
   padding-left: 25%;
   padding-right: 25%;
-  background: url("https://ruigedist.oss-cn-hongkong.aliyuncs.com/mainimage1.jpg");
+  background: url("https://www.rayvet.cn/cdn-product/mainimage1.jpg");
   background-size: 100% 100%;
 }
 
@@ -61,14 +61,14 @@
 }
 .aboutus > span,
 .product > span {
-  font-size: 24px; 
-  line-height: 27px; 
-  letter-spacing: -0.8px; 
-  display:block;
+  font-size: 24px;
+  line-height: 27px;
+  letter-spacing: -0.8px;
+  display: block;
   word-break: break-word;
-	letter-spacing: -0.016px;
-	color: rgb(78, 80, 82);
-  margin:  auto;
+  letter-spacing: -0.016px;
+  color: rgb(78, 80, 82);
+  margin: auto;
   margin-top: 16px;
   margin-bottom: 80px;
   width: 50%;
@@ -124,7 +124,7 @@
   font-weight: bold;
 }
 .aboutus li span {
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 18px;
   line-height: 27px;
   letter-spacing: -0.2px;
@@ -136,9 +136,9 @@
   /* line-height: 30px; */
   width: 100%;
 }
-.aboutus img{
+.aboutus img {
   height: auto;
-  width:100%;
+  width: 100%;
 }
 .product > ul li {
   font-size: 20px;
@@ -390,7 +390,7 @@
   height: 500px;
   float: left;
   margin-left: 40px;
-  background: url("https://ruigedist.oss-cn-hongkong.aliyuncs.com/productright.jpg");
+  background: url("https://www.rayvet.cn/cdn-product/productright.jpg");
   background-size: 100% 100%;
 }
 .middle-left {
@@ -423,10 +423,10 @@
   font-weight: 700;
 }
 
-.news{
+.news {
   margin-top: 60px;
 }
-.news h1{
+.news h1 {
   margin-bottom: 2rem;
 }
 
@@ -545,7 +545,7 @@
     line-height: 27px;
     letter-spacing: -0.2px;
     color: rgb(118, 119, 122);
-    font-family: Inter,sans-serif;
+    font-family: Inter, sans-serif;
   }
   .in-warp span {
     font-size: 15px;
@@ -675,7 +675,7 @@
       width: 100%;
       text-align: center;
     }
-    .aboutus > span{
+    .aboutus > span {
       text-align: center;
       display: block;
       width: 300px;
@@ -690,7 +690,7 @@
       margin: 10px auto;
       font-size: 10px;
     }
-    .aboutus li{
+    .aboutus li {
       width: 47%;
       height: auto;
       margin: 0 auto;
@@ -921,7 +921,7 @@
       width: 100%;
       text-align: center;
     }
-    .aboutus li{
+    .aboutus li {
       width: 100%;
       height: auto;
       margin: 0 auto;

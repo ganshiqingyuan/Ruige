@@ -1,222 +1,225 @@
-.pro-list{
-			margin-top: 100px;
-		}
-		.pro-list li {
-			width: 1000px;
-			height: 400px;
-			margin: auto;
-			margin-top: 100px;
-		}
-		.pro-list li>span:last-child{
-			box-sizing: border-box;
-			font-size: 1.6rem;
-			padding: 2rem 2rem;
-			display: block;
-			width: 50%;
-			height: 100%;
-			float: left;
-			background: rgb(81,195,251)
-		}
-		.pro-list li>span:first-child{
-			background: url(../img/newdog.png);
-			background-size:100% 100%;
-			width: 50%;
-			float: left;
-			padding-top: 40%;
-		}
-		.pro-list li>span h1{
-			color: white;
-			font-weight: 700;
-			width: 100%;
-			height: auto;
-			font-size: 2rem;
-			text-align: center;
-		}
-		.pro-list li>span p{
-			color: white;
-			margin-top: 2rem;
-			width: 100%;
-			text-align: center;
-			font-size: 1.7rem;
-		}
-		.pro-list li>span span{
-			display: block;
-			width: 200px;
-			height: 2.8rem;
-			line-height: 2.8rem;
-			font-size: 1.4rem;
-			text-align: center;
-			background: black;
-			border-radius:0.5rem;
-			font-weight: 700;
-			color: white;
-			margin: auto;
-			margin-top: 50px;
-		}
-		.panel{
-			background: white;
-			border: 1px solid black;
-		}
-		.pro-list li>span span a{
-			color: white;
-		}
-		.pro-list li>span span a:hover{
-			color: lightpink;
-		}
-		.other{
-			margin-top: 7rem;
-			width: 100%;
-		}
-		.other::before{
-			content: "";
-			display: block;
-			width: 100%;
-			border-top: 1px solid rgba(150,150,150,0.8);
-		}
-		.other h1{
-			width: 300px;
-			margin: auto;
-			font-size: 25px;
-			font-weight: 700;
-			text-align: center;
-			margin-top: 3.5rem;
-		}
-		a:hover{
-			text-decoration: none;
-		}
-		.other ul{
-			width: 100%;
-			max-width: 1060px;
-			margin: auto;
-			overflow: auto;
-			margin-top: 3.5rem;
-		}
-		.other ul li{
-			width: 100%;
-			height: 100%;
-		}
-		.other ul a{
-			display: block;
-			width: 25%;
-			height: auto;
-			float: left;
-			margin-left: 40px;
-			box-sizing: border-box;
-			border: 2px solid white;
-		}
-		.other ul a:hover{
-			border: 2px solid rgba(16,95,240,0.5);
-		}
-		.other ul li .bac{
-			width: 100%;
-			padding-top: 80%;
-		}
-		.other ul li p{
-			width: 70%;
-			margin: auto;
-			height: auto;
-			line-height: 2.1rem;
-			text-align: center;
-			font-size: 18px;
-			color: black;
-		}
-		.other ul li:first-child{
-			margin-left: 0;
-		}
-		.spro-top{
-			width: 100%;
-			padding-top: 30%;
-			background: url('https://ruigedist.oss-cn-hongkong.aliyuncs.com/catdog.jpg');
-			background-size:100% 100% ;
-		}
-		.spro-top1{
-			z-index: -1;
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			padding-top: 30%;
-			background: url(/img/catdog1.jpg);
-			background-size:100% 100% ;
-		}
-		@media only screen and (max-width:1080px ) {
-			
-			.pro-list li {
-				overflow: auto;
-			width: 100%;
-			height: auto;
-			margin: auto;
-			margin-top: 100px;
-		}
-		html,body{
-			font-size: 12px;
-		}
-		}
-		@media only screen and (max-width:800px ) {
-			html,body{
-			font-size: 10px;
-		}
-		}
-		@media only screen and (max-width: 680px) {
-			.other ul a{
-			display: block;
-			width: 70%;
-			height: auto;
-			float: left;
-			margin-left: 15%;
-			box-sizing: border-box;
-			border: 2px solid white;
-		}
-		}
-		@media only screen and (max-width:600px ) {
-			html,body{
-			font-size: 8px;
-		}
-		}
-		@media only screen and (max-width:500px ) {
-			.pro-list{
-			margin-top: 50px;
-		}
-			html,body{
-			font-size: 7px;
-		}
-		.spro-top{
-			width: 100%;
-			padding-top: 60%;
-		}
-		.pro-list li>span:last-child{
-			box-sizing: border-box;
-			font-size: 1.75rem;
-			padding: 2rem 2rem;
-			display: block;
-			width: 80%;
-			height: 100%;
-			margin: 0 10%;
-			float: left;
-		}
-		.pro-list li>span:first-child{
-			background: url(../img/newdog.png);
-			background-size:100% 100%;
-			width: 80%;
-			float: left;
-			padding-top: 60%;
-			margin: 0 10%;
-		}
-		.pro-list li>span span{
-			display: block;
-			width: 100px;
-			height: 2.8rem;
-			line-height: 2.8rem;
-			font-size: 1.7rem;
-			text-align: center;
-			background: blue;
-			border-radius:0.5rem;
-			font-weight: 700;
-			color: white;
-			margin: auto;
-			margin-top: 20px;
-		}
-		.pro-list li{
-			box-sizing: border-box;
-		}
-		}
+.pro-list {
+  margin-top: 100px;
+}
+.pro-list li {
+  width: 1000px;
+  height: 400px;
+  margin: auto;
+  margin-top: 100px;
+}
+.pro-list li > span:last-child {
+  box-sizing: border-box;
+  font-size: 1.6rem;
+  padding: 2rem 2rem;
+  display: block;
+  width: 50%;
+  height: 100%;
+  float: left;
+  background: rgb(81, 195, 251);
+}
+.pro-list li > span:first-child {
+  background: url(../img/newdog.png);
+  background-size: 100% 100%;
+  width: 50%;
+  float: left;
+  padding-top: 40%;
+}
+.pro-list li > span h1 {
+  color: white;
+  font-weight: 700;
+  width: 100%;
+  height: auto;
+  font-size: 2rem;
+  text-align: center;
+}
+.pro-list li > span p {
+  color: white;
+  margin-top: 2rem;
+  width: 100%;
+  text-align: center;
+  font-size: 1.7rem;
+}
+.pro-list li > span span {
+  display: block;
+  width: 200px;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  font-size: 1.4rem;
+  text-align: center;
+  background: black;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  color: white;
+  margin: auto;
+  margin-top: 50px;
+}
+.panel {
+  background: white;
+  border: 1px solid black;
+}
+.pro-list li > span span a {
+  color: white;
+}
+.pro-list li > span span a:hover {
+  color: lightpink;
+}
+.other {
+  margin-top: 7rem;
+  width: 100%;
+}
+.other::before {
+  content: "";
+  display: block;
+  width: 100%;
+  border-top: 1px solid rgba(150, 150, 150, 0.8);
+}
+.other h1 {
+  width: 300px;
+  margin: auto;
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 3.5rem;
+}
+a:hover {
+  text-decoration: none;
+}
+.other ul {
+  width: 100%;
+  max-width: 1060px;
+  margin: auto;
+  overflow: auto;
+  margin-top: 3.5rem;
+}
+.other ul li {
+  width: 100%;
+  height: 100%;
+}
+.other ul a {
+  display: block;
+  width: 25%;
+  height: auto;
+  float: left;
+  margin-left: 40px;
+  box-sizing: border-box;
+  border: 2px solid white;
+}
+.other ul a:hover {
+  border: 2px solid rgba(16, 95, 240, 0.5);
+}
+.other ul li .bac {
+  width: 100%;
+  padding-top: 80%;
+}
+.other ul li p {
+  width: 70%;
+  margin: auto;
+  height: auto;
+  line-height: 2.1rem;
+  text-align: center;
+  font-size: 18px;
+  color: black;
+}
+.other ul li:first-child {
+  margin-left: 0;
+}
+.spro-top {
+  width: 100%;
+  padding-top: 30%;
+  background: url("https://www.rayvet.cn/cdn-product/catdog.jpg");
+  background-size: 100% 100%;
+}
+.spro-top1 {
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding-top: 30%;
+  background: url(/img/catdog1.jpg);
+  background-size: 100% 100%;
+}
+@media only screen and (max-width: 1080px) {
+  .pro-list li {
+    overflow: auto;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    margin-top: 100px;
+  }
+  html,
+  body {
+    font-size: 12px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  html,
+  body {
+    font-size: 10px;
+  }
+}
+@media only screen and (max-width: 680px) {
+  .other ul a {
+    display: block;
+    width: 70%;
+    height: auto;
+    float: left;
+    margin-left: 15%;
+    box-sizing: border-box;
+    border: 2px solid white;
+  }
+}
+@media only screen and (max-width: 600px) {
+  html,
+  body {
+    font-size: 8px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .pro-list {
+    margin-top: 50px;
+  }
+  html,
+  body {
+    font-size: 7px;
+  }
+  .spro-top {
+    width: 100%;
+    padding-top: 60%;
+  }
+  .pro-list li > span:last-child {
+    box-sizing: border-box;
+    font-size: 1.75rem;
+    padding: 2rem 2rem;
+    display: block;
+    width: 80%;
+    height: 100%;
+    margin: 0 10%;
+    float: left;
+  }
+  .pro-list li > span:first-child {
+    background: url(../img/newdog.png);
+    background-size: 100% 100%;
+    width: 80%;
+    float: left;
+    padding-top: 60%;
+    margin: 0 10%;
+  }
+  .pro-list li > span span {
+    display: block;
+    width: 100px;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    font-size: 1.7rem;
+    text-align: center;
+    background: blue;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    color: white;
+    margin: auto;
+    margin-top: 20px;
+  }
+  .pro-list li {
+    box-sizing: border-box;
+  }
+}

@@ -448,6 +448,7 @@ router.get('/sitemap.xml', async (ctx) => {
 })
 
 router.get('/cdn-product/:img', async (ctx) => {
+    console.log("回源")
     ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.img}`);
     ctx.body = 'Redirecting';
 })
