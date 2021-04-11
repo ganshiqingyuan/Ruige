@@ -19,7 +19,7 @@ Vue.use(request)
 
 window.cdn = {
     productUrl: "https://img.rayvet.cn/",
-    newsUrl: "https://img.rayvet.cn/"
+    newsUrl: "/cdn-news/"
 }
 
 new Vue({
