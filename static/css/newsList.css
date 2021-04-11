@@ -85,6 +85,7 @@
   overflow: auto;
   margin: auto;
   margin-top: 30px;
+  padding:10px;
 }
 
 .news_list_content ul a {
