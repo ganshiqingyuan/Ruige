@@ -17,7 +17,7 @@
   float: left;
   background: rgb(81, 195, 251);
 }
-.pro-list li > img:first-child {
+.pro-list li > span:first-child {
   background: url(../img/newdog.png);
   background-size: 100% 100%;
   width: 50%;
@@ -126,7 +126,7 @@ a:hover {
 .spro-top {
   width: 100%;
   padding-top: 30%;
-  background: url("https://www.rayvet.cn/cdn-product/catdog.jpg");
+  background: url("https://ruigedist.oss-cn-hongkong.aliyuncs.com/catdog.jpg");
   background-size: 100% 100%;
 }
 .spro-top1 {
