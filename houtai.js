@@ -128,7 +128,7 @@ function reload() {
             };
             const id_list = results.map(_ => _.id)
             console.log(id_list)
-            const sql = `select * from product_list where typeID in (${id_list.map(_ => `'${_}'`).join(',')})`
+            const sql = `select * from product_list where typeID in (${id_list.map(_ => `'${_}'`).join(',') || 0})`
             threadpool.query(sql, function (error, results2, fields) {
                 if (error) {
                     throw error
@@ -448,7 +448,6 @@ router.get('/sitemap.xml', async (ctx) => {
 })
 
 router.get('/cdn-product/:img', async (ctx) => {
-    console.log("回源")
     ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.img}`);
     ctx.body = 'Redirecting';
 })
@@ -458,7 +457,7 @@ router.get('/cdn-news/:title/:img', async (ctx) => {
     ctx.body = 'Redirecting';
 })
 
-houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client, db)
+houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client, db, sqlconfig)
 
 app.use(auth(threadpool, db))
 

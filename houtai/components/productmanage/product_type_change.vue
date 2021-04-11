@@ -12,16 +12,31 @@
       :rules="fenleirules"
       label-width="120px"
     >
-      <el-form-item size="small" prop="name" label="分类名称：">
+      <el-form-item
+        size="small"
+        prop="name"
+        label="分类名称："
+      >
         <el-input v-model="fenleiItem.name"></el-input>
       </el-form-item>
-      <el-form-item prop="descript" size="small" label="描述：">
+      <el-form-item
+        prop="descript"
+        size="small"
+        label="描述："
+      >
         <el-input v-model="fenleiItem.descript"></el-input>
       </el-form-item>
-      <el-form-item prop="sort" size="small" label="排序：">
+      <el-form-item
+        prop="sort"
+        size="small"
+        label="排序："
+      >
         <el-input v-model="fenleiItem.sort"></el-input>
       </el-form-item>
-      <el-form-item size="small" label="图片">
+      <el-form-item
+        size="small"
+        label="图片"
+      >
         <el-upload
           ref="upload"
           style="text-align:center;"
@@ -35,7 +50,7 @@
             style="width:50%;"
             :src="
               typeof fenleiItem.file == 'string'
-                ? fenleiItem.file
+                ? productUrl + fenleiItem.file
                 : URL.createObjectURL(fenleiItem.file.raw)
             "
             class="avatar"
@@ -45,24 +60,30 @@
             <div class="el-upload__text">
               将文件拖到此处，或<em>点击上传</em>
             </div>
-            <div class="el-upload__tip" slot="tip">
+            <div
+              class="el-upload__tip"
+              slot="tip"
+            >
               一次上传一张，只支持处理过后的透明png图片
             </div>
           </div>
         </el-upload>
       </el-form-item>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="changeTypeChangeShowFlag(false)"
-        >取 消</el-button
-      >
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        size="small"
+        @click="changeTypeChangeShowFlag(false)"
+      >取 消</el-button>
       <el-button
         size="small"
         :loading="uploadLoading"
         type="primary"
         @click="submitType"
-        >提 交</el-button
-      >
+      >提 交</el-button>
     </span>
   </el-dialog>
 </template>
@@ -82,6 +103,7 @@ export default {
       },
       imgSrc: this.$rq.imgSrc,
       URL: URL,
+      productUrl: cdn.productUrl,
       fenleirules: {
         name: [
           { required: true, trigger: "blur", message: "分类名称不能唯恐" },
@@ -96,7 +118,7 @@ export default {
   props: {
     propsType: Object,
   },
-  mounted: function() {
+  mounted: function () {
     const propsType = this.propsType;
     console.log(propsType);
     if (propsType) {
@@ -108,10 +130,10 @@ export default {
     }
   },
   methods: {
-    changeTypeChangeShowFlag: function(flag) {
+    changeTypeChangeShowFlag: function (flag) {
       this.$parent.changeTypeChangeShowFlag(flag);
     },
-    listChange: function(file) {
+    listChange: function (file) {
       if (file.name.split(".")[file.name.split(".").length - 1] != "png") {
         this.$notify({
           message: "只支持处理过后的透明png图片上传",
@@ -122,7 +144,7 @@ export default {
       }
       this.fenleiItem.file = file;
     },
-    submitType: function() {
+    submitType: function () {
       this.$refs.typeform.validate((valid) => {
         if (valid) {
           if (this.fenleiItem.file) {

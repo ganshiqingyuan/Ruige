@@ -4,16 +4,25 @@
       v-if="newsListShowFlag"
       :news="changedNews"
     ></news-list-change>
-    <news-view :newsHtml="viewsNews" v-if="newsViewShowFlag"></news-view>
+    <news-view
+      :newsHtml="viewsNews"
+      v-if="newsViewShowFlag"
+    ></news-view>
     <el-form label-width="120px">
       <el-row>
         <el-col :span="8">
-          <el-form-item label="新闻标题" size="small">
+          <el-form-item
+            label="新闻标题"
+            size="small"
+          >
             <el-input v-model="queryItem.title"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="内容" size="small">
+          <el-form-item
+            label="内容"
+            size="small"
+          >
             <el-input v-model="queryItem.content"></el-input>
           </el-form-item>
         </el-col>
@@ -21,7 +30,11 @@
       </el-row>
       <el-row>
         <el-col :span="8">
-          <el-form-item prop="beginTime" size="small" label="时间：从">
+          <el-form-item
+            prop="beginTime"
+            size="small"
+            label="时间：从"
+          >
             <el-date-picker
               v-model="queryItem.beginTime"
               type="datetime"
@@ -31,7 +44,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item prop="endTime" size="small" label="至">
+          <el-form-item
+            prop="endTime"
+            size="small"
+            label="至"
+          >
             <el-date-picker
               v-model="queryItem.endTime"
               type="datetime"
@@ -41,7 +58,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item prop="imgSrc" size="small">
+          <el-form-item
+            prop="imgSrc"
+            size="small"
+          >
             <el-button @click="query_news_list(1)">查询</el-button>
             <el-button @click="addNews">添加</el-button>
           </el-form-item>
@@ -49,8 +69,14 @@
       </el-row>
     </el-form>
 
-    <el-table v-loading="tableLoading" :data="newsList">
-      <el-table-column label="时间" prop="creationTimestamp">
+    <el-table
+      v-loading="tableLoading"
+      :data="newsList"
+    >
+      <el-table-column
+        label="时间"
+        prop="creationTimestamp"
+      >
         <template slot-scope="scope">
           <p>
             {{ formatDate(scope.row.creationTimestamp, "yyyy-MM-dd HH:mm:ss") }}
@@ -58,9 +84,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="标题" prop="title"> </el-table-column>
+      <el-table-column
+        label="标题"
+        prop="title"
+      > </el-table-column>
 
-      <el-table-column label="内容" prop="content">
+      <el-table-column
+        label="内容"
+        prop="content"
+      >
         <template slot-scope="scope">
           <el-tooltip
             class="item"
@@ -78,9 +110,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="封面图片" prop="titleImg">
+      <el-table-column
+        label="封面图片"
+        prop="titleImg"
+      >
         <template slot-scope="scope">
-          <img style="width:50px;height:50px;" :src="scope.row.titleImg" />
+          <img
+            style="width:50px;height:50px;"
+            :src="newsUrl + scope.row.title.replace(/\s/g, '-') + '/' + scope.row.titleImg"
+          />
         </template>
       </el-table-column>
 
@@ -145,10 +183,11 @@ export default {
       total: 0,
       viewsNews: "",
       changedNews: "",
+      newsUrl: cdn.newsUrl,
     };
   },
   methods: {
-    query_news_list: function() {
+    query_news_list: function () {
       const requestData = {
         title: this.queryItem.title,
         content: this.queryItem.content,
@@ -165,13 +204,13 @@ export default {
         this.tableLoading = false;
       });
     },
-    changeNewsViewChangeShowFlag: function(flag) {
+    changeNewsViewChangeShowFlag: function (flag) {
       this.newsViewShowFlag = flag;
     },
-    changeNewsListChangeShowFlag: function(flag) {
+    changeNewsListChangeShowFlag: function (flag) {
       this.newsListShowFlag = flag;
     },
-    deleteNews: function(item) {
+    deleteNews: function (item) {
       const requestData = {
         id: item.id,
       };
@@ -196,19 +235,41 @@ export default {
         })
         .catch(() => {});
     },
-    changeNews: function(item) {
-      this.changedNews = item;
+    changeNews: function (item) {
+      this.changedNews = {
+        ...item,
+        imgName: item.content
+          .match(new RegExp(/<img src=[^>]*>/, "g"))
+          .map((str) => {
+            const url = str.substring(
+              str.indexOf('"') + 1,
+              str.lastIndexOf(".")
+            );
+            return url.substr(url.lastIndexOf("/") + 1);
+          }),
+        imgFace: item.content
+          .match(new RegExp(/<img src=[^>]*>/, "g"))
+          .map((str) => {
+            const url = str.substring(
+              str.indexOf('"') + 1,
+              str.lastIndexOf('"')
+            );
+            return url.substr(url.lastIndexOf("/") + 1);
+          })
+          .indexOf(item.titleImg),
+      };
+      console.log(this.changedNews);
       this.changeNewsListChangeShowFlag(true);
     },
-    viewNews: function(content) {
+    viewNews: function (content) {
       this.viewsNews = content;
       this.changeNewsViewChangeShowFlag(true);
     },
-    addNews: function() {
+    addNews: function () {
       this.changedNews = "";
       this.changeNewsListChangeShowFlag(true);
     },
-    formatDate: function(date, format) {
+    formatDate: function (date, format) {
       date = new Date(date);
       if (!format) format = "yyyy-MM-dd";
       var dict = {
@@ -224,12 +285,12 @@ export default {
         mm: ("" + (date.getMinutes() + 100)).substr(1),
         ss: ("" + (date.getSeconds() + 100)).substr(1),
       };
-      return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function() {
+      return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function () {
         return dict[arguments[0]];
       });
     },
   },
-  mounted: function() {
+  mounted: function () {
     this.query_news_list();
   },
   components: {

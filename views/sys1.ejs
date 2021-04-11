@@ -120,7 +120,7 @@ We started to be <i>manufacturer</i> of different kinds of <i>imaging machine</i
                                 <a href="newsList/<%= newsList[i].title.replace(/\s/g, '-') %>">
                                 <li>
                                     <div class="news_left">
-                                    <img alt="<%= newsList[i].title.replace(/\s/g, '-') %>" src="<%= newsList[i].titleImg %>" alt="" />
+                                    <img alt="<%= newsList[i].title.replace(/\s/g, '-') %>" src="<%=cdn.newsUrl +  newsList[i].title.replace(/\s/g, '-') + '/' + newsList[i].titleImg %>" alt="" />
                                     </div>
                                     <div class="news_right">
                                     <div>

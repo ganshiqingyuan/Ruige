@@ -22,6 +22,7 @@
 				 <% for(var i=0;i<gs_list.length;i++){ %>
                     <li>
                     	<span style="background:url(<%= cdn.productUrl + gs_list[i].imgSrc %>) ; background-size:100% 100% ;"></span>
+                        <img alt="<%=gs_list[i].list_name %>" src="<%= cdn.productUrl + gs_list[i].imgSrc %>"/>
                     	<span>
                     		<h1><%= gs_list[i].list_name %></h1>
                     		<p><%= gs_list[i].descript %></p>

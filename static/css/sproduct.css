@@ -17,7 +17,7 @@
   float: left;
   background: rgb(81, 195, 251);
 }
-.pro-list li > span:first-child {
+.pro-list li > img:first-child {
   background: url(../img/newdog.png);
   background-size: 100% 100%;
   width: 50%;

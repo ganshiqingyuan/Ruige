@@ -5,7 +5,17 @@ var LRU = require("lru-cache")
 var svgCaptcha = require('svg-captcha');
 const authConfig = require('../../config/admin.js')
 
-module.exports = function (router, threadpool, reload, reloadNews, rebuildSitemap, al_client, news_client, db) {
+function getLastParam(src) {
+    const lastIndex = src.lastIndexOf('/')
+    const img_name = src.substr(lastIndex + 1);
+
+    const sec_src = src.substring(0, lastIndex);
+    const sec_lastIndex = sec_src.lastIndexOf('/');
+    const news_name = sec_src.substr(sec_lastIndex + 1)
+    return [news_name, img_name]
+}
+
+module.exports = function (router, threadpool, reload, reloadNews, rebuildSitemap, al_client, news_client, db, config) {
     var adminCache = new LRU({
         max: 1000,
         maxAge: 60 * 1000 * 60
@@ -104,15 +114,6 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 var fname = file.name;
                 var nextPath = '';
                 if (file.size > 0 && path) {
-                    var extArr = fname.split('.');
-                    var ext = extArr[extArr.length - 1]
-                    nextPath = path + '.' + ext;
-                    // await al_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
-                    // src = await al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
-                    src = name.replace(/\s/g, '-')
-                    await al_client.put(src, file.path)
-                    await fs.unlinkSync(file.path) //删除临时存储文件
-
                     const old_src = await new Promise((res, rej) => {
                         const sql = `select src from product_type where id = '${id}'`
                         threadpool.query(sql, function (error, results, fields) {
@@ -125,7 +126,23 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                     if (old_src && old_src[0]) {
                         await al_client.delete(old_src[0].src)
                     }
+
+                    var extArr = fname.split('.');
+                    var ext = extArr[extArr.length - 1]
+                    nextPath = path + '.' + ext;
+                    // await al_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
+                    // src = await al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
+                    src = name.replace(/\s/g, '-') + '.' + ext
+                    await al_client.put(src, file.path)
+                    await fs.unlinkSync(file.path) //删除临时存储文件
+
                 }
+            }
+            else {
+                const buffer = (await al_client.get(src)).content;
+                await al_client.delete(src);
+                src = name.replace(/\s/g, '-') + '.' + src.substr(src.lastIndexOf('.') + 1)
+                await al_client.put(src, buffer)
             }
             await new Promise((res, rej) => {
                 const sql = `replace into product_type(id, parentId, name, descript, updateTime, sort, src)
@@ -309,15 +326,6 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 var fname = file.name;
                 var nextPath = '';
                 if (file.size > 0 && path) {
-                    var extArr = fname.split('.');
-                    var ext = extArr[extArr.length - 1]
-                    nextPath = path + '.' + ext;
-                    // await al_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
-                    // src = al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
-                    src = list_name
-                    await al_client.put(src, file.path)
-                    await fs.unlinkSync(file.path) //删除临时存储文件
-
                     const old_src = await new Promise((res, rej) => {
                         const sql = `select imgSrc from product_list where id = '${id}'`
                         threadpool.query(sql, function (error, results, fields) {
@@ -330,7 +338,23 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                     if (old_src && old_src[0]) {
                         await al_client.delete(old_src[0].imgSrc)
                     }
+
+                    var extArr = fname.split('.');
+                    var ext = extArr[extArr.length - 1]
+                    nextPath = path + '.' + ext;
+                    // await al_client.put(nextPath.slice(nextPath.lastIndexOf('/') + 1), file.path)
+                    // src = al_client.generateObjectUrl(nextPath.slice(nextPath.lastIndexOf('/') + 1)).replace('http', 'https')
+                    src = list_name.replace(/\s/g, '-') + '.' + ext
+                    await al_client.put(src, file.path)
+                    await fs.unlinkSync(file.path) //删除临时存储文件
+
                 }
+            }
+            else {
+                const buffer = (await al_client.get(src)).content;
+                await al_client.delete(src);
+                src = list_name.replace(/\s/g, '-') + '.' + src.substr(src.lastIndexOf('.') + 1)
+                await al_client.put(src, buffer)
             }
 
             await new Promise((res, rej) => {
@@ -675,7 +699,8 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                 for (var i = 0; i < oldImgLength; i++) {
                     const str = old_content.match(regex)[0]
                     const src = str.substring(str.indexOf(`"`) + 1, str.lastIndexOf(`"`))
-                    al_client.delete(src.slice(src.lastIndexOf('/') + 1))
+                    const [news_name, img_name] = getLastParam(src)
+                    al_client.delete(news_name + '_' + img_name)
                     old_content = old_content.replace(str, 123)
                 }
             }
@@ -697,35 +722,39 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
 
     router.post('/houtai/newsmanage/change_news', async (ctx) => {
         try {
-            const file = ctx.request.files && ctx.request.files.file
-            var { id, title, content, imgName } = ctx.request.body
-            let src = ctx.request.body.file
-            if (file) {
-                var path = file.path.replace(/\\/g, '/');
-                var fname = file.name;
-                var nextPath = '';
-                if (file.size > 0 && path) {
-                    var extArr = fname.split('.');
-                    var ext = extArr[extArr.length - 1]
-                    nextPath = path + '.' + ext;
-                    src = imgName
-                    await al_client.put(imgName, file.path)
-                    fs.unlinkSync(file.path) //删除临时存储文件
+            // const file = ctx.request.files && ctx.request.files.file
+            var { id, title, content, imgName, imgFace } = ctx.request.body
 
-                    const old_src = await new Promise((res, rej) => {
-                        const sql = `select titleImg from news where id = '${id}'`
-                        threadpool.query(sql, function (error, results, fields) {
-                            if (error) {
-                                throw error
-                            }
-                            res(results)
-                        })
-                    })
-                    if (old_src && old_src[0]) {
-                        al_client.delete(old_src[0].titleImg)
-                    }
-                }
-            }
+            const imgNameArry = imgName
+            const imgFaceIndex = imgFace
+            let imgFaceType = undefined
+            const formatTitle = title.replace(/\s/g, '-')
+            // if (file) {
+            //     var path = file.path.replace(/\\/g, '/');
+            //     var fname = file.name;
+            //     var nextPath = '';
+            //     if (file.size > 0 && path) {
+            //         var extArr = fname.split('.');
+            //         var ext = extArr[extArr.length - 1]
+            //         nextPath = path + '.' + ext;
+            //         src = imgName
+            //         await al_client.put(imgName, file.path)
+            //         fs.unlinkSync(file.path) //删除临时存储文件
+
+            //         const old_src = await new Promise((res, rej) => {
+            //             const sql = `select titleImg from news where id = '${id}'`
+            //             threadpool.query(sql, function (error, results, fields) {
+            //                 if (error) {
+            //                     throw error
+            //                 }
+            //                 res(results)
+            //             })
+            //         })
+            //         if (old_src && old_src[0]) {
+            //             al_client.delete(old_src[0].titleImg)
+            //         }
+            //     }
+            // }
             if (content) {
                 if (!id) {
                     var regex = /<img src="data:image[^>]*>/
@@ -736,11 +765,15 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                         var imgType = imgstr.substring(imgstr.indexOf('/') + 1, imgstr.indexOf(';'))
                         var buffer = Buffer.from(imgstr.substring(imgstr.indexOf(`,`) + 1, imgstr.lastIndexOf(`"`)), 'base64');
 
-                        var uuName = uuid.v4() + '.' + imgType
+                        var uuName = formatTitle + '_' + imgNameArry[i] + '.' + imgType
 
                         await al_client.put(uuName, buffer)
-                        var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
-                        content = content.replace(regex, `<img src="${newstr}"/>`)
+                        // var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
+                        content = content.replace(regex, `<img src="${config.cdn.newsUrl + formatTitle + '/' + imgNameArry[i] + '.' + imgType}"/>`)
+
+                        if (i == imgFaceIndex) {
+                            imgFaceType = imgType
+                        }
                     }
                 }
                 else {
@@ -754,42 +787,60 @@ module.exports = function (router, threadpool, reload, reloadNews, rebuildSitema
                         })
                     })
 
-                    var regex = /<img src="data:image[^>]*>/
-                    var newImglength = content.match(new RegExp(regex, 'g')) && content.match(new RegExp(regex, 'g')).length || 0
-                    for (var i = 0; i < newImglength; i++) {
-                        var imgstr = content.match(regex)[0];
-                        var imgType = imgstr.substring(imgstr.indexOf('/') + 1, imgstr.indexOf(';'))
-                        var buffer = Buffer.from(imgstr.substring(imgstr.indexOf(`,`) + 1, imgstr.lastIndexOf(`"`)), 'base64');
-
-                        var uuName = uuid.v4() + '.' + imgType
-
-                        await news_client.put(uuName, buffer)
-                        var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
-                        content = content.replace(regex, `<img src="${newstr}"/>`)
-                    }
-
-                    const new_content = content;
-
                     // 删掉旧的无用的图片
                     const old_regex = /<img src=[^>]*>/
                     const oldImgLength = old_content.content.match(new RegExp(old_regex, 'g')) && old_content.content.match(new RegExp(old_regex, 'g')).length || 0
                     for (var i = 0; i < oldImgLength; i++) {
                         const str = old_content.content.match(old_regex)[0]
                         const src = str.substring(str.indexOf(`"`) + 1, str.lastIndexOf(`"`))
-                        if (new_content.indexOf(src) == -1) {
-                            console.log(src.slice(src.lastIndexOf('/') + 1))
-                            news_client.delete(src.slice(src.lastIndexOf('/') + 1))
+                        if (content.indexOf(src) == -1) {
+                            const [news_name, img_name] = getLastParam(src)
+                            al_client.delete(news_name + '_' + img_name)
                         }
                         old_content.content = old_content.content.replace(old_regex, 123)
                     }
 
+                    const regex_base64 = /<img src="data:image[^>]*>/
+                    const regex = /<img src=[^>]*>/
+                    var newImglength = content.match(new RegExp(regex, 'g')) && content.match(new RegExp(regex, 'g')).length || 0
+                    for (var i = 0; i < newImglength; i++) {
+                        var imgstr = content.match((new RegExp(regex, 'g')))[i];
+                        var imgType;
+                        if (imgstr.match(new RegExp(regex_base64, 'g'))) {
+                            imgType = imgstr.substring(imgstr.indexOf('/') + 1, imgstr.indexOf(';'))
+                            var buffer = Buffer.from(imgstr.substring(imgstr.indexOf(`,`) + 1, imgstr.lastIndexOf(`"`)), 'base64');
 
+                            var uuName = formatTitle + '_' + imgNameArry[i] + '.' + imgType
 
+                            await al_client.put(uuName, buffer)
+                            // var newstr = await news_client.generateObjectUrl(uuName).replace('http', 'https')
+                            content = content.replace(imgstr, `<img src="${config.cdn.newsUrl + formatTitle + '/' + imgNameArry[i] + '.' + imgType}"/>`)
+                        }
+                        else {
+                            imgType = imgstr.substring(imgstr.indexOf('.') + 1, imgstr.lastIndexOf('"'));
+                            const url = imgstr.substring(
+                                imgstr.indexOf('"') + 1,
+                                imgstr.lastIndexOf('"')
+                            );
+                            const [news_name, img_name] = getLastParam(url)
+                            var oldName = news_name + '_' + img_name;
+                            var buffer = (await al_client.get(oldName)).content;
+
+                            var uuName = formatTitle + '_' + imgNameArry[i] + '.' + imgType
+
+                            al_client.delete(oldName);
+                            await al_client.put(uuName, buffer);
+                            content = content.replace(imgstr, `<img src="${config.cdn.newsUrl + formatTitle + '/' + imgNameArry[i] + '.' + imgType}"/>`)
+                        }
+                        if (i == imgFaceIndex) {
+                            imgFaceType = imgType
+                        }
+                    }
                 }
             }
             await new Promise((res, rej) => {
                 const sql = `replace into news(id, title, titleImg, content)
-                            values('${id || uuid.v4()}', '${title.replace(/\'/g, "''")}', '${src}', '${content.replace(/\'/g, "''")}')`
+                            values('${id || uuid.v4()}', '${formatTitle}', '${imgNameArry[imgFaceIndex] + '.' + imgFaceType}', '${content.replace(/\'/g, "''")}')`
                 threadpool.query(sql, function (error, results, fields) {
                     if (error) {
                         throw error

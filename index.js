@@ -17,19 +17,24 @@ import request from "./config/request.js"
 
 Vue.use(request)
 
-new Vue({
-      data() {
-            return {
-                  text: 123,
-            }
-      },
-      router,
-      //   store,
-      el: "#app",
-      render: c => c("App"),
-      components: {
-            App
-      }
+window.cdn = {
+    productUrl: "https://img.rayvet.cn/",
+    newsUrl: "https://img.rayvet.cn/"
+}
 
-      //template:"<h1>123123</h1>"
+new Vue({
+    data() {
+        return {
+            text: 123,
+        }
+    },
+    router,
+    //   store,
+    el: "#app",
+    render: c => c("App"),
+    components: {
+        App
+    }
+
+    //template:"<h1>123123</h1>"
 })

@@ -26,10 +26,11 @@
     <div class="news_list_content">
       <a href="newsList/<%= newsList[0].title.replace(/\s/g, '-') %>">
         <div class="top_news">
-          <div
+          <img
             class="left_img"
-            style="background: url(<%= newsList[0].titleImg %>); background-size:100% 100% ;"
-          ></div>
+            alt="<%=newsList[0].title + ' ' + newsList[0].titleImg.substring(0,newsList[0].titleImg.lastIndexOf('.') ) %>"
+            src="<%=cdn.newsUrl +  newsList[0].title.replace(/\s/g, '-') + '/' + newsList[0].titleImg %>"
+          />
           <div class="right_content">
             <div class="right_content_header">
               <%= newsList[0].title %>
@@ -48,10 +49,11 @@
         <% for(var i = 1; i < newsList.length ; i++){ %>
         <a href="newsList/<%= newsList[i].title.replace(/\s/g, '-') %>">
           <li>
-            <div
+            <img
               class="news_img"
-              style="background: url(<%= newsList[i].titleImg %>); background-size:100% 100% ;"
-            ></div>
+              alt="<%=newsList[i].title + ' ' + newsList[i].titleImg.substring(0,newsList[i].titleImg.lastIndexOf('.') ) %>"
+              src="<%=cdn.newsUrl +  newsList[i].title.replace(/\s/g, '-') + '/' + newsList[i].titleImg %>"
+            />
             <div class="news_content">
               <p class="news_content_title">
                 <%= newsList[i].title %>

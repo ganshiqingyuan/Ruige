@@ -20,6 +20,12 @@ module.exports = {
             },
             '/login': {
                 target: 'http://localhost:3000'
+            },
+            '/cdn-news': {
+                target: 'http://localhost:3000'
+            },
+            '/cdn-product': {
+                target: 'http://localhost:3000'
             }
         }
 

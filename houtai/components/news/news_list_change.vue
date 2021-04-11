@@ -13,37 +13,6 @@
       >
         <el-input v-model="newsEntity.title"></el-input>
       </el-form-item>
-      <!-- <el-form-item size="small" label="图片：">
-        <el-upload
-          ref="upload"
-          style="text-align:center;"
-          action=""
-          :show-file-list="false"
-          :on-change="listChange"
-          :auto-upload="false"
-        >
-          <img
-            v-if="newsEntity.titleImg"
-            style="width:50%;"
-            :src="
-              typeof newsEntity.titleImg == 'string'
-                ? newsEntity.titleImg
-                : URL.createObjectURL(newsEntity.titleImg.raw)
-            "
-            class="avatar"
-          />
-          <div v-else>
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">
-              将文件拖到此处，或<em>点击上传</em>
-            </div>
-            <div class="el-upload__tip" slot="tip">
-              一次上传一张，只支持处理过后的透明png图片
-            </div>
-          </div>
-        </el-upload>
-      </el-form-item> -->
-
       <el-form-item
         label="内容："
         size="small"
@@ -62,21 +31,37 @@
         size="small"
         prop="imgName"
       >
-        <el-input
-          placeholder="依次输入内容中上传图片的名称用逗号隔开(例name1,name2,name3)"
-          v-model="newsEntity.imgName"
-        ></el-input>
-      </el-form-item>
-      <el-form-item
-        label="选择封面图片："
-        size="small"
-        prop="imgFace"
-      >
-        <el-button
-          type="primary"
-          plain
-          @click="selectImgFaceBtn(true)"
-        >选择封面图</el-button>
+        <el-table
+          class="img_chose_table"
+          :data="imgList"
+        >
+          <el-table-column
+            width="100"
+            label="图片"
+            class="img_chose"
+          >
+            <template slot-scope="scope">
+              <div v-html="scope.row">
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="图片名">
+            <template slot-scope="scope">
+              <el-input v-model="newsEntity.imgName[scope.$index]"></el-input>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="是否为封面图片">
+            <template slot-scope="scope">
+              <el-radio
+                v-model="newsEntity.imgFace"
+                :label="scope.$index"
+              >选这个</el-radio>
+            </template>
+          </el-table-column>
+
+        </el-table>
       </el-form-item>
     </el-form>
     <span
@@ -137,11 +122,15 @@ export default {
         id: "",
         title: "",
         // titleImg: "",
-        imgName: "",
-        imgFace: "",
+        imgName: [],
+        imgFace: 0,
         content: "",
       },
       uploadLoading: false,
+      oldArry:
+        (this.$props.news &&
+          this.$props.news.content.match(new RegExp(/<img src=[^>]*>/, "g"))) ||
+        [],
     };
   },
   props: ["news"],
@@ -196,18 +185,27 @@ export default {
         });
         return;
       }
-      const requestData = new FormData();
-      requestData.append("title", this.newsEntity.title);
-      requestData.append("content", this.newsEntity.content);
-      requestData.append("id", this.newsEntity.id);
-      //   requestData.append(
-      //     "file",
-      //     typeof this.newsEntity.titleImg != "string"
-      //       ? this.newsEntity.titleImg.raw
-      //       : this.newsEntity.titleImg
-      //   );
-      requestData.append("imgName", this.newsEntity.imgName);
-      requestData.append("imgFace", this.newsEntity.imgFace);
+      if (this.newsEntity.imgName.filter((item) => !item).length) {
+        this.$notify({
+          message: "请为图片补充名称以方便进行seo",
+          type: "warning",
+        });
+        return;
+      }
+      if (this.imgList.length < this.newsEntity.imgFace + 1) {
+        this.$notify({
+          message: "请选择封面图片或上传封面图片",
+          type: "warning",
+        });
+        return;
+      }
+      const requestData = {
+        title: this.newsEntity.title,
+        content: this.newsEntity.content,
+        id: this.newsEntity.id,
+        imgName: this.newsEntity.imgName,
+        imgFace: this.newsEntity.imgFace == -1 ? 0 : this.newsEntity.imgFace,
+      };
       this.uploadLoading = true;
       this.$rq
         .changeNews(requestData)
@@ -225,10 +223,38 @@ export default {
         });
     },
   },
+  computed: {
+    imgList: function () {
+      var regex = /<img src=[^>]*>/;
+      var newArry = this.newsEntity.content.match(new RegExp(regex, "g")) || [];
+      console.log("执行", newArry);
+      if (newArry.length > this.oldArry.length) {
+        for (let i = 0; i < newArry.length; i++) {
+          if (this.oldArry.indexOf(newArry[i]) == -1) {
+            this.newsEntity.imgName.splice(i, 0, "");
+          }
+        }
+      } else {
+        for (let i = 0; i < this.oldArry.length; i++) {
+          if (newArry.indexOf(this.oldArry[i]) == -1) {
+            this.newsEntity.imgName.splice(i, 1);
+          }
+        }
+      }
+      this.oldArry = newArry;
+      return newArry;
+    },
+  },
   components: {
     quillEditor,
   },
 };
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+.img_chose_table {
+  img {
+    width: 100%;
+  }
+}
+</style>
