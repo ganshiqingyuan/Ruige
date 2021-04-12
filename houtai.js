@@ -109,6 +109,7 @@ function reloadNews() {
                 throw error
             };
             global.newsList = results
+            console.log(results)
             res(results)
         });
     })
@@ -192,24 +193,46 @@ function rebuildSitemap() {
                 url: '/product/' + _.name.replace(/\s/g, '-'),
                 changefreq: 'monthly',
                 priority: 0.5,
-                img: _.src
+                img: {
+                    url: 'cdn-product/' + _.src,
+                    caption: _.name,
+                    title: _.name,
+                    geoLocation: 'HK',
+                }
             })
             _.list.forEach(__ => {
                 siteArry.push({
                     url: '/product/' + _.name.replace(/\s/g, '-') + '/' + __.list_name.replace(/\s/g, '-'),
                     changefreq: 'monthly',
                     priority: 0.5,
-                    img: __.imgSrc
+                    img: {
+                        url: 'cdn-product/' + __.imgSrc,
+                        caption: _.name + ' ' + __.list_name,
+                        title: __.list_name,
+                        geoLocation: 'HK',
+                    }
                 })
             })
         })
-
+        console.log(newsList)
         newsList.forEach(_ => {
             siteArry.push({
                 url: '/newsList/' + _.title.replace(/\s/g, '-'),
                 changefreq: 'daily',
                 priority: 0.5,
-                img: _.titleImg
+                img: _.content.match(new RegExp(/<img src=[^>]*>/, "g"))
+                    .map((str) => {
+                        const url = str.substring(
+                            str.indexOf('"') + 1,
+                            str.lastIndexOf('"')
+                        );
+                        return {
+                            url: url,
+                            caption: _.title + ' ' + url.substring(url.lastIndexOf('/')),
+                            title: url.substring(url.lastIndexOf('/')),
+                            geoLocation: 'HK',
+                        }
+                    })
             })
         })
 
@@ -223,7 +246,7 @@ function rebuildSitemap() {
         // cache the response
         streamToPromise(pipeline).then(sm => {
             sitemap = sm;
-            //http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
+            http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
         })
         // make sure to attach a write stream such as streamToPromise before ending
         // stream write the response
@@ -448,13 +471,27 @@ router.get('/sitemap.xml', async (ctx) => {
 })
 
 router.get('/cdn-product/:img', async (ctx) => {
-    ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.img}`);
-    ctx.body = 'Redirecting';
+    const reffer = ctx.headers['referer'] || '';
+    console.log(reffer)
+    if (reffer.indexOf('google') != -1) {
+        ctx.status = 200;
+    }
+    else {
+        ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.img}`);
+        ctx.body = 'Redirecting';
+    }
 })
 
 router.get('/cdn-news/:title/:img', async (ctx) => {
-    ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.title}_${ctx.params.img}`);
-    ctx.body = 'Redirecting';
+    const reffer = ctx.headers['referer'] || '';
+    console.log(reffer)
+    if (reffer.indexOf('google') != -1) {
+        ctx.status = 200;
+    }
+    else {
+        ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.title}_${ctx.params.img}`);
+        ctx.body = 'Redirecting';
+    }
 })
 
 houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client, db, sqlconfig)
