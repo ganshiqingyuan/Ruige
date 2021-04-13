@@ -12,12 +12,12 @@
 		<link rel='shortcut icon' type="image/x-icon" sizes="any" href="/img/r.svg"/>
 		<link rel='icon' sizes="any" href="/img/r.svg"/>
         <script type="application/ld+json">
-           {
+        {
             "@context": "https://schema.org/",
             "@type": "Product",
             "name": "<%= list_info.list_name %>",
             "image": [
-                "<%= cdn.productUrl + list_info.imgSrc %>"
+                "https://www.rayvet.cn<%= cdn.productUrl + list_info.imgSrc %>"
             ],
             "description": "<%= list_info.descript %>",
             "brand": {
@@ -28,16 +28,22 @@
                 "@type": "Review",
                 "reviewRating": {
                   "@type": "Rating",
-                  "ratingValue": "4",
+                  "ratingValue": "5",
                   "bestRating": "5"
                 },
                 "author": {
-                  "@type": "Person",
-                  "name": "ben2"
+                  "@type": "Organization",
+                  "name": "CPMB"
                 }
-              }
+            },
+            "offers": {
+                "@type": "AggregateOffer",
+                "offerCount": "5",
+                "lowPrice": "0",
+                "highPrice": "99999",
+                "priceCurrency": "USD"
             }
-            }
+        }
         </script>
 	</head>
 	<body>
