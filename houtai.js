@@ -308,7 +308,7 @@ router.get("/newsList/:title", async (ctx) => {
         return
     }
     await ctx.render("newsWatch", {
-        productdata, news: newsList.find(_ => _.title.replace(/\s/g, '-') == ctx.params.title)
+        productdata, news: newsList.find(_ => _.title.replace(/\s/g, '-') == ctx.params.title), cdn: sqlconfig.cdn
     })
 })
 
@@ -379,7 +379,8 @@ router.get("/product/:type_name", async (ctx) => {
         await ctx.render('delete_product_type', {
             productdataRecommend: productdata.filter(function (_) {
                 return _.recommend
-            })
+            }),
+            cdn: sqlconfig.cdn
         })
         return
     }
@@ -425,7 +426,8 @@ router.get("/product/:a/:b", async (ctx) => {
                 return pre.concat(cur.list)
             }, []).filter(function (_) {
                 return _.recommend
-            })
+            }),
+            cdn: sqlconfig.cdn
         })
         return
     }
