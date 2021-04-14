@@ -472,29 +472,29 @@ router.get('/sitemap.xml', async (ctx) => {
     }
 })
 
-router.get('/cdn-product/:img', async (ctx) => {
-    const reffer = ctx.headers['referer'] || '';
-    console.log(reffer)
-    if (reffer.indexOf('google') != -1) {
-        ctx.status = 200;
-    }
-    else {
-        ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.img}`);
-        ctx.body = 'Redirecting';
-    }
-})
+// router.get('/cdn-product/:img', async (ctx) => {
+//     const reffer = ctx.headers['referer'] || '';
+//     console.log(reffer)
+//     if (reffer.indexOf('google') != -1) {
+//         ctx.status = 200;
+//     }
+//     else {
+//         ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.img}`);
+//         ctx.body = 'Redirecting';
+//     }
+// })
 
-router.get('/cdn-news/:title/:img', async (ctx) => {
-    const reffer = ctx.headers['referer'] || '';
-    console.log(reffer)
-    if (reffer.indexOf('google') != -1) {
-        ctx.status = 200;
-    }
-    else {
-        ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.title}_${ctx.params.img}`);
-        ctx.body = 'Redirecting';
-    }
-})
+// router.get('/cdn-news/:title/:img', async (ctx) => {
+//     const reffer = ctx.headers['referer'] || '';
+//     console.log(reffer)
+//     if (reffer.indexOf('google') != -1) {
+//         ctx.status = 200;
+//     }
+//     else {
+//         ctx.redirect(`https://ruigedist.oss-cn-hongkong.aliyuncs.com/${ctx.params.title}_${ctx.params.img}`);
+//         ctx.body = 'Redirecting';
+//     }
+// })
 
 houtai_api(router, threadpool, reload, reloadNews, rebuildSitemap, client, news_client, db, sqlconfig)
 
