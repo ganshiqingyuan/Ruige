@@ -246,7 +246,7 @@ function rebuildSitemap() {
         // cache the response
         streamToPromise(pipeline).then(sm => {
             sitemap = sm;
-            http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
+            //http.get("http://www.google.com/ping?sitemap=https://www.rayvet.cn/sitemap.xml")
         })
         // make sure to attach a write stream such as streamToPromise before ending
         // stream write the response
@@ -302,6 +302,7 @@ router.get("/newsList", async (ctx) => {
 router.get("/newsList/:title", async (ctx) => {
     const news = newsList.find(_ => _.title.replace(/\s/g, '-') == ctx.params.title);
     if (!news) {
+        ctx.status = 404
         await ctx.render('delete_news', {
             news: newsList.slice(0, 3), cdn: sqlconfig.cdn
         })
@@ -376,6 +377,7 @@ router.get("/product/:type_name", async (ctx) => {
         return type.name.replace(/\s/g, '-') === type_name
     })[0]
     if (!gs_info) {
+        ctx.status = 404
         await ctx.render('delete_product_type', {
             productdataRecommend: productdata.filter(function (_) {
                 return _.recommend
@@ -421,6 +423,7 @@ router.get("/product/:a/:b", async (ctx) => {
     const list_info = type_info.list.filter(list => list.list_name.replace(/\s/g, '-') === listName)[0];
 
     if (!list_info || !type_info) {
+        ctx.status = 404
         await ctx.render('delete_product', {
             productdataRecommend: productdata.reduce(function (pre, cur) {
                 return pre.concat(cur.list)
