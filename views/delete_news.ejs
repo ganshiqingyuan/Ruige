@@ -148,7 +148,7 @@
               <div class="news_left">
                 <img
                   alt="<%= news[i].title.replace(/\s/g, '-') %>"
-                  src="<%= news[i].titleImg %>"
+                  src="<%=cdn.newsUrl +  news[i].title.replace(/\s/g, '-') + '/' +  news[i].titleImg %>"
                   alt=""
                 />
               </div>
