@@ -232,7 +232,18 @@ function rebuildSitemap() {
                             title: url.substring(url.lastIndexOf('/')),
                             geoLocation: 'HK',
                         }
-                    })
+                    }),
+                news: {
+                    publication: {
+                        name: _.title,
+                        language: 'en'
+                    },
+                    genres: 'PressRelease, Blog',
+                    publication_date: _.creationTimestamp,
+                    title: _.title,
+                    keywords: _.title,
+                    stock_tickers: 'NASDAQ:A, NASDAQ:B'
+                }
             })
         })
 
@@ -535,4 +546,4 @@ function parseQueryStr(queryStr) {
 }
 
 app.listen(sqlconfig.PORT)
-console.log('[demo] start-quick is starting at port 3000')
+console.log('[demo] start-quick is starting at port ' + sqlconfig.PORT)
